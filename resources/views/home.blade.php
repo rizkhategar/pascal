@@ -15,10 +15,8 @@
             --white: #ffffff;
             --light: #f1f6f7;
             --text: #111827;
-            --muted: #6b7280;
             --gold: #d9a935;
             --green: #78927a;
-            --border: #d7d7d7;
         }
 
         * {
@@ -35,6 +33,7 @@
             font-family: 'Montserrat', sans-serif;
             background: var(--light);
             color: var(--text);
+            overflow-x: hidden;
         }
 
         a {
@@ -46,10 +45,8 @@
             list-style: none;
         }
 
-        .top-header {
-            width: 100%;
-            background: #eef4f5;
-            padding: 13px 0;
+        button {
+            font-family: inherit;
         }
 
         .container {
@@ -57,22 +54,33 @@
             margin: 0 auto;
         }
 
+        .top-header {
+            width: 100%;
+            background: #eef4f5;
+            padding: 13px 0;
+        }
+
         .brand-wrapper {
             display: flex;
             align-items: center;
+            justify-content: flex-start;
             gap: 14px;
+            width: 100%;
         }
 
         .brand-logo {
             width: 58px;
             height: 58px;
             object-fit: contain;
+            flex-shrink: 0;
         }
 
         .brand-unw {
             display: flex;
             align-items: center;
+            justify-content: flex-start;
             gap: 14px;
+            min-width: 0;
         }
 
         .brand-main {
@@ -97,6 +105,7 @@
             height: 43px;
             background: var(--primary);
             opacity: 0.7;
+            flex-shrink: 0;
         }
 
         .brand-school {
@@ -105,25 +114,26 @@
             font-size: 16px;
             line-height: 1.25;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .navbar {
             background: var(--primary);
-            height: 64px;
+            min-height: 64px;
             position: relative;
-            z-index: 50;
+            z-index: 100;
         }
 
         .nav-content {
             display: flex;
             align-items: center;
-            height: 64px;
+            min-height: 64px;
         }
 
         .nav-menu {
             display: flex;
             align-items: center;
-            height: 100%;
+            height: 64px;
         }
 
         .nav-item {
@@ -146,7 +156,6 @@
             border: none;
             background: transparent;
             cursor: pointer;
-            font-family: inherit;
         }
 
         .nav-link:hover,
@@ -202,7 +211,7 @@
             visibility: hidden;
             transform: translateY(8px);
             transition: 0.25s ease;
-            z-index: 100;
+            z-index: 200;
         }
 
         .nav-item:hover .dropdown {
@@ -497,7 +506,6 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-family: inherit;
             cursor: pointer;
             transition: 0.2s ease;
         }
@@ -623,7 +631,6 @@
             justify-content: center;
             gap: 9px;
             text-align: center;
-            font-family: inherit;
             cursor: pointer;
             transition: 0.25s ease;
             padding: 15px;
@@ -667,128 +674,306 @@
             flex: 1;
         }
 
-        .edom-card-wrapper:hover .edom-popover {
+        .edom-card-wrapper:hover .edom-popover,
+        .edom-card-wrapper.show-popover .edom-popover {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
             pointer-events: auto;
         }
 
-        .edom-card-wrapper:hover .service-card {
+        .edom-card-wrapper:hover .service-card,
+        .edom-card-wrapper.show-popover .service-card {
             background: var(--yellow);
             color: #ffffff;
             transform: translateY(-3px);
         }
 
-        .edom-card-wrapper:hover .service-card svg {
+        .edom-card-wrapper:hover .service-card svg,
+        .edom-card-wrapper.show-popover .service-card svg {
             fill: #ffffff;
         }
 
         .edom-popover {
-    position: absolute;
-    top: calc(100% + 14px);
-    left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    width: 210px;
-    background: #ffffff;
-    border-radius: 9px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
-    padding: 16px 14px;
-    z-index: 20;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: 0.22s ease;
-}
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            width: 230px;
+            background: #ffffff;
+            border-radius: 9px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+            padding: 16px 14px;
+            z-index: 30;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: 0.22s ease;
+        }
 
-.edom-popover::before {
-    content: "";
-    position: absolute;
-    top: -13px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 13px solid #ffffff;
-}
+        .edom-popover::before {
+            content: "";
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 13px solid #ffffff;
+        }
 
-.edom-popover h4 {
-    font-size: 13px;
-    line-height: 1.25;
-    font-weight: 800;
-    margin-bottom: 12px;
-    color: #050505;
-}
+        .edom-popover h4 {
+            font-size: 13px;
+            line-height: 1.25;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #050505;
+        }
 
-.edom-popover p {
-    font-size: 12px;
-    line-height: 1.35;
-    color: #050505;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
+        .edom-popover p {
+            font-size: 12px;
+            line-height: 1.35;
+            color: #050505;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
 
-.edom-popover .small-label {
-    font-size: 11px;
-    line-height: 1.3;
-    color: #777;
-    margin-bottom: 9px;
-}
+        .edom-popover .small-label {
+            font-size: 11px;
+            line-height: 1.3;
+            color: #777;
+            margin-bottom: 9px;
+        }
 
-.edom-score {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .edom-score {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.edom-score span {
-    width: 24px;
-    height: 24px;
-    border-radius: 5px;
-    background: #e5e5e5;
-    color: #111;
-    font-size: 13px;
-    font-weight: 800;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+        .edom-score span {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            background: #e5e5e5;
+            color: #111;
+            font-size: 13px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        @media (max-width: 640px) {
-    .edom-popover {
-        width: 220px;
-        padding: 16px 14px;
-    }
-}
-
-        @media (max-width: 640px) {
+        @media (max-width: 1200px) {
             .container {
-                width: min(100% - 28px, 1120px);
+                width: min(100% - 40px, 1120px);
+            }
+
+            .nav-link {
+                padding: 0 12px;
+                font-size: 11px;
+            }
+
+            .hero-text {
+                margin-left: 58px;
+            }
+
+            .info-layout {
+                grid-template-columns: 1.25fr 0.9fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                width: min(100% - 32px, 1120px);
+            }
+
+            .top-header {
+                padding: 10px 0;
             }
 
             .brand-wrapper {
-                gap: 9px;
-            }
-
-            .brand-logo {
-                width: 48px;
-                height: 48px;
+                justify-content: flex-start;
+                gap: 12px;
             }
 
             .brand-main {
-                font-size: 29px;
-            }
-
-            .brand-sub {
-                font-size: 6.5px;
-            }
-
-            .brand-divider {
-                height: 36px;
+                font-size: 34px;
             }
 
             .brand-school {
-                font-size: 11px;
+                font-size: 13px;
+            }
+
+            .navbar {
+                min-height: 64px;
+            }
+
+            .nav-content {
+                min-height: 64px;
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 8px 0 14px;
+            }
+
+            .nav-menu.show {
+                display: flex;
+            }
+
+            .nav-item {
+                height: auto;
+                width: 100%;
+            }
+
+            .nav-link {
+                width: 100%;
+                height: 48px;
+                padding: 0 14px;
+                justify-content: space-between;
+                font-size: 12px;
+                background: transparent;
+                color: var(--white);
+            }
+
+            .nav-link:hover {
+                background: transparent;
+                color: var(--white);
+            }
+
+            .nav-link.nav-click-active {
+                background: var(--yellow);
+                color: var(--white);
+            }
+
+            .nav-item.home-active .nav-link {
+                color: var(--yellow);
+                background: transparent;
+            }
+
+            .nav-item.home-active .nav-link:hover {
+                color: var(--yellow);
+                background: transparent;
+            }
+
+            .nav-item.home-active::after {
+                display: none;
+            }
+
+            .dropdown {
+                position: static;
+                min-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                padding: 5px 0;
+                background: #ffffff;
+            }
+
+            .nav-item:hover .dropdown {
+                display: none;
+            }
+
+            .nav-item.open .dropdown {
+                display: block;
+            }
+
+            .dropdown a {
+                padding: 11px 20px;
+                font-size: 12px;
+            }
+
+            .hero {
+                min-height: 340px;
+            }
+
+            .hero-content {
+                min-height: 340px;
+            }
+
+            .hero-text {
+                margin-left: 42px;
+                max-width: 620px;
+            }
+
+            .hero-title {
+                font-size: 30px;
+            }
+
+            .hero-subtitle {
+                font-size: 17px;
+            }
+
+            .hero-arrow.left {
+                left: clamp(16px, 4vw, 42px);
+            }
+
+            .hero-arrow.right {
+                right: clamp(16px, 4vw, 42px);
+            }
+
+            .program-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-layout {
+                grid-template-columns: 1fr;
+                gap: 42px;
+            }
+
+            .news-area {
+                padding-right: 0;
+                border-right: none;
+            }
+
+            .service-title {
+                margin-bottom: 22px;
+            }
+
+            .service-grid {
+                grid-template-columns: repeat(2, minmax(180px, 1fr));
+                gap: 22px;
+            }
+
+            .edom-popover {
+                width: 230px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .brand-logo {
+                width: 52px;
+                height: 52px;
+            }
+
+            .brand-unw {
+                gap: 10px;
+            }
+
+            .brand-main {
+                font-size: 31px;
+            }
+
+            .brand-school {
+                font-size: 12px;
+            }
+
+            .brand-divider {
+                height: 38px;
             }
 
             .hero {
@@ -801,12 +986,11 @@
 
             .hero-text {
                 margin-left: 0;
-                padding: 0 38px;
-                text-align: left;
+                padding: 0 44px;
             }
 
             .hero-title {
-                font-size: 25px;
+                font-size: 27px;
             }
 
             .hero-subtitle {
@@ -814,27 +998,40 @@
             }
 
             .btn-primary {
-                min-width: 200px;
-                height: 46px;
-                font-size: 14px;
+                min-width: 210px;
+                height: 47px;
+                font-size: 15px;
             }
 
             .hero-arrow {
-                width: 34px;
-                height: 34px;
-                font-size: 20px;
+                width: 36px;
+                height: 36px;
+                font-size: 21px;
             }
 
             .hero-arrow.left {
-                left: 14px;
+                left: 16px;
             }
 
             .hero-arrow.right {
-                right: 14px;
+                right: 16px;
             }
 
-            .program-grid {
-                grid-template-columns: 1fr;
+            .hero-dot {
+                width: 12px;
+                height: 12px;
+            }
+
+            .program-section {
+                padding: 34px 0;
+            }
+
+            .program-card {
+                min-height: 138px;
+            }
+
+            .info-section {
+                padding: 26px 0 44px;
             }
 
             .section-header {
@@ -842,44 +1039,250 @@
                 flex-direction: column;
             }
 
-            .section-title {
-                font-size: 22px;
-            }
-
             .pagination {
                 flex-wrap: wrap;
             }
 
             .news-item {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .news-thumb {
-                width: 100%;
-                height: 160px;
+                grid-template-columns: 140px 1fr;
+                gap: 16px;
             }
 
             .news-title {
                 font-size: 16px;
             }
 
+            .news-date {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                width: min(100% - 28px, 1120px);
+            }
+
+            .top-header {
+                padding: 9px 0;
+            }
+
+            .brand-wrapper {
+                justify-content: flex-start;
+                gap: 9px;
+            }
+
+            .brand-logo {
+                width: 46px;
+                height: 46px;
+            }
+
+            .brand-unw {
+                gap: 8px;
+            }
+
+            .brand-main {
+                font-size: 28px;
+            }
+
+            .brand-sub {
+                font-size: 6.5px;
+            }
+
+            .brand-divider {
+                width: 1.5px;
+                height: 34px;
+            }
+
+            .brand-school {
+                font-size: 10px;
+                white-space: normal;
+            }
+
+            .hamburger {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hamburger span {
+                width: 26px;
+                height: 3px;
+            }
+
+            .hero {
+                min-height: 315px;
+            }
+
+            .hero-content {
+                min-height: 315px;
+            }
+
+            .hero-text {
+                padding: 0 32px;
+                text-align: left;
+            }
+
+            .hero-title {
+                font-size: 23px;
+                line-height: 1.28;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+                line-height: 1.45;
+                margin-bottom: 16px;
+            }
+
+            .btn-primary {
+                min-width: 185px;
+                height: 44px;
+                padding: 0 18px;
+                font-size: 13px;
+            }
+
+            .hero-arrow {
+                width: 32px;
+                height: 32px;
+                font-size: 19px;
+            }
+
+            .hero-arrow.left {
+                left: 10px;
+            }
+
+            .hero-arrow.right {
+                right: 10px;
+            }
+
+            .hero-dots {
+                bottom: 13px;
+                gap: 7px;
+            }
+
+            .hero-dot {
+                width: 11px;
+                height: 11px;
+            }
+
+            .program-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .program-card {
+                min-height: 130px;
+            }
+
+            .section-title {
+                font-size: 21px;
+                line-height: 1.25;
+            }
+
+            .pagination {
+                gap: 6px;
+            }
+
+            .page-btn,
+            .page-number {
+                width: 23px;
+                height: 23px;
+                font-size: 12px;
+            }
+
+            .news-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 14px 0 18px;
+            }
+
+            .news-thumb {
+                width: 100%;
+                height: 155px;
+            }
+
+            .news-title {
+                font-size: 15px;
+                line-height: 1.35;
+            }
+
+            .news-category {
+                font-size: 13px;
+            }
+
+            .news-date {
+                font-size: 13px;
+            }
+
             .service-grid {
                 grid-template-columns: 1fr;
+                gap: 18px;
             }
 
-            .edom-card-wrapper {
-                width: 100%;
-                min-height: 116px;
+            .service-card {
+                min-height: 112px;
             }
 
+            .edom-card-wrapper,
             .edom-card-wrapper .service-card {
                 width: 100%;
-                min-height: 116px;
+                min-height: 112px;
             }
 
             .edom-popover {
-                width: 150px;
+                width: min(260px, calc(100vw - 48px));
+                padding: 16px 14px;
+            }
+
+            .edom-score {
+                gap: 7px;
+                flex-wrap: wrap;
+            }
+
+            .edom-score span {
+                width: 26px;
+                height: 26px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .brand-wrapper {
+                align-items: center;
+            }
+
+            .brand-school,
+            .brand-divider {
+                display: none;
+            }
+
+            .hero-text {
+                padding: 0 26px;
+            }
+
+            .hero-title {
+                font-size: 20px;
+            }
+
+            .hero-subtitle {
+                font-size: 13px;
+            }
+
+            .btn-primary {
+                min-width: 170px;
+                height: 42px;
+                font-size: 12px;
+            }
+
+            .hero-arrow {
+                width: 29px;
+                height: 29px;
+            }
+
+            .hero-arrow.left {
+                left: 8px;
+            }
+
+            .hero-arrow.right {
+                right: 8px;
             }
         }
     </style>
@@ -925,8 +1328,8 @@
                     <a href="{{ route('home') }}" class="nav-link" data-nav="home">Beranda</a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
                         Profile <span class="chevron">⌄</span>
                     </a>
                     <div class="dropdown">
@@ -936,8 +1339,8 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
                         Akademik <span class="chevron">⌄</span>
                     </a>
                     <div class="dropdown">
@@ -948,8 +1351,8 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
                         Penjaminan Mutu <span class="chevron">⌄</span>
                     </a>
                     <div class="dropdown">
@@ -959,8 +1362,8 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link dropdown-trigger">
                         Riset & PDM <span class="chevron">⌄</span>
                     </a>
                     <div class="dropdown">
@@ -1133,7 +1536,7 @@
                         <span>Login<br>Mahasiswa</span>
                     </button>
 
-                    <div class="edom-card-wrapper">
+                    <div class="edom-card-wrapper" id="edomCardWrapper">
                         <button class="service-card" type="button" id="edomService">
                             <svg viewBox="0 0 24 24">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z"/>
@@ -1188,6 +1591,26 @@
 
     hamburger.addEventListener('click', function () {
         navMenu.classList.toggle('show');
+    });
+
+    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+
+    dropdownTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', function (event) {
+            if (window.innerWidth <= 992) {
+                event.preventDefault();
+
+                const currentItem = trigger.closest('.nav-item');
+
+                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                    if (item !== currentItem) {
+                        item.classList.remove('open');
+                    }
+                });
+
+                currentItem.classList.toggle('open');
+            }
+        });
     });
 
     const slides = document.querySelectorAll('.hero-slide');
@@ -1247,6 +1670,8 @@
     const edomNav = document.getElementById('edomNav');
     const homeNavItem = document.getElementById('homeNavItem');
     const navLinks = document.querySelectorAll('.nav-link');
+    const edomCardWrapper = document.getElementById('edomCardWrapper');
+    const edomService = document.getElementById('edomService');
 
     edomNav.addEventListener('click', function () {
         navLinks.forEach((link) => link.classList.remove('nav-click-active'));
@@ -1255,6 +1680,34 @@
 
         if (window.innerWidth <= 992) {
             navMenu.classList.remove('show');
+            document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                item.classList.remove('open');
+            });
+        }
+    });
+
+    edomService.addEventListener('click', function (event) {
+        if (window.innerWidth <= 992) {
+            event.preventDefault();
+            edomCardWrapper.classList.toggle('show-popover');
+        }
+    });
+
+    document.addEventListener('click', function (event) {
+        if (window.innerWidth <= 992 && !edomCardWrapper.contains(event.target)) {
+            edomCardWrapper.classList.remove('show-popover');
+        }
+    });
+
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 992) {
+            navMenu.classList.remove('show');
+
+            document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                item.classList.remove('open');
+            });
+
+            edomCardWrapper.classList.remove('show-popover');
         }
     });
 </script>
