@@ -1,4 +1,13 @@
 <style>
+    :root {
+        --primary: #072b57;
+        --primary-dark: #052044;
+        --yellow: #f7b500;
+        --white: #ffffff;
+        --light: #f1f6f7;
+        --text: #111827;
+    }
+
     .site-header {
         position: sticky;
         top: 0;
@@ -71,8 +80,15 @@
         white-space: nowrap;
     }
 
+    .navbar,
+    .navbar .container,
+    .navbar .nav-content,
+    .navbar .nav-menu {
+        overflow: visible;
+    }
+
     .navbar {
-        background: var(--primary);
+        background: var(--primary) !important;
         min-height: 64px;
         position: relative;
         z-index: 1000;
@@ -88,16 +104,20 @@
 
     .nav-menu {
         display: flex;
-        align-items: stretch;
-        height: auto;
+        align-items: flex-start;
+        height: 64px;
         min-height: 64px;
+        background: transparent;
     }
 
     .nav-item {
         position: relative;
-        height: auto;
+        height: 64px;
+        min-height: 64px;
         display: flex;
         flex-direction: column;
+        background: transparent !important;
+        overflow: visible;
     }
 
     .nav-link {
@@ -108,29 +128,33 @@
         gap: 8px;
         font-size: 12px;
         font-weight: 700;
-        color: var(--white);
+        color: var(--white) !important;
         text-transform: uppercase;
         transition: 0.25s ease;
         white-space: nowrap;
         border: none;
-        background: transparent;
+        background: transparent !important;
         cursor: pointer;
     }
 
     .nav-link:hover,
-    .nav-link.nav-click-active {
-        background: var(--yellow);
-        color: var(--white);
+    .nav-link.nav-click-active,
+    .nav-item:hover > .nav-link,
+    .nav-item.open > .nav-link {
+        background: var(--yellow) !important;
+        color: var(--white) !important;
     }
 
-    .nav-item.home-active .nav-link {
-        color: var(--yellow);
-        background: transparent;
+    .nav-item.home-active > .nav-link:not(:hover):not(.nav-click-active) {
+        color: var(--yellow) !important;
+        background: transparent !important;
     }
 
-    .nav-item.home-active .nav-link:hover {
-        color: var(--white);
-        background: var(--yellow);
+    .nav-item.home-active:hover > .nav-link,
+    .nav-item.home-active > .nav-link:hover,
+    .nav-item.home-active > .nav-link.nav-click-active {
+        color: var(--white) !important;
+        background: var(--yellow) !important;
     }
 
     .nav-item.home-active::after {
@@ -142,8 +166,10 @@
         height: 5px;
         border-radius: 8px 8px 0 0;
         background: var(--yellow);
+        pointer-events: none;
     }
 
+    .nav-item.home-active:hover::after,
     .nav-item.home-active.hide-indicator::after {
         display: none;
     }
@@ -167,40 +193,57 @@
     }
 
     .dropdown {
-        position: static;
-        width: 100%;
-        min-width: 100%;
-        background: var(--white);
-        border-radius: 0;
-        box-shadow: none;
-        padding: 7px 0;
+        position: absolute !important;
+        top: 64px !important;
+        left: 0 !important;
+        right: auto !important;
+        width: max-content !important;
+        min-width: 255px !important;
+        height: auto !important;
+        display: none !important;
+        padding: 8px 0 !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+        border-radius: 0 !important;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15) !important;
         opacity: 1;
         visibility: visible;
         transform: none;
-        display: none;
-        z-index: 1;
+        z-index: 99999 !important;
     }
 
     .nav-item:hover .dropdown,
     .nav-item.open .dropdown {
-        display: block;
+        display: block !important;
+        background: #ffffff !important;
     }
 
     .dropdown a {
-        display: block;
-        width: 100%;
-        padding: 11px 18px;
+        display: block !important;
+        width: 100% !important;
+        min-width: 255px !important;
+        padding: 11px 18px !important;
         font-size: 12px;
         font-weight: 600;
-        color: #111827;
+        color: #111827 !important;
         transition: 0.2s ease;
-        white-space: normal;
+        white-space: nowrap !important;
+        background: #ffffff !important;
     }
 
-    .dropdown a:hover {
-        background: #f3f4f6;
-        color: var(--primary);
-        padding-left: 23px;
+    .dropdown a:hover,
+    .dropdown a:focus {
+        background: #f3f4f6 !important;
+        color: var(--primary) !important;
+        padding-left: 23px !important;
+    }
+
+    .nav-item.has-dropdown,
+    .nav-item.has-dropdown:hover,
+    .nav-item.has-dropdown.open,
+    .nav-item.has-dropdown::before,
+    .nav-item.has-dropdown::after {
+        background: transparent !important;
     }
 
     .hamburger {
@@ -264,7 +307,7 @@
             right: 24px;
             width: auto;
             min-height: 0;
-            background: transparent;
+            background: transparent !important;
             box-shadow: none;
         }
 
@@ -309,7 +352,7 @@
             flex-direction: column;
             align-items: stretch;
             padding: 8px 0 14px;
-            background: var(--primary);
+            background: var(--primary) !important;
             border-radius: 0;
             box-shadow: none;
         }
@@ -321,6 +364,7 @@
         .site-header.nav-collapsed .nav-item {
             width: 100%;
             height: auto;
+            min-height: 0;
         }
 
         .site-header.nav-collapsed .nav-link {
@@ -329,7 +373,7 @@
             padding: 0 16px;
             justify-content: space-between;
             font-size: 12px;
-            color: var(--white);
+            color: var(--white) !important;
         }
 
         .site-header.nav-collapsed .nav-item.home-active::after {
@@ -337,11 +381,18 @@
         }
 
         .site-header.nav-collapsed .nav-item:hover .dropdown {
-            display: none;
+            display: none !important;
         }
 
         .site-header.nav-collapsed .nav-item.open .dropdown {
-            display: block;
+            display: block !important;
+        }
+
+        .site-header.nav-collapsed .dropdown {
+            position: static !important;
+            width: 100% !important;
+            min-width: 100% !important;
+            box-shadow: none !important;
         }
     }
 
@@ -382,7 +433,7 @@
             right: 14px;
             width: auto;
             min-height: 0;
-            background: transparent;
+            background: transparent !important;
             border-radius: 0;
             box-shadow: none;
         }
@@ -430,7 +481,7 @@
             flex-direction: column;
             align-items: stretch;
             padding: 0 0 12px;
-            background: var(--primary);
+            background: var(--primary) !important;
             border-radius: 0;
             box-shadow: none;
             z-index: 10050;
@@ -443,6 +494,7 @@
         .nav-item {
             width: 100%;
             height: auto;
+            min-height: 0;
         }
 
         .nav-link {
@@ -451,28 +503,20 @@
             padding: 0 18px;
             justify-content: space-between;
             font-size: 12px;
-            background: transparent;
-            color: var(--white);
+            background: transparent !important;
+            color: var(--white) !important;
         }
 
-        .nav-link:hover {
-            background: transparent;
-            color: var(--white);
+        .nav-link:hover,
+        .nav-link.nav-click-active,
+        .nav-item.open > .nav-link {
+            background: var(--yellow) !important;
+            color: var(--white) !important;
         }
 
-        .nav-link.nav-click-active {
-            background: var(--yellow);
-            color: var(--white);
-        }
-
-        .nav-item.home-active .nav-link {
-            color: var(--yellow);
-            background: transparent;
-        }
-
-        .nav-item.home-active .nav-link:hover {
-            color: var(--yellow);
-            background: transparent;
+        .nav-item.home-active > .nav-link:not(:hover):not(.nav-click-active) {
+            color: var(--yellow) !important;
+            background: transparent !important;
         }
 
         .nav-item.home-active::after {
@@ -480,25 +524,28 @@
         }
 
         .nav-item:hover .dropdown {
-            display: none;
+            display: none !important;
         }
 
         .nav-item.open .dropdown {
-            display: block;
+            display: block !important;
         }
 
         .dropdown {
-            width: 100%;
-            min-width: 100%;
-            padding: 5px 0;
-            background: #ffffff;
+            position: static !important;
+            width: 100% !important;
+            min-width: 100% !important;
+            padding: 5px 0 !important;
+            background: #ffffff !important;
             border-radius: 0;
-            box-shadow: none;
+            box-shadow: none !important;
         }
 
         .dropdown a {
-            padding: 12px 24px;
+            min-width: 100% !important;
+            padding: 12px 24px !important;
             font-size: 12px;
+            background: #ffffff !important;
         }
     }
 
@@ -697,7 +744,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Admisi</a>
+                        <a href="https://pmb.unw.ac.id/" class="nav-link">Admisi</a>
                     </li>
 
                     <li class="nav-item">
@@ -716,6 +763,7 @@
         const navMenu = document.getElementById('navMenu');
         const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
         const heroSlides = document.querySelectorAll('.hero-slide');
+        const navLinks = document.querySelectorAll('.nav-link');
         let lastScrollY = window.scrollY;
         let lastHeroActive = document.querySelector('.hero-slide.active');
         let heroObserverLock = false;
@@ -732,6 +780,16 @@
             document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
                 item.classList.remove('open');
             });
+        }
+
+        function setActiveNav(link) {
+            navLinks.forEach((item) => item.classList.remove('nav-click-active'));
+            link.classList.add('nav-click-active');
+
+            const homeNavItem = document.getElementById('homeNavItem');
+            if (homeNavItem && link.dataset.nav !== 'home') {
+                homeNavItem.classList.add('hide-indicator');
+            }
         }
 
         function normalizeHeroSlides() {
@@ -769,7 +827,6 @@
 
             currentActive.classList.remove('slide-ready-right', 'slide-out-left');
             currentActive.classList.add('was-active');
-            const oldActive = lastHeroActive;
             lastHeroActive = currentActive;
 
             setTimeout(() => {
@@ -804,12 +861,19 @@
             }, true);
         }
 
+        navLinks.forEach((link) => {
+            link.addEventListener('click', function() {
+                setActiveNav(link);
+            });
+        });
+
         dropdownTriggers.forEach((trigger) => {
             trigger.addEventListener('click', function(event) {
                 if (!isCompactMode()) return;
 
                 event.preventDefault();
                 event.stopImmediatePropagation();
+                setActiveNav(trigger);
 
                 const currentItem = trigger.closest('.nav-item');
 
