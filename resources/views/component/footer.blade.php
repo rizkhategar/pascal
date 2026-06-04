@@ -20,43 +20,124 @@
     pointer-events: auto;
 }
 
-.nav-item.has-dropdown,
-.nav-item.has-dropdown.open,
-.nav-item.has-dropdown:hover {
-    background: transparent !important;
-}
-
-.nav-item.has-dropdown.open > .nav-link,
-.nav-item.has-dropdown:hover > .nav-link,
-.nav-link:hover,
-.nav-link.nav-click-active {
-    background: var(--yellow) !important;
-    color: #ffffff !important;
-}
-
-.nav-item.has-dropdown.open .dropdown,
-.nav-item.has-dropdown:hover .dropdown,
-.dropdown,
-.dropdown a {
-    background: #ffffff !important;
-}
-
-.dropdown a:hover {
-    background: #f3f4f6 !important;
-}
-
-@media (max-width: 992px) {
-    .nav-item.has-dropdown.open {
-        background: #ffffff !important;
+@media (min-width: 993px) {
+    .navbar,
+    .navbar .container,
+    .navbar .nav-content,
+    .navbar .nav-menu {
+        overflow: visible !important;
     }
 
-    .nav-item.has-dropdown.open > .nav-link {
+    .navbar .nav-menu {
+        height: 64px !important;
+        min-height: 64px !important;
+        align-items: flex-start !important;
+        background: transparent !important;
+    }
+
+    .navbar .nav-item {
+        height: 64px !important;
+        min-height: 64px !important;
+        background: transparent !important;
+        overflow: visible !important;
+    }
+
+    .navbar .nav-item.has-dropdown,
+    .navbar .nav-item.has-dropdown:hover,
+    .navbar .nav-item.has-dropdown.open {
+        background: transparent !important;
+    }
+
+    .navbar .nav-link,
+    .navbar .nav-item.has-dropdown > .nav-link {
+        height: 64px !important;
+        background: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .navbar .nav-link:hover,
+    .navbar .nav-link.nav-click-active,
+    .navbar .nav-item:hover > .nav-link,
+    .navbar .nav-item.open > .nav-link {
         background: var(--yellow) !important;
         color: #ffffff !important;
     }
 
-    .nav-item.has-dropdown.open .dropdown {
+    .navbar .nav-item.home-active > .nav-link:not(:hover):not(.nav-click-active) {
+        background: transparent !important;
+        color: var(--yellow) !important;
+    }
+
+    .navbar .nav-item.has-dropdown .dropdown {
+        position: absolute !important;
+        top: 64px !important;
+        left: 0 !important;
+        right: auto !important;
+        width: max-content !important;
+        min-width: 255px !important;
+        height: auto !important;
+        display: none !important;
+        padding: 8px 0 !important;
+        margin: 0 !important;
         background: #ffffff !important;
+        border-radius: 0 !important;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15) !important;
+        z-index: 99999 !important;
+    }
+
+    .navbar .nav-item.has-dropdown:hover .dropdown,
+    .navbar .nav-item.has-dropdown.open .dropdown {
+        display: block !important;
+        background: #ffffff !important;
+    }
+
+    .navbar .dropdown a {
+        display: block !important;
+        width: 100% !important;
+        min-width: 255px !important;
+        padding: 11px 18px !important;
+        background: #ffffff !important;
+        color: #111827 !important;
+        white-space: nowrap !important;
+    }
+
+    .navbar .dropdown a:hover,
+    .navbar .dropdown a:focus {
+        background: #f3f4f6 !important;
+        color: var(--primary) !important;
+        padding-left: 23px !important;
+    }
+
+    .navbar .nav-item.has-dropdown::before,
+    .navbar .nav-item.has-dropdown::after {
+        background: transparent !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-item.has-dropdown,
+    .nav-item.has-dropdown.open,
+    .nav-item.has-dropdown:hover {
+        background: transparent !important;
+    }
+
+    .nav-item.has-dropdown.open > .nav-link,
+    .nav-item.has-dropdown:hover > .nav-link,
+    .nav-link:hover,
+    .nav-link.nav-click-active {
+        background: var(--yellow) !important;
+        color: #ffffff !important;
+    }
+
+    .nav-item.has-dropdown.open .dropdown,
+    .nav-item.has-dropdown:hover .dropdown,
+    .dropdown,
+    .dropdown a {
+        background: #ffffff !important;
+    }
+
+    .dropdown a:hover {
+        background: #f3f4f6 !important;
     }
 }
 
