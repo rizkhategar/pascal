@@ -189,6 +189,7 @@
         visibility: visible;
         transform: translateY(0);
     }
+
     /* BATAS PERBAIKAN DROPDOWN DESKTOP */
 
     .dropdown a {
@@ -340,14 +341,15 @@
         .site-header.nav-collapsed .nav-item.home-active::after {
             display: none;
         }
-        
+
         /* PENGATURAN DROPDOWN SAAT NAVIGASI STICKY COLLAPSED */
         .site-header.nav-collapsed .dropdown {
             position: static;
             box-shadow: none;
             padding: 5px 0;
             transform: none;
-            display: none; /* Sembunyikan secara visual di mode collapsed */
+            display: none;
+            /* Sembunyikan secara visual di mode collapsed */
             opacity: 1;
             visibility: visible;
         }
@@ -682,10 +684,12 @@
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
-                            <a href="{{ route('akademik.hukum') }}">Magister Hukum</a>
-                            <a href="#">Magister Manajemen Pendidikan</a>
-                            <a href="#">Magister Kesehatan Masyarakat</a>
-                            <a href="#">Magister Keperawatan</a>
+                            <a href="{{ route('akademik.show', 'magister-hukum') }}">Magister Hukum</a>
+                            <a href="{{ route('akademik.show', 'magister-manajemen-pendidikan') }}">Magister Manajemen
+                                Pendidikan</a>
+                            <a href="{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}">Magister Kesehatan
+                                Masyarakat</a>
+                            <a href="{{ route('akademik.show', 'magister-keperawatan') }}">Magister Keperawatan</a>
                         </div>
                     </li>
 
@@ -821,7 +825,8 @@
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 navMenu.classList.toggle('show');
-                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' : 'false');
+                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' :
+                    'false');
             }, true);
         }
 
