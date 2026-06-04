@@ -1,73 +1,192 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-    /* Kustomisasi khusus yang tidak ada di utility bawaan Bootstrap */
-    .bg-unw { background-color: #022B63; }
-    .text-unw-yellow { color: #FFC107; }
-    
-    .footer-link {
-        color: #fff;
-        transition: 0.3s;
+.footer{
+    background:#022B63;
+    color:#fff;
+    padding:40px 0 20px;
+}
+
+.footer-content{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr .8fr;
+    gap:60px;
+    align-items:flex-start;
+}
+
+.footer-column h3{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:20px;
+    text-transform:uppercase;
+}
+
+.footer-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+    font-size:15px;
+    font-weight:600;
+}
+
+.footer-item i{
+    color:#FFC107;
+    width:20px;
+    font-size:18px;
+    text-align:center;
+}
+
+.footer-item a{
+    color:#fff;
+    text-decoration:none;
+}
+
+.footer-item a:hover{
+    color:#FFC107;
+}
+
+.footer-links{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.footer-links li{
+    margin-bottom:16px;
+}
+
+.footer-links a{
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.footer-links a:hover{
+    color:#FFC107;
+    padding-left:5px;
+}
+
+.social-icons{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.social-icons a{
+    width:36px;
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#FFC107;
+    font-size:22px;
+    transition:.3s;
+}
+
+.social-icons a:hover{
+    transform:translateY(-3px);
+}
+
+.footer-bottom{
+    margin-top:35px;
+    padding-top:15px;
+    border-top:1px solid rgba(255,255,255,.35);
+    text-align:center;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* MAP */
+.map-container{
+    width:100%;
+    max-width:280px;
+}
+
+.footer-map{
+    width:100%;
+    height:180px;
+    border:none;
+    border-radius:18px;
+    display:block;
+}
+
+/* RESPONSIVE */
+@media(max-width:992px){
+
+    .footer-content{
+        grid-template-columns:repeat(2,1fr);
+        gap:35px;
     }
-    .footer-link:hover {
-        color: #FFC107;
-        padding-left: 5px;
+}
+
+@media(max-width:768px){
+
+    .footer{
+        text-align:center;
     }
-    
-    .social-icon-btn {
-        width: 36px;
-        height: 36px;
-        transition: 0.3s;
+
+    .footer-content{
+        grid-template-columns:1fr;
+        gap:30px;
     }
-    .social-icon-btn:hover {
-        transform: translateY(-3px);
-        color: #fff !important; /* Opsional: ubah warna saat dihover */
+
+    .footer-item{
+        justify-content:center;
     }
-    
-    .footer-map {
-        width: 100%;
-        height: 180px;
-        border-radius: 18px;
+
+    .social-icons{
+        justify-content:center;
     }
+
+    .map-container{
+        margin:auto;
+    }
+}
 </style>
 
-<footer class="bg-unw text-white pt-5 pb-3 mt-auto">
+<footer class="footer">
     <div class="container">
-        <div class="row gx-lg-5 gy-4">
 
-            {{-- KONTAK (4 Kolom di Desktop, 6 di Tablet, 12 di Mobile) --}}
-            <div class="col-lg-4 col-md-6 col-12 text-center text-md-start">
-                <h6 class="fw-bold mb-4 text-uppercase">Kontak</h6>
+        <div class="footer-content">
 
-                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3 fw-semibold">
-                    <i class="fas fa-location-dot text-unw-yellow fs-5" style="width: 20px;"></i>
+            {{-- KONTAK --}}
+            <div class="footer-column">
+                <h3>KONTAK</h3>
+
+                <div class="footer-item">
+                    <i class="fas fa-location-dot"></i>
                     <span>Universitas Ngudi Waluyo</span>
                 </div>
 
-                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3 fw-semibold">
-                    <i class="fas fa-phone text-unw-yellow fs-5" style="width: 20px;"></i>
+                <div class="footer-item">
+                    <i class="fas fa-phone"></i>
                     <span>0261 438-3363</span>
                 </div>
 
-                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3 fw-semibold">
-                    <i class="fab fa-whatsapp text-unw-yellow fs-5" style="width: 20px;"></i>
+                <div class="footer-item">
+                    <i class="fab fa-whatsapp"></i>
                     <span>0561 438-3363</span>
                 </div>
 
-                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3 fw-semibold">
-                    <i class="fas fa-globe text-unw-yellow fs-5" style="width: 20px;"></i>
-                    <a href="https://www.unw.ac.id" target="_blank" class="text-white text-decoration-none footer-link">
+                <div class="footer-item">
+                    <i class="fas fa-globe"></i>
+                    <a href="https://www.unw.ac.id" target="_blank">
                         universitasngudiwaluyo.com
                     </a>
                 </div>
             </div>
 
-            {{-- LOKASI (3 Kolom di Desktop, 6 di Tablet, 12 di Mobile) --}}
-            <div class="col-lg-3 col-md-6 col-12 text-center text-md-start">
-                <h6 class="fw-bold mb-4 text-uppercase">Lokasi</h6>
-                <div class="mx-auto mx-md-0" style="max-width: 280px;">
+            {{-- LOKASI --}}
+            <div class="footer-column">
+                <h3>LOKASI</h3>
+
+                <div class="map-container">
                     <iframe
-                        class="footer-map border-0"
+                        class="footer-map"
                         src="https://maps.google.com/maps?q=Universitas%20Ngudi%20Waluyo&t=&z=15&ie=UTF8&iwloc=&output=embed"
                         loading="lazy"
                         allowfullscreen
@@ -76,50 +195,59 @@
                 </div>
             </div>
 
-            {{-- LINK CEPAT (3 Kolom di Desktop, 6 di Tablet, 12 di Mobile) --}}
-            <div class="col-lg-3 col-md-6 col-12 text-center text-md-start">
-                <h6 class="fw-bold mb-4 text-uppercase">Link Cepat</h6>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-3">
-                        <a href="#" class="text-decoration-none fw-semibold footer-link">Akreditasi</a>
+            {{-- LINK CEPAT --}}
+            <div class="footer-column">
+                <h3>LINK CEPAT</h3>
+
+                <ul class="footer-links">
+                    <li>
+                        <a href="#">Akreditasi</a>
                     </li>
-                    <li class="mb-3">
-                        <a href="#" class="text-decoration-none fw-semibold footer-link">Admisi</a>
+
+                    <li>
+                        <a href="#">Admisi</a>
                     </li>
-                    <li class="mb-3">
-                        <a href="#" class="text-decoration-none fw-semibold footer-link">Penjaminan Mutu</a>
+
+                    <li>
+                        <a href="#">Penjaminan Mutu</a>
                     </li>
-                    <li class="mb-3">
-                        <a href="#" class="text-decoration-none fw-semibold footer-link">Riset & PDM</a>
+
+                    <li>
+                        <a href="#">Riset & PDM</a>
                     </li>
                 </ul>
             </div>
 
-            {{-- MEDIA SOSIAL (2 Kolom di Desktop, 6 di Tablet, 12 di Mobile) --}}
-            <div class="col-lg-2 col-md-6 col-12 text-center text-md-start">
-                <h6 class="fw-bold mb-4 text-uppercase">Media Sosial</h6>
-                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-                    <a href="#" class="social-icon-btn d-flex align-items-center justify-content-center text-unw-yellow text-decoration-none fs-4">
+            {{-- MEDIA SOSIAL --}}
+            <div class="footer-column">
+                <h3>MEDIA SOSIAL</h3>
+
+                <div class="social-icons">
+
+                    <a href="#">
                         <i class="fab fa-facebook"></i>
                     </a>
-                    <a href="#" class="social-icon-btn d-flex align-items-center justify-content-center text-unw-yellow text-decoration-none fs-4">
+
+                    <a href="#">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="social-icon-btn d-flex align-items-center justify-content-center text-unw-yellow text-decoration-none fs-4">
+
+                    <a href="#">
                         <i class="fab fa-x-twitter"></i>
                     </a>
-                    <a href="#" class="social-icon-btn d-flex align-items-center justify-content-center text-unw-yellow text-decoration-none fs-4">
+
+                    <a href="#">
                         <i class="fab fa-youtube"></i>
                     </a>
+
                 </div>
             </div>
 
         </div>
 
-        <div class="row mt-5">
-            <div class="col-12 text-center pt-3 border-top border-light border-opacity-25" style="font-size: 14px; font-weight: 600;">
-                © {{ date('Y') }} Universitas Ngudi Waluyo. All Rights Reserved
-            </div>
+        <div class="footer-bottom">
+            © {{ date('Y') }} Universitas Ngudi Waluyo. All Rights Reserved
         </div>
+
     </div>
 </footer>
