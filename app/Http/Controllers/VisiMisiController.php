@@ -7,8 +7,8 @@ use App\Models\VisiMisi;
 class VisiMisiController extends Controller
 {
     public function index()
-    {
-        $visiMisi = VisiMisi::firstOrCreate([]);
-        return view('visi-misi', compact('visiMisi'));
-    }
+{
+    $visiMisi = VisiMisi::first();
+    return view('visi-misi', compact('visiMisi'));
+}
 }
