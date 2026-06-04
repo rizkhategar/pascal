@@ -89,13 +89,13 @@
     .nav-menu {
         display: flex;
         align-items: stretch;
-        height: 64px;
+        height: auto;
         min-height: 64px;
     }
 
     .nav-item {
         position: relative;
-        height: 64px;
+        height: auto;
         display: flex;
         flex-direction: column;
     }
@@ -118,9 +118,7 @@
     }
 
     .nav-link:hover,
-    .nav-link.nav-click-active,
-    .nav-item:hover > .nav-link,
-    .nav-item.open > .nav-link {
+    .nav-link.nav-click-active {
         background: var(--yellow);
         color: var(--white);
     }
@@ -130,9 +128,7 @@
         background: transparent;
     }
 
-    .nav-item.home-active:hover .nav-link,
-    .nav-item.home-active .nav-link:hover,
-    .nav-item.home-active .nav-link.nav-click-active {
+    .nav-item.home-active .nav-link:hover {
         color: var(--white);
         background: var(--yellow);
     }
@@ -146,10 +142,8 @@
         height: 5px;
         border-radius: 8px 8px 0 0;
         background: var(--yellow);
-        pointer-events: none;
     }
 
-    .nav-item.home-active:hover::after,
     .nav-item.home-active.hide-indicator::after {
         display: none;
     }
@@ -173,20 +167,18 @@
     }
 
     .dropdown {
-        position: absolute;
-        top: 64px;
-        left: 0;
+        position: static;
         width: 100%;
-        min-width: 255px;
+        min-width: 100%;
         background: var(--white);
         border-radius: 0;
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        box-shadow: none;
         padding: 7px 0;
         opacity: 1;
         visibility: visible;
         transform: none;
         display: none;
-        z-index: 3000;
+        z-index: 1;
     }
 
     .nav-item:hover .dropdown,
@@ -203,7 +195,6 @@
         color: #111827;
         transition: 0.2s ease;
         white-space: normal;
-        background: #ffffff;
     }
 
     .dropdown a:hover {
@@ -352,13 +343,6 @@
         .site-header.nav-collapsed .nav-item.open .dropdown {
             display: block;
         }
-
-        .site-header.nav-collapsed .dropdown {
-            position: static;
-            width: 100%;
-            min-width: 100%;
-            box-shadow: none;
-        }
     }
 
     @media (max-width: 1200px) {
@@ -471,9 +455,12 @@
             color: var(--white);
         }
 
-        .nav-link:hover,
-        .nav-link.nav-click-active,
-        .nav-item.open > .nav-link {
+        .nav-link:hover {
+            background: transparent;
+            color: var(--white);
+        }
+
+        .nav-link.nav-click-active {
             background: var(--yellow);
             color: var(--white);
         }
@@ -483,11 +470,9 @@
             background: transparent;
         }
 
-        .nav-item.home-active:hover .nav-link,
-        .nav-item.home-active .nav-link:hover,
-        .nav-item.home-active .nav-link.nav-click-active {
-            color: var(--white);
-            background: var(--yellow);
+        .nav-item.home-active .nav-link:hover {
+            color: var(--yellow);
+            background: transparent;
         }
 
         .nav-item.home-active::after {
@@ -503,7 +488,6 @@
         }
 
         .dropdown {
-            position: static;
             width: 100%;
             min-width: 100%;
             padding: 5px 0;
@@ -677,7 +661,7 @@
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
-                            <a href="#">Magister Hukum</a>
+                            <a href="{{ route('akademik.hukum') }}">Magister Hukum</a>
                             <a href="#">Magister Manajemen Pendidikan</a>
                             <a href="#">Magister Kesehatan Masyarakat</a>
                             <a href="#">Magister Keperawatan</a>
@@ -713,7 +697,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="https://pmb.unw.ac.id/" class="nav-link">Admisi</a>
+                        <a href="#" class="nav-link">Admisi</a>
                     </li>
 
                     <li class="nav-item">
@@ -732,7 +716,6 @@
         const navMenu = document.getElementById('navMenu');
         const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
         const heroSlides = document.querySelectorAll('.hero-slide');
-        const navLinks = document.querySelectorAll('.nav-link');
         let lastScrollY = window.scrollY;
         let lastHeroActive = document.querySelector('.hero-slide.active');
         let heroObserverLock = false;
@@ -749,16 +732,6 @@
             document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
                 item.classList.remove('open');
             });
-        }
-
-        function setActiveNav(link) {
-            navLinks.forEach((item) => item.classList.remove('nav-click-active'));
-            link.classList.add('nav-click-active');
-
-            const homeNavItem = document.getElementById('homeNavItem');
-            if (homeNavItem && link.dataset.nav !== 'home') {
-                homeNavItem.classList.add('hide-indicator');
-            }
         }
 
         function normalizeHeroSlides() {
@@ -796,6 +769,7 @@
 
             currentActive.classList.remove('slide-ready-right', 'slide-out-left');
             currentActive.classList.add('was-active');
+            const oldActive = lastHeroActive;
             lastHeroActive = currentActive;
 
             setTimeout(() => {
@@ -830,19 +804,12 @@
             }, true);
         }
 
-        navLinks.forEach((link) => {
-            link.addEventListener('click', function() {
-                setActiveNav(link);
-            });
-        });
-
         dropdownTriggers.forEach((trigger) => {
             trigger.addEventListener('click', function(event) {
                 if (!isCompactMode()) return;
 
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                setActiveNav(trigger);
 
                 const currentItem = trigger.closest('.nav-item');
 
