@@ -1365,9 +1365,9 @@
 
                 <a href="#" class="program-card">
                     <div class="program-icon">
-                        <svg viewBox="0 0 24 24">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
                             <path
-                                d="M12 3h2v3h4v2h-1.2l2.7 6.1c-.8 1.2-2.1 1.9-3.5 1.9s-2.7-.7-3.5-1.9L15.2 8H14v10h4v2H6v-2h4V8H8.8l2.7 6.1C10.7 15.3 9.4 16 8 16s-2.7-.7-3.5-1.9L7.2 8H6V6h4V3h2Zm-4 7.2L6.6 13h2.8L8 10.2Zm8 0L14.6 13h2.8L16 10.2Z" />
+                                d="M12 2a1 1 0 0 1 1 1v2h5a1 1 0 1 1 0 2h-1l2.5 5a3.5 3.5 0 0 1-7 0L15 7h-2v11h4a1 1 0 1 1 0 2H7a1 1 0 1 1 0-2h4V7H9l2.5 5a3.5 3.5 0 0 1-7 0L7 7H6a1 1 0 1 1 0-2h5V3a1 1 0 0 1 1-1Zm-4 6-1.6 3h3.2L8 8Zm8 0-1.6 3h3.2L16 8Z" />
                         </svg>
                     </div>
                     <h3 class="program-title">Magister<br>Hukum</h3>
