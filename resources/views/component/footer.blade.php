@@ -2,6 +2,15 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
+:root {
+    --primary: #072b57;
+    --primary-dark: #052044;
+    --yellow: #f7b500;
+    --white: #ffffff;
+    --light: #f1f6f7;
+    --text: #111827;
+}
+
 .hero .container,
 .hero-content,
 .hero-text {
@@ -26,6 +35,10 @@
     .navbar .nav-content,
     .navbar .nav-menu {
         overflow: visible !important;
+    }
+
+    .navbar {
+        background: var(--primary) !important;
     }
 
     .navbar .nav-menu {
@@ -115,6 +128,10 @@
 }
 
 @media (max-width: 992px) {
+    .navbar {
+        background: transparent !important;
+    }
+
     .nav-item.has-dropdown,
     .nav-item.has-dropdown.open,
     .nav-item.has-dropdown:hover {
