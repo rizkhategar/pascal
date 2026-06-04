@@ -241,16 +241,18 @@
 
     .hero-slide.active {
         opacity: 1 !important;
-        transform: translateX(0);
+        transform: translateX(0) !important;
         z-index: 3;
     }
 
+    .hero-slide.was-active:not(.active),
     .hero-slide.slide-out-left {
+        opacity: 1 !important;
         transform: translateX(-100%) !important;
         z-index: 2;
     }
 
-    .hero-slide.slide-ready-right {
+    .hero-slide.slide-ready-right:not(.active):not(.was-active) {
         transform: translateX(100%) !important;
         z-index: 1;
     }
@@ -734,9 +736,12 @@
 
         function normalizeHeroSlides() {
             heroSlides.forEach((slide) => {
+                slide.classList.remove('slide-out-left', 'slide-ready-right', 'was-active');
+
                 if (slide.classList.contains('active')) {
-                    slide.classList.remove('slide-out-left', 'slide-ready-right');
-                } else if (!slide.classList.contains('slide-out-left')) {
+                    slide.classList.add('was-active');
+                    lastHeroActive = slide;
+                } else {
                     slide.classList.add('slide-ready-right');
                 }
             });
@@ -751,24 +756,26 @@
             heroObserverLock = true;
 
             heroSlides.forEach((slide) => {
-                slide.classList.remove('slide-out-left');
-                if (slide !== currentActive) {
+                if (slide !== currentActive && slide !== lastHeroActive) {
+                    slide.classList.remove('was-active', 'slide-out-left');
                     slide.classList.add('slide-ready-right');
                 }
             });
 
             if (lastHeroActive && lastHeroActive !== currentActive) {
                 lastHeroActive.classList.remove('slide-ready-right');
-                lastHeroActive.classList.add('slide-out-left');
+                lastHeroActive.classList.add('was-active', 'slide-out-left');
             }
 
             currentActive.classList.remove('slide-ready-right', 'slide-out-left');
+            currentActive.classList.add('was-active');
+            const oldActive = lastHeroActive;
             lastHeroActive = currentActive;
 
             setTimeout(() => {
                 heroSlides.forEach((slide) => {
                     if (slide !== currentActive) {
-                        slide.classList.remove('slide-out-left');
+                        slide.classList.remove('was-active', 'slide-out-left');
                         slide.classList.add('slide-ready-right');
                     }
                 });
