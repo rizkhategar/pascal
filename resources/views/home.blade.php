@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Pascasarjana Universitas Ngudi Waluyo</title>
     <link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -292,13 +294,30 @@
             opacity: 1;
         }
 
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(1.15);
+            z-index: 1;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
         .hero-slide::after {
             content: "";
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(90deg, rgba(7, 43, 87, 0.92), rgba(7, 43, 87, 0.88), rgba(7, 43, 87, 0.96)),
-                linear-gradient(90deg, rgba(255,255,255,0.12), transparent 48%);
+                linear-gradient(90deg,
+                    rgba(7, 43, 87, 0.50),
+                    rgba(7, 43, 87, 0.35),
+                    rgba(7, 43, 87, 0.55));
         }
 
         .hero-content {
@@ -1297,441 +1316,451 @@
                 right: 8px;
             }
         }
-        
     </style>
 </head>
+
 <body>
 
-<div class="site-header">
-    <header class="top-header">
-        <div class="container">
-            <div class="brand-wrapper">
-                <img src="{{ asset('assets/images/logo-unw.png') }}" alt="Logo UNW" class="brand-logo">
+    <div class="site-header">
+        <header class="top-header">
+            <div class="container">
+                <div class="brand-wrapper">
+                    <img src="{{ asset('assets/images/logo-unw.png') }}" alt="Logo UNW" class="brand-logo">
 
-                <div class="brand-unw">
-                    <div>
-                        <div class="brand-main">UNW</div>
-                        <div class="brand-sub">
-                            Universitas Ngudi Waluyo<br>
-                            Pasca Sarjana
-                        </div>
-                    </div>
-
-                    <div class="brand-divider"></div>
-
-                    <div class="brand-school">
-                        Postgraduate School<br>
-                        Univcasarjana
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <button class="hamburger" id="hamburger" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
-                <ul class="nav-menu" id="navMenu">
-                    <li class="nav-item home-active" id="homeNavItem">
-                        <a href="{{ route('home') }}" class="nav-link" data-nav="home">Beranda</a>
-                    </li>
-
-                    <li class="nav-item has-dropdown">
-                        <a href="#" class="nav-link dropdown-trigger">
-                            <span>Profile</span>
-                            <span class="chevron" aria-hidden="true"></span>
-                        </a>
-                        <div class="dropdown">
-                            <a href="#">Tentang Pascasarjana</a>
-                            <a href="#">Visi dan Misi</a>
-                            <a href="#">Struktur Organisasi</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item has-dropdown">
-                        <a href="#" class="nav-link dropdown-trigger">
-                            <span>Akademik</span>
-                            <span class="chevron" aria-hidden="true"></span>
-                        </a>
-                        <div class="dropdown">
-                            <a href="#">Magister Hukum</a>
-                            <a href="#">Magister Manajemen Pendidikan</a>
-                            <a href="#">Magister Kesehatan Masyarakat</a>
-                            <a href="#">Magister Keperawatan</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item has-dropdown">
-                        <a href="#" class="nav-link dropdown-trigger">
-                            <span>Penjaminan Mutu</span>
-                            <span class="chevron" aria-hidden="true"></span>
-                        </a>
-                        <div class="dropdown">
-                            <a href="#">Dokumen SPMI</a>
-                            <a href="#">Laporan AMI</a>
-                            <a href="#">Penjaminan Digital</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item has-dropdown">
-                        <a href="#" class="nav-link dropdown-trigger">
-                            <span>Riset & PDM</span>
-                            <span class="chevron" aria-hidden="true"></span>
-                        </a>
-                        <div class="dropdown">
-                            <a href="#">Riset Dosen</a>
-                            <a href="#">Publikasi</a>
-                            <a href="#">Pengabdian Masyarakat</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Admisi</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Kontak</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-
-<section class="hero">
-    <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');"></div>
-    <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');"></div>
-    <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');"></div>
-    <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');"></div>
-
-    <button class="hero-arrow left" id="prevSlide" type="button" aria-label="Slide sebelumnya">‹</button>
-    <button class="hero-arrow right" id="nextSlide" type="button" aria-label="Slide berikutnya">›</button>
-
-    <div class="container">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    Pascasarjana<br>
-                    Universitas Ngudi Waluyo
-                </h1>
-
-                <p class="hero-subtitle">
-                    Pascasarjana Universitas Ngudi Waluyo
-                </p>
-
-                <a href="#" class="btn-primary">
-                    Daftar Sekarang
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="hero-dots" id="heroDots">
-        <button class="hero-dot active" type="button" aria-label="Slide 1"></button>
-        <button class="hero-dot" type="button" aria-label="Slide 2"></button>
-        <button class="hero-dot" type="button" aria-label="Slide 3"></button>
-        <button class="hero-dot" type="button" aria-label="Slide 4"></button>
-    </div>
-</section>
-
-<section class="program-section">
-    <div class="container">
-        <div class="program-grid">
-
-            <a href="#" class="program-card">
-                <div class="program-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 3h2v3h4v2h-1.2l2.7 6.1c-.8 1.2-2.1 1.9-3.5 1.9s-2.7-.7-3.5-1.9L15.2 8H14v10h4v2H6v-2h4V8H8.8l2.7 6.1C10.7 15.3 9.4 16 8 16s-2.7-.7-3.5-1.9L7.2 8H6V6h4V3h2Zm-4 7.2L6.6 13h2.8L8 10.2Zm8 0L14.6 13h2.8L16 10.2Z"/>
-                    </svg>
-                </div>
-                <h3 class="program-title">Magister<br>Hukum</h3>
-                <span class="program-detail">Detail</span>
-            </a>
-
-            <a href="#" class="program-card">
-                <div class="program-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z"/>
-                    </svg>
-                </div>
-                <h3 class="program-title">Magister Manajemen<br>Pendidikan</h3>
-                <span class="program-detail">Detail</span>
-            </a>
-
-            <a href="#" class="program-card">
-                <div class="program-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 21s-7.5-4.6-9.7-9.2C.6 8.2 2.6 4 6.5 4c2.2 0 3.7 1.2 4.5 2.6C11.8 5.2 13.3 4 15.5 4c3.9 0 5.9 4.2 4.2 7.8C17.5 16.4 12 21 12 21Zm-1.3-7.7h2.6v-2.1h2.1V8.6h-2.1V6.5h-2.6v2.1H8.6v2.6h2.1v2.1Z"/>
-                    </svg>
-                </div>
-                <h3 class="program-title">Magister Kesehatan<br>Masyarakat</h3>
-                <span class="program-detail">Detail</span>
-            </a>
-
-            <a href="#" class="program-card">
-                <div class="program-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2 6 4v5c0 3.7 2.5 7.1 6 8 3.5-.9 6-4.3 6-8V4l-6-2Zm1 3v2h2v2h-2v2h-2V9H9V7h2V5h2Zm-8 14c0-2.2 4.7-3.4 7-3.4s7 1.2 7 3.4V22H5v-3Z"/>
-                    </svg>
-                </div>
-                <h3 class="program-title">Magister<br>Keperawatan</h3>
-                <span class="program-detail">Detail</span>
-            </a>
-
-        </div>
-    </div>
-</section>
-
-<section class="info-section" id="layanan-mahasiswa">
-    <div class="container">
-        <div class="info-layout">
-
-            <div class="news-area">
-                <div class="section-header">
-                    <h2 class="section-title">Berita Terkini & Agenda</h2>
-
-                    <div class="pagination">
-                        <button class="page-btn" type="button">‹</button>
-                        <button class="page-number active" type="button">1</button>
-                        <button class="page-number" type="button">2</button>
-                        <button class="page-number" type="button">3</button>
-                        <span>......</span>
-                        <button class="page-number" type="button">10</button>
-                        <button class="page-btn dark" type="button">›</button>
-                    </div>
-                </div>
-
-                <div class="news-list">
-                    @for ($i = 0; $i < 4; $i++)
-                        <article class="news-item">
-                            <div class="news-thumb">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z"/>
-                                </svg>
+                    <div class="brand-unw">
+                        <div>
+                            <div class="brand-main">UNW</div>
+                            <div class="brand-sub">
+                                Universitas Ngudi Waluyo<br>
+                                Pasca Sarjana
                             </div>
+                        </div>
 
-                            <div class="news-content">
-                                <div class="news-category">
-                                    <svg viewBox="0 0 24 24">
-                                        <path d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12.17l-1.41 1.24ZM7.5 8A1.5 1.5 0 1 0 7.5 5 1.5 1.5 0 0 0 7.5 8Z"/>
-                                    </svg>
-                                    Lorem, Ipsum
-                                </div>
+                        <div class="brand-divider"></div>
 
-                                <h3 class="news-title">
-                                    Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor
-                                </h3>
-
-                                <div class="news-date">
-                                    <svg viewBox="0 0 24 24">
-                                        <path d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2Zm12 8H5v10h14V10ZM5 8h14V6H5v2Zm2 4h3v3H7v-3Zm5 0h3v3h-3v-3Z"/>
-                                    </svg>
-                                    03 Juni 2026
-                                </div>
-                            </div>
-                        </article>
-                    @endfor
+                        <div class="brand-school">
+                            Postgraduate School<br>
+                            Univcasarjana
+                        </div>
+                    </div>
                 </div>
             </div>
+        </header>
 
-            <div class="service-area">
-                <h2 class="section-title service-title">Menu Layanan Mahasiswa</h2>
-
-                <div class="service-grid">
-                    <button class="service-card" type="button">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M10 17v-3H3v-4h7V7l5 5-5 5ZM12 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3Z"/>
-                        </svg>
-                        <span>Login<br>Mahasiswa</span>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <button class="hamburger" id="hamburger" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </button>
 
-                    <div class="edom-card-wrapper" id="edomCardWrapper">
-                        <button class="service-card" type="button" id="edomService">
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item home-active" id="homeNavItem">
+                            <a href="{{ route('home') }}" class="nav-link" data-nav="home">Beranda</a>
+                        </li>
+
+                        <li class="nav-item has-dropdown">
+                            <a href="#" class="nav-link dropdown-trigger">
+                                <span>Profile</span>
+                                <span class="chevron" aria-hidden="true"></span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="#">Tentang Pascasarjana</a>
+                                <a href="#">Visi dan Misi</a>
+                                <a href="#">Struktur Organisasi</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-dropdown">
+                            <a href="#" class="nav-link dropdown-trigger">
+                                <span>Akademik</span>
+                                <span class="chevron" aria-hidden="true"></span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="#">Magister Hukum</a>
+                                <a href="#">Magister Manajemen Pendidikan</a>
+                                <a href="#">Magister Kesehatan Masyarakat</a>
+                                <a href="#">Magister Keperawatan</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-dropdown">
+                            <a href="#" class="nav-link dropdown-trigger">
+                                <span>Penjaminan Mutu</span>
+                                <span class="chevron" aria-hidden="true"></span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="#">Dokumen SPMI</a>
+                                <a href="#">Laporan AMI</a>
+                                <a href="#">Penjaminan Digital</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-dropdown">
+                            <a href="#" class="nav-link dropdown-trigger">
+                                <span>Riset & PDM</span>
+                                <span class="chevron" aria-hidden="true"></span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="#">Riset Dosen</a>
+                                <a href="#">Publikasi</a>
+                                <a href="#">Pengabdian Masyarakat</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Admisi</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Kontak</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');">
+        </div>
+        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus2.png') }}');"></div>
+        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus3.png') }}');"></div>
+        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus4.png') }}');"></div>
+
+        <button class="hero-arrow left" id="prevSlide" type="button" aria-label="Slide sebelumnya">‹</button>
+        <button class="hero-arrow right" id="nextSlide" type="button" aria-label="Slide berikutnya">›</button>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Pascasarjana<br>
+                        Universitas Ngudi Waluyo
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Pascasarjana Universitas Ngudi Waluyo
+                    </p>
+
+                    <a href="#" class="btn-primary">
+                        Daftar Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-dots" id="heroDots">
+            <button class="hero-dot active" type="button" aria-label="Slide 1"></button>
+            <button class="hero-dot" type="button" aria-label="Slide 2"></button>
+            <button class="hero-dot" type="button" aria-label="Slide 3"></button>
+            <button class="hero-dot" type="button" aria-label="Slide 4"></button>
+        </div>
+    </section>
+
+    <section class="program-section">
+        <div class="container">
+            <div class="program-grid">
+
+                <a href="#" class="program-card">
+                    <div class="program-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 3h2v3h4v2h-1.2l2.7 6.1c-.8 1.2-2.1 1.9-3.5 1.9s-2.7-.7-3.5-1.9L15.2 8H14v10h4v2H6v-2h4V8H8.8l2.7 6.1C10.7 15.3 9.4 16 8 16s-2.7-.7-3.5-1.9L7.2 8H6V6h4V3h2Zm-4 7.2L6.6 13h2.8L8 10.2Zm8 0L14.6 13h2.8L16 10.2Z" />
+                        </svg>
+                    </div>
+                    <h3 class="program-title">Magister<br>Hukum</h3>
+                    <span class="program-detail">Detail</span>
+                </a>
+
+                <a href="#" class="program-card">
+                    <div class="program-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z" />
+                        </svg>
+                    </div>
+                    <h3 class="program-title">Magister Manajemen<br>Pendidikan</h3>
+                    <span class="program-detail">Detail</span>
+                </a>
+
+                <a href="#" class="program-card">
+                    <div class="program-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 21s-7.5-4.6-9.7-9.2C.6 8.2 2.6 4 6.5 4c2.2 0 3.7 1.2 4.5 2.6C11.8 5.2 13.3 4 15.5 4c3.9 0 5.9 4.2 4.2 7.8C17.5 16.4 12 21 12 21Zm-1.3-7.7h2.6v-2.1h2.1V8.6h-2.1V6.5h-2.6v2.1H8.6v2.6h2.1v2.1Z" />
+                        </svg>
+                    </div>
+                    <h3 class="program-title">Magister Kesehatan<br>Masyarakat</h3>
+                    <span class="program-detail">Detail</span>
+                </a>
+
+                <a href="#" class="program-card">
+                    <div class="program-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2 6 4v5c0 3.7 2.5 7.1 6 8 3.5-.9 6-4.3 6-8V4l-6-2Zm1 3v2h2v2h-2v2h-2V9H9V7h2V5h2Zm-8 14c0-2.2 4.7-3.4 7-3.4s7 1.2 7 3.4V22H5v-3Z" />
+                        </svg>
+                    </div>
+                    <h3 class="program-title">Magister<br>Keperawatan</h3>
+                    <span class="program-detail">Detail</span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section" id="layanan-mahasiswa">
+        <div class="container">
+            <div class="info-layout">
+
+                <div class="news-area">
+                    <div class="section-header">
+                        <h2 class="section-title">Berita Terkini & Agenda</h2>
+
+                        <div class="pagination">
+                            <button class="page-btn" type="button">‹</button>
+                            <button class="page-number active" type="button">1</button>
+                            <button class="page-number" type="button">2</button>
+                            <button class="page-number" type="button">3</button>
+                            <span>......</span>
+                            <button class="page-number" type="button">10</button>
+                            <button class="page-btn dark" type="button">›</button>
+                        </div>
+                    </div>
+
+                    <div class="news-list">
+                        @for ($i = 0; $i < 4; $i++)
+                            <article class="news-item">
+                                <div class="news-thumb">
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z" />
+                                    </svg>
+                                </div>
+
+                                <div class="news-content">
+                                    <div class="news-category">
+                                        <svg viewBox="0 0 24 24">
+                                            <path
+                                                d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12.17l-1.41 1.24ZM7.5 8A1.5 1.5 0 1 0 7.5 5 1.5 1.5 0 0 0 7.5 8Z" />
+                                        </svg>
+                                        Lorem, Ipsum
+                                    </div>
+
+                                    <h3 class="news-title">
+                                        Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor
+                                    </h3>
+
+                                    <div class="news-date">
+                                        <svg viewBox="0 0 24 24">
+                                            <path
+                                                d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2Zm12 8H5v10h14V10ZM5 8h14V6H5v2Zm2 4h3v3H7v-3Zm5 0h3v3h-3v-3Z" />
+                                        </svg>
+                                        03 Juni 2026
+                                    </div>
+                                </div>
+                            </article>
+                        @endfor
+                    </div>
+                </div>
+
+                <div class="service-area">
+                    <h2 class="section-title service-title">Menu Layanan Mahasiswa</h2>
+
+                    <div class="service-grid">
+                        <button class="service-card" type="button">
                             <svg viewBox="0 0 24 24">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z"/>
+                                <path
+                                    d="M10 17v-3H3v-4h7V7l5 5-5 5ZM12 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3Z" />
                             </svg>
-                            <span>EDOM</span>
+                            <span>Login<br>Mahasiswa</span>
                         </button>
 
-                        <div class="edom-popover">
-                            <h4>Pilih Mata Kuliah :</h4>
-                            <p>Kejelasan Penyampaian Materi Dosen?</p>
-                            <div class="small-label">Kejelasan Penyampaian Materi Dosen?</div>
-                            <div class="edom-score">
-                                <span>1</span>
-                                <span>2</span>
-                                <span>3</span>
-                                <span>4</span>
-                                <span>5</span>
+                        <div class="edom-card-wrapper" id="edomCardWrapper">
+                            <button class="service-card" type="button" id="edomService">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z" />
+                                </svg>
+                                <span>EDOM</span>
+                            </button>
+
+                            <div class="edom-popover">
+                                <h4>Pilih Mata Kuliah :</h4>
+                                <p>Kejelasan Penyampaian Materi Dosen?</p>
+                                <div class="small-label">Kejelasan Penyampaian Materi Dosen?</div>
+                                <div class="edom-score">
+                                    <span>1</span>
+                                    <span>2</span>
+                                    <span>3</span>
+                                    <span>4</span>
+                                    <span>5</span>
+                                </div>
                             </div>
                         </div>
+
+                        <button class="service-card" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z" />
+                            </svg>
+                            <span>E-Learning</span>
+                        </button>
+
+                        <button class="service-card" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z" />
+                            </svg>
+                            <span>Perpustakaan<br>Digital</span>
+                        </button>
+
+                        <button class="service-card" type="button">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z" />
+                            </svg>
+                            <span>E-Learning</span>
+                        </button>
                     </div>
-
-                    <button class="service-card" type="button">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z"/>
-                        </svg>
-                        <span>E-Learning</span>
-                    </button>
-
-                    <button class="service-card" type="button">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z"/>
-                        </svg>
-                        <span>Perpustakaan<br>Digital</span>
-                    </button>
-
-                    <button class="service-card" type="button">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z"/>
-                        </svg>
-                        <span>E-Learning</span>
-                    </button>
                 </div>
+
             </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
-@include('component.footer')
+    @include('component.footer')
 
-<script>
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
 
-    hamburger.addEventListener('click', function () {
-        navMenu.classList.toggle('show');
-    });
-
-    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
-
-    dropdownTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', function (event) {
-            if (window.innerWidth <= 992) {
-                event.preventDefault();
-
-                const currentItem = trigger.closest('.nav-item');
-
-                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
-                    if (item !== currentItem) {
-                        item.classList.remove('open');
-                    }
-                });
-
-                currentItem.classList.toggle('open');
-            }
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('show');
         });
-    });
 
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-dot');
-    const prevSlide = document.getElementById('prevSlide');
-    const nextSlide = document.getElementById('nextSlide');
+        const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
 
-    let currentSlide = 0;
-    let slideInterval;
+        dropdownTriggers.forEach((trigger) => {
+            trigger.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    event.preventDefault();
 
-    function showSlide(index) {
-        slides.forEach((slide) => slide.classList.remove('active'));
-        dots.forEach((dot) => dot.classList.remove('active'));
+                    const currentItem = trigger.closest('.nav-item');
 
-        currentSlide = (index + slides.length) % slides.length;
+                    document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                        if (item !== currentItem) {
+                            item.classList.remove('open');
+                        }
+                    });
 
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
-    }
+                    currentItem.classList.toggle('open');
+                }
+            });
+        });
 
-    function goToNextSlide() {
-        showSlide(currentSlide + 1);
-    }
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.hero-dot');
+        const prevSlide = document.getElementById('prevSlide');
+        const nextSlide = document.getElementById('nextSlide');
 
-    function goToPrevSlide() {
-        showSlide(currentSlide - 1);
-    }
+        let currentSlide = 0;
+        let slideInterval;
 
-    function startAutoSlide() {
-        slideInterval = setInterval(goToNextSlide, 2500);
-    }
+        function showSlide(index) {
+            slides.forEach((slide) => slide.classList.remove('active'));
+            dots.forEach((dot) => dot.classList.remove('active'));
 
-    function resetAutoSlide() {
-        clearInterval(slideInterval);
-        startAutoSlide();
-    }
+            currentSlide = (index + slides.length) % slides.length;
 
-    nextSlide.addEventListener('click', function () {
-        goToNextSlide();
-        resetAutoSlide();
-    });
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
 
-    prevSlide.addEventListener('click', function () {
-        goToPrevSlide();
-        resetAutoSlide();
-    });
+        function goToNextSlide() {
+            showSlide(currentSlide + 1);
+        }
 
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', function () {
-            showSlide(index);
+        function goToPrevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(goToNextSlide, 2500);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        nextSlide.addEventListener('click', function() {
+            goToNextSlide();
             resetAutoSlide();
         });
-    });
 
-    startAutoSlide();
+        prevSlide.addEventListener('click', function() {
+            goToPrevSlide();
+            resetAutoSlide();
+        });
 
-    const edomNav = document.getElementById('edomNav');
-    const homeNavItem = document.getElementById('homeNavItem');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const edomCardWrapper = document.getElementById('edomCardWrapper');
-    const edomService = document.getElementById('edomService');
-
-    edomNav.addEventListener('click', function () {
-        navLinks.forEach((link) => link.classList.remove('nav-click-active'));
-        edomNav.classList.add('nav-click-active');
-        homeNavItem.classList.add('hide-indicator');
-
-        if (window.innerWidth <= 992) {
-            navMenu.classList.remove('show');
-            document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
-                item.classList.remove('open');
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                showSlide(index);
+                resetAutoSlide();
             });
-        }
-    });
+        });
 
-    edomService.addEventListener('click', function (event) {
-        if (window.innerWidth <= 992) {
-            event.preventDefault();
-            edomCardWrapper.classList.toggle('show-popover');
-        }
-    });
+        startAutoSlide();
 
-    document.addEventListener('click', function (event) {
-        if (window.innerWidth <= 992 && !edomCardWrapper.contains(event.target)) {
-            edomCardWrapper.classList.remove('show-popover');
-        }
-    });
+        const edomNav = document.getElementById('edomNav');
+        const homeNavItem = document.getElementById('homeNavItem');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const edomCardWrapper = document.getElementById('edomCardWrapper');
+        const edomService = document.getElementById('edomService');
 
-    window.addEventListener('resize', function () {
-        if (window.innerWidth > 992) {
-            navMenu.classList.remove('show');
+        edomNav.addEventListener('click', function() {
+            navLinks.forEach((link) => link.classList.remove('nav-click-active'));
+            edomNav.classList.add('nav-click-active');
+            homeNavItem.classList.add('hide-indicator');
 
-            document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
-                item.classList.remove('open');
-            });
+            if (window.innerWidth <= 992) {
+                navMenu.classList.remove('show');
+                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                    item.classList.remove('open');
+                });
+            }
+        });
 
-            edomCardWrapper.classList.remove('show-popover');
-        }
-    });
-</script>
+        edomService.addEventListener('click', function(event) {
+            if (window.innerWidth <= 992) {
+                event.preventDefault();
+                edomCardWrapper.classList.toggle('show-popover');
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth <= 992 && !edomCardWrapper.contains(event.target)) {
+                edomCardWrapper.classList.remove('show-popover');
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                navMenu.classList.remove('show');
+
+                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                    item.classList.remove('open');
+                });
+
+                edomCardWrapper.classList.remove('show-popover');
+            }
+        });
+    </script>
 
 </body>
+
 </html>
