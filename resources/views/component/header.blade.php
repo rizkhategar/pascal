@@ -5,6 +5,7 @@
         width: 100%;
         z-index: 9999;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        transition: 0.25s ease;
     }
 
     .top-header {
@@ -75,12 +76,14 @@
         min-height: 64px;
         position: relative;
         z-index: 1000;
+        transition: 0.25s ease;
     }
 
     .nav-content {
         display: flex;
         align-items: center;
         min-height: 64px;
+        position: relative;
     }
 
     .nav-menu {
@@ -204,6 +207,7 @@
         border: none;
         background: transparent;
         cursor: pointer;
+        padding: 0;
     }
 
     .hamburger span {
@@ -213,6 +217,106 @@
         background: var(--white);
         margin: 6px auto;
         border-radius: 10px;
+        transition: 0.25s ease;
+    }
+
+    @media (min-width: 993px) {
+        .site-header.nav-collapsed .navbar {
+            position: absolute;
+            top: 14px;
+            right: 24px;
+            width: auto;
+            min-height: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .site-header.nav-collapsed .navbar .container {
+            width: auto;
+            margin: 0;
+        }
+
+        .site-header.nav-collapsed .nav-content {
+            min-height: 0;
+            justify-content: flex-end;
+        }
+
+        .site-header.nav-collapsed .hamburger {
+            display: block;
+            margin-left: 0;
+        }
+
+        .site-header.nav-collapsed .hamburger span {
+            background: var(--primary);
+        }
+
+        .site-header.nav-collapsed .nav-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 285px;
+            height: auto;
+            max-height: calc(100vh - 110px);
+            overflow-y: auto;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 8px 0 14px;
+            background: var(--primary);
+            border-radius: 12px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+        }
+
+        .site-header.nav-collapsed .nav-menu.show {
+            display: flex;
+        }
+
+        .site-header.nav-collapsed .nav-item {
+            width: 100%;
+            height: auto;
+        }
+
+        .site-header.nav-collapsed .nav-link {
+            width: 100%;
+            height: 48px;
+            padding: 0 16px;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--white);
+        }
+
+        .site-header.nav-collapsed .nav-item.home-active::after {
+            display: none;
+        }
+
+        .site-header.nav-collapsed .dropdown {
+            position: static;
+            min-width: 100%;
+            box-shadow: none;
+            border-radius: 0;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            display: none;
+            padding: 5px 0;
+            background: #ffffff;
+        }
+
+        .site-header.nav-collapsed .nav-item:hover .dropdown {
+            display: none;
+        }
+
+        .site-header.nav-collapsed .nav-item.open .dropdown {
+            display: block;
+        }
+
+        .site-header.nav-collapsed .nav-item:hover .chevron {
+            transform: rotate(45deg) translateY(-2px);
+        }
+
+        .site-header.nav-collapsed .nav-item.open .chevron {
+            transform: rotate(225deg) translateY(-1px);
+        }
     }
 
     @media (max-width: 1200px) {
@@ -252,9 +356,9 @@
             right: 14px;
             width: auto;
             min-height: 0;
-            background: var(--primary);
-            border-radius: 12px;
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
         }
 
         .navbar .container {
@@ -273,17 +377,22 @@
             width: 46px;
             height: 46px;
             margin-left: 0;
-            border-radius: 12px;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .hamburger span {
+            background: var(--primary);
         }
 
         .nav-menu {
             display: none;
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0;
+            position: fixed;
+            top: 74px;
+            right: 14px;
             width: min(286px, calc(100vw - 28px));
             height: auto;
-            max-height: calc(100vh - 105px);
+            max-height: calc(100vh - 92px);
             overflow-y: auto;
             flex-direction: column;
             align-items: stretch;
@@ -291,6 +400,7 @@
             background: var(--primary);
             border-radius: 12px;
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+            z-index: 10050;
         }
 
         .nav-menu.show {
@@ -449,6 +559,10 @@
             width: 24px;
             height: 3px;
         }
+
+        .nav-menu {
+            top: 66px;
+        }
     }
 
     @media (max-width: 420px) {
@@ -463,7 +577,7 @@
     }
 </style>
 
-<div class="site-header">
+<div class="site-header" id="siteHeader">
     <header class="top-header">
         <div class="container">
             <div class="brand-wrapper">
@@ -571,12 +685,37 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.getElementById('hamburger');
+        const siteHeader = document.getElementById('siteHeader');
+        const oldHamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
+        let hamburger = oldHamburger;
+        let lastScrollY = window.scrollY;
+
+        if (oldHamburger) {
+            const cleanHamburger = oldHamburger.cloneNode(true);
+            oldHamburger.replaceWith(cleanHamburger);
+            hamburger = cleanHamburger;
+        }
+
         const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+
+        function isCompactMode() {
+            return window.innerWidth <= 992 || siteHeader.classList.contains('nav-collapsed');
+        }
+
+        function closeNavMenu() {
+            if (!navMenu || !hamburger) return;
+
+            navMenu.classList.remove('show');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                item.classList.remove('open');
+            });
+        }
 
         if (hamburger && navMenu) {
             hamburger.addEventListener('click', function(event) {
+                event.preventDefault();
                 event.stopPropagation();
                 navMenu.classList.toggle('show');
                 hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' : 'false');
@@ -585,7 +724,7 @@
 
         dropdownTriggers.forEach((trigger) => {
             trigger.addEventListener('click', function(event) {
-                if (window.innerWidth <= 992) {
+                if (isCompactMode()) {
                     event.preventDefault();
                     const currentItem = trigger.closest('.nav-item');
 
@@ -601,26 +740,37 @@
         });
 
         document.addEventListener('click', function(event) {
-            if (!navMenu || !hamburger || window.innerWidth > 992) return;
+            if (!navMenu || !hamburger || !isCompactMode()) return;
 
             if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
-                navMenu.classList.remove('show');
-                hamburger.setAttribute('aria-expanded', 'false');
-                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
-                    item.classList.remove('open');
-                });
+                closeNavMenu();
             }
         });
 
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 992 && navMenu) {
-                navMenu.classList.remove('show');
-                hamburger?.setAttribute('aria-expanded', 'false');
+        window.addEventListener('scroll', function() {
+            if (!siteHeader || window.innerWidth <= 992) return;
 
-                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
-                    item.classList.remove('open');
-                });
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY && currentScrollY > 120) {
+                siteHeader.classList.add('nav-collapsed');
+                closeNavMenu();
+            } else if (currentScrollY < lastScrollY) {
+                siteHeader.classList.remove('nav-collapsed');
+                closeNavMenu();
             }
+
+            lastScrollY = currentScrollY;
+        });
+
+        window.addEventListener('resize', function() {
+            if (!siteHeader) return;
+
+            if (window.innerWidth <= 992) {
+                siteHeader.classList.remove('nav-collapsed');
+            }
+
+            closeNavMenu();
         });
     });
 </script>
