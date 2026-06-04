@@ -686,10 +686,18 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const siteHeader = document.getElementById('siteHeader');
-        const hamburger = document.getElementById('hamburger');
+        const oldHamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
-        const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+        let hamburger = oldHamburger;
         let lastScrollY = window.scrollY;
+
+        if (oldHamburger) {
+            const cleanHamburger = oldHamburger.cloneNode(true);
+            oldHamburger.replaceWith(cleanHamburger);
+            hamburger = cleanHamburger;
+        }
+
+        const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
 
         function isCompactMode() {
             return window.innerWidth <= 992 || siteHeader.classList.contains('nav-collapsed');
@@ -707,6 +715,7 @@
 
         if (hamburger && navMenu) {
             hamburger.addEventListener('click', function(event) {
+                event.preventDefault();
                 event.stopPropagation();
                 navMenu.classList.toggle('show');
                 hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' : 'false');
@@ -759,10 +768,9 @@
 
             if (window.innerWidth <= 992) {
                 siteHeader.classList.remove('nav-collapsed');
-                closeNavMenu();
-            } else {
-                closeNavMenu();
             }
+
+            closeNavMenu();
         });
     });
 </script>
