@@ -671,7 +671,7 @@
                         </a>
                         <div class="dropdown">
                             <a href="#">Tentang Pascasarjana</a>
-                            <a href="#">Visi dan Misi</a>
+                            <a href="{{ route('visi-misi') }}">Visi dan Misi</a>
                             <a href="#">Struktur Organisasi</a>
                         </div>
                     </li>
