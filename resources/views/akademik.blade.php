@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magister Hukum - Akademik</title>
-    <!-- CSS Vanilla Terintegrasi -->
     <style>
         /* Variabel Warna dan Pengaturan Dasar */
         :root {
+            /* --- VARIABEL UNTUK KOMPONEN HEADER & FOOTER --- */
+            --primary: #072b57;
+            --yellow: #f7b500;
+            /* ----------------------------------------------- */
+
             --primary-blue: #0f172a;   /* Warna biru tua dominan */
             --primary-light: #1e293b;
             --accent-yellow: #eab308;  /* Warna kuning logogram/sorotan */
@@ -23,6 +27,23 @@
         *, *::before, *::after {
             box-sizing: border-box;
         }
+
+        /* --- RESET GLOBAL UNTUK HEADER & FOOTER --- */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            font-family: inherit;
+        }
+        /* ------------------------------------------ */
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -437,13 +458,10 @@
 </head>
 <body>
     
-    <!-- HEADER COMPONENTS -->
     @include('component.header')
 
     <main>
-        <!-- 1. Hero Section (Judul Bermakna) -->
         <section class="hero" style="background-image: url('{{ asset('assets/images/12533c31510bc1f7d71048a61271e4a3.original.jpg') }}');">
-            <!-- Overlay gelap untuk kontras teks -->
             <div class="hero-overlay"></div>
             
             <div class="container hero-content">
@@ -457,7 +475,6 @@
             </div>
         </section>
 
-        <!-- 2. Overview: Pemecahan Konten -->
         <section class="section-padding bg-white">
             <div class="container">
                 <div class="overview-grid">
@@ -469,7 +486,6 @@
                         </div>
                     </div>
                     <div>
-                        <!-- Media Pendukung -->
                         <div class="overview-image-wrapper">
                             <img src="{{ asset('assets/images/hero-campus2.png') }}" alt="Aktivitas Perkuliahan Magister Hukum" class="overview-image">
                         </div>
@@ -478,12 +494,10 @@
             </div>
         </section>
 
-        <!-- 3. Syarat & Alur Pendaftaran: Daftar Visual -->
         <section class="section-padding req-section">
             <div class="container">
                 <div class="req-grid">
                     
-                    <!-- Kolom Kiri: Prasyarat (Daftar Berpoin) -->
                     <div class="card">
                         <div class="card-header">
                             <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -497,7 +511,6 @@
                         </ul>
                     </div>
 
-                    <!-- Kolom Kanan: Alur Pendaftaran (Daftar Bernomor) -->
                     <div class="card">
                         <div class="card-header">
                             <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -530,7 +543,6 @@
             </div>
         </section>
 
-        <!-- 4. Penjurusan/Fokus Studi: Tabel & Grafik Fungsi (Grid Jika-Maka) -->
         <section class="section-padding bg-white">
             <div class="container">
                 <div class="text-center">
@@ -539,7 +551,6 @@
                 </div>
 
                 <div class="matrix-grid">
-                    <!-- Card 1: Hukum Pidana -->
                     <div class="matrix-card">
                         <svg class="matrix-bg-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         <h3 class="matrix-title">
@@ -557,7 +568,6 @@
                         </a>
                     </div>
 
-                    <!-- Card 2: Hukum Perdata & Bisnis -->
                     <div class="matrix-card">
                         <svg class="matrix-bg-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         <h3 class="matrix-title">
@@ -575,7 +585,6 @@
                         </a>
                     </div>
 
-                    <!-- Card 3: Hukum Tata Negara -->
                     <div class="matrix-card">
                         <svg class="matrix-bg-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         <h3 class="matrix-title">
@@ -593,7 +602,6 @@
                         </a>
                     </div>
 
-                    <!-- Card 4: Hukum Internasional -->
                     <div class="matrix-card">
                         <svg class="matrix-bg-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         <h3 class="matrix-title">
@@ -615,7 +623,6 @@
         </section>
     </main>
 
-    <!-- FOOTER COMPONENTS -->
     @include('component.footer')
 
 </body>
