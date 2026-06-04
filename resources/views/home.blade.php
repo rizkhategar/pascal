@@ -1296,6 +1296,7 @@
                 right: 8px;
             }
         }
+        
     </style>
 </head>
 <body>
@@ -1601,6 +1602,8 @@
         </div>
     </div>
 </section>
+
+@include('component.footer')
 
 <script>
     const hamburger = document.getElementById('hamburger');
