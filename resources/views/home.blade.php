@@ -54,6 +54,14 @@
             margin: 0 auto;
         }
 
+        .site-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
         .top-header {
             width: 100%;
             background: #eef4f5;
@@ -121,7 +129,7 @@
             background: var(--primary);
             min-height: 64px;
             position: relative;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .nav-content {
@@ -146,7 +154,7 @@
             padding: 0 17px;
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 8px;
             font-size: 12px;
             font-weight: 700;
             color: var(--white);
@@ -190,12 +198,20 @@
         }
 
         .chevron {
-            font-size: 12px;
-            line-height: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transform: translateY(-1px);
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transform-origin: center;
+            display: inline-block;
+            flex-shrink: 0;
+            margin-left: 2px;
+            transition: transform 0.25s ease;
+        }
+
+        .nav-item:hover .chevron {
+            transform: rotate(225deg) translateY(-1px);
         }
 
         .dropdown {
@@ -211,7 +227,7 @@
             visibility: hidden;
             transform: translateY(8px);
             transition: 0.25s ease;
-            z-index: 200;
+            z-index: 2000;
         }
 
         .nav-item:hover .dropdown {
@@ -785,10 +801,6 @@
         }
 
         @media (max-width: 992px) {
-            .container {
-                width: min(100% - 32px, 1120px);
-            }
-
             .top-header {
                 padding: 10px 0;
             }
@@ -806,12 +818,7 @@
                 font-size: 13px;
             }
 
-            .navbar {
-                min-height: 64px;
-            }
-
             .nav-content {
-                min-height: 64px;
                 flex-wrap: wrap;
             }
 
@@ -833,8 +840,8 @@
             }
 
             .nav-item {
-                height: auto;
                 width: 100%;
+                height: auto;
             }
 
             .nav-link {
@@ -869,6 +876,14 @@
 
             .nav-item.home-active::after {
                 display: none;
+            }
+
+            .nav-item:hover .chevron {
+                transform: rotate(45deg) translateY(-2px);
+            }
+
+            .nav-item.open .chevron {
+                transform: rotate(225deg) translateY(-1px);
             }
 
             .dropdown {
@@ -947,10 +962,6 @@
             .service-grid {
                 grid-template-columns: repeat(2, minmax(180px, 1fr));
                 gap: 22px;
-            }
-
-            .edom-popover {
-                width: 230px;
             }
         }
 
@@ -1289,105 +1300,111 @@
 </head>
 <body>
 
-<header class="top-header">
-    <div class="container">
-        <div class="brand-wrapper">
-            <img src="{{ asset('assets/images/logo-unw.png') }}" alt="Logo UNW" class="brand-logo">
+<div class="site-header">
+    <header class="top-header">
+        <div class="container">
+            <div class="brand-wrapper">
+                <img src="{{ asset('assets/images/logo-unw.png') }}" alt="Logo UNW" class="brand-logo">
 
-            <div class="brand-unw">
-                <div>
-                    <div class="brand-main">UNW</div>
-                    <div class="brand-sub">
-                        Universitas Ngudi Waluyo<br>
-                        Pasca Sarjana
+                <div class="brand-unw">
+                    <div>
+                        <div class="brand-main">UNW</div>
+                        <div class="brand-sub">
+                            Universitas Ngudi Waluyo<br>
+                            Pasca Sarjana
+                        </div>
                     </div>
-                </div>
 
-                <div class="brand-divider"></div>
+                    <div class="brand-divider"></div>
 
-                <div class="brand-school">
-                    Postgraduate School<br>
-                    Univcasarjana
+                    <div class="brand-school">
+                        Postgraduate School<br>
+                        Univcasarjana
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<nav class="navbar">
-    <div class="container">
-        <div class="nav-content">
-            <button class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
-            <ul class="nav-menu" id="navMenu">
-                <li class="nav-item home-active" id="homeNavItem">
-                    <a href="{{ route('home') }}" class="nav-link" data-nav="home">Beranda</a>
-                </li>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item home-active" id="homeNavItem">
+                        <a href="{{ route('home') }}" class="nav-link" data-nav="home">Beranda</a>
+                    </li>
 
-                <li class="nav-item has-dropdown">
-                    <a href="#" class="nav-link dropdown-trigger">
-                        Profile <span class="chevron">⌄</span>
-                    </a>
-                    <div class="dropdown">
-                        <a href="#">Tentang Pascasarjana</a>
-                        <a href="#">Visi dan Misi</a>
-                        <a href="#">Struktur Organisasi</a>
-                    </div>
-                </li>
+                    <li class="nav-item has-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            <span>Profile</span>
+                            <span class="chevron" aria-hidden="true"></span>
+                        </a>
+                        <div class="dropdown">
+                            <a href="#">Tentang Pascasarjana</a>
+                            <a href="#">Visi dan Misi</a>
+                            <a href="#">Struktur Organisasi</a>
+                        </div>
+                    </li>
 
-                <li class="nav-item has-dropdown">
-                    <a href="#" class="nav-link dropdown-trigger">
-                        Akademik <span class="chevron">⌄</span>
-                    </a>
-                    <div class="dropdown">
-                        <a href="#">Magister Hukum</a>
-                        <a href="#">Magister Manajemen Pendidikan</a>
-                        <a href="#">Magister Kesehatan Masyarakat</a>
-                        <a href="#">Magister Keperawatan</a>
-                    </div>
-                </li>
+                    <li class="nav-item has-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            <span>Akademik</span>
+                            <span class="chevron" aria-hidden="true"></span>
+                        </a>
+                        <div class="dropdown">
+                            <a href="#">Magister Hukum</a>
+                            <a href="#">Magister Manajemen Pendidikan</a>
+                            <a href="#">Magister Kesehatan Masyarakat</a>
+                            <a href="#">Magister Keperawatan</a>
+                        </div>
+                    </li>
 
-                <li class="nav-item has-dropdown">
-                    <a href="#" class="nav-link dropdown-trigger">
-                        Penjaminan Mutu <span class="chevron">⌄</span>
-                    </a>
-                    <div class="dropdown">
-                        <a href="#">Dokumen SPMI</a>
-                        <a href="#">Laporan AMI</a>
-                        <a href="#">Penjaminan Digital</a>
-                    </div>
-                </li>
+                    <li class="nav-item has-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            <span>Penjaminan Mutu</span>
+                            <span class="chevron" aria-hidden="true"></span>
+                        </a>
+                        <div class="dropdown">
+                            <a href="#">Dokumen SPMI</a>
+                            <a href="#">Laporan AMI</a>
+                            <a href="#">Penjaminan Digital</a>
+                        </div>
+                    </li>
 
-                <li class="nav-item has-dropdown">
-                    <a href="#" class="nav-link dropdown-trigger">
-                        Riset & PDM <span class="chevron">⌄</span>
-                    </a>
-                    <div class="dropdown">
-                        <a href="#">Riset Dosen</a>
-                        <a href="#">Publikasi</a>
-                        <a href="#">Pengabdian Masyarakat</a>
-                    </div>
-                </li>
+                    <li class="nav-item has-dropdown">
+                        <a href="#" class="nav-link dropdown-trigger">
+                            <span>Riset & PDM</span>
+                            <span class="chevron" aria-hidden="true"></span>
+                        </a>
+                        <div class="dropdown">
+                            <a href="#">Riset Dosen</a>
+                            <a href="#">Publikasi</a>
+                            <a href="#">Pengabdian Masyarakat</a>
+                        </div>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a>
-                </li>
+                    <li class="nav-item">
+                        <a href="#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Admisi</a>
-                </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Admisi</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Kontak</a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Kontak</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</div>
 
 <section class="hero">
     <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');"></div>
