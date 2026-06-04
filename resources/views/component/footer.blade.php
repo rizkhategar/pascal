@@ -2,6 +2,24 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
+.hero .container,
+.hero-content,
+.hero-text {
+    position: relative !important;
+    z-index: 50 !important;
+}
+
+.hero-title,
+.hero-subtitle,
+.hero .btn-primary {
+    position: relative !important;
+    z-index: 60 !important;
+}
+
+.hero .btn-primary {
+    pointer-events: auto;
+}
+
 .footer{
     background:#022B63;
     color:#fff;
