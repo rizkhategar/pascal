@@ -722,11 +722,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Admisi</a>
+                        <a href="https://pmb.unw.ac.id/" class="nav-link">Admisi</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Kontak</a>
+                        <a href="https://pmb.unw.ac.id/kontak" class="nav-link">Kontak</a>
                     </li>
                 </ul>
             </div>
