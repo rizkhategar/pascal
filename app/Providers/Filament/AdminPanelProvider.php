@@ -28,6 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->favicon(asset('logo_unwnobg.png'))
+            ->brandName('Pascasarjana UNW')
             ->colors([
                 'primary' => Color::Amber,
             ])
