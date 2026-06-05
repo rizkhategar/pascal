@@ -9,7 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -44,22 +44,15 @@ class StrukturOrganisasiResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                FileUpload::make('image_path')
-                    ->label('Gambar Struktur Organisasi')
-                    ->disk('public')
-                    ->directory('struktur-organisasi')
-                    ->visibility('public')
-                    ->acceptedFileTypes([
-                        'image/jpeg',
-                        'image/png',
-                        'image/webp',
-                    ])
-                    ->maxSize(5120)
-                    ->multiple(false)
-                    ->storeFiles(true)
-                    ->previewable(false)
-                    ->helperText('Upload gambar JPG, PNG, atau WEBP. Maksimal 5 MB.')
-                    ->required(),
+                Placeholder::make('upload_info')
+                    ->label('Upload Gambar Struktur Organisasi')
+                    ->content('Gunakan halaman create/edit khusus. Upload file diproses saat tombol simpan ditekan, bukan lewat FilePond, agar tidak stuck di Uploading 100%.'),
+
+                TextInput::make('image_path')
+                    ->label('Path Gambar')
+                    ->helperText('Field ini akan diisi otomatis setelah upload berhasil.')
+                    ->disabled()
+                    ->dehydrated(false),
 
                 Toggle::make('is_active')
                     ->label('Aktif')
