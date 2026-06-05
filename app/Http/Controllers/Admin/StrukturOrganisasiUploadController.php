@@ -8,9 +8,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class StrukturOrganisasiUploadController extends Controller
 {
+    public function create(): View
+    {
+        return view('admin.struktur-organisasi.create');
+    }
+
+    public function edit(StrukturOrganisasi $strukturOrganisasi): View
+    {
+        return view('admin.struktur-organisasi.edit', compact('strukturOrganisasi'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
