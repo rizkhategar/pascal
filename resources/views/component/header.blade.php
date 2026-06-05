@@ -1,3 +1,6 @@
+<link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
+<link rel="shortcut icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
+
 <style>
     :root {
         --primary: #072b57;
