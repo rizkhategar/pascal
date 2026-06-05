@@ -9,7 +9,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -34,6 +34,8 @@ class StrukturOrganisasiResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Profil';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -44,17 +46,15 @@ class StrukturOrganisasiResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                FileUpload::make('image_path')
-                    ->label('Gambar Struktur Organisasi')
-                    ->image()
-                    ->directory('struktur-organisasi')
-                    ->disk('public')
-                    ->visibility('public')
-                    ->imagePreviewHeight('280')
-                    ->maxSize(4096)
-                    ->downloadable()
-                    ->openable()
-                    ->required(),
+                Placeholder::make('upload_info')
+                    ->label('Upload Gambar Struktur Organisasi')
+                    ->content('Gunakan tombol Tambah/Edit dari tabel. Upload file diproses saat tombol simpan ditekan, bukan lewat FilePond.'),
+
+                TextInput::make('image_path')
+                    ->label('Path Gambar')
+                    ->helperText('Field ini akan diisi otomatis setelah upload berhasil.')
+                    ->disabled()
+                    ->dehydrated(false),
 
                 Toggle::make('is_active')
                     ->label('Aktif')
@@ -68,13 +68,20 @@ class StrukturOrganisasiResource extends Resource
             ->columns([
                 ImageColumn::make('image_path')
                     ->label('Gambar')
-                    ->disk('public')
-                    ->height(72),
+                    ->getStateUsing(fn (StrukturOrganisasi $record): ?string => $record->image_path ? asset('storage/' . $record->image_path) : null)
+                    ->height(72)
+                    ->width(110)
+                    ->square(false),
 
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('image_path')
+                    ->label('Path')
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_active')
                     ->label('Aktif')
@@ -86,7 +93,8 @@ class StrukturOrganisasiResource extends Resource
                     ->sortable(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->url(fn (StrukturOrganisasi $record): string => route('admin.struktur-organisasi-upload.edit', $record)),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
