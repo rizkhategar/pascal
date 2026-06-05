@@ -139,13 +139,13 @@
 
     .nav-link:hover,
     .nav-link.nav-click-active,
-    .nav-item:hover > .nav-link,
-    .nav-item.open > .nav-link {
+    .nav-item:hover>.nav-link,
+    .nav-item.open>.nav-link {
         background: var(--yellow) !important;
         color: var(--white) !important;
     }
 
-    .nav-item.home-active > .nav-link:not(:hover):not(.nav-click-active) {
+    .nav-item.home-active>.nav-link:not(:hover):not(.nav-click-active) {
         color: var(--yellow) !important;
         background: transparent !important;
     }
@@ -624,10 +624,11 @@
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
-                            <a href="{{ route('akademik.show', 'magister-hukum') }}">Magister Hukum</a>
-                            <a href="{{ route('akademik.show', 'magister-manajemen-pendidikan') }}">Magister Manajemen Pendidikan</a>
-                            <a href="{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}">Magister Kesehatan Masyarakat</a>
-                            <a href="{{ route('akademik.show', 'magister-keperawatan') }}">Magister Keperawatan</a>
+                            @foreach ($academicProgramsNav as $navProgram)
+                                <a href="{{ route('akademik.show', $navProgram->slug) }}">
+                                    {{ $navProgram->name }}
+                                </a>
+                            @endforeach
                         </div>
                     </li>
 
@@ -773,7 +774,8 @@
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 navMenu.classList.toggle('show');
-                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' : 'false');
+                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' :
+                    'false');
             }, true);
         }
 
