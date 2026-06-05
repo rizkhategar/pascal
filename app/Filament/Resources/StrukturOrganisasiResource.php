@@ -4,9 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StrukturOrganisasiResource\Pages;
 use App\Models\StrukturOrganisasi;
+use BackedEnum;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
@@ -17,12 +18,13 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class StrukturOrganisasiResource extends Resource
 {
     protected static ?string $model = StrukturOrganisasi::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office-2';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $navigationLabel = 'Struktur Organisasi';
 
@@ -30,7 +32,7 @@ class StrukturOrganisasiResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Struktur Organisasi';
 
-    protected static ?string $navigationGroup = 'Profil';
+    protected static string|UnitEnum|null $navigationGroup = 'Profil';
 
     public static function form(Schema $schema): Schema
     {
