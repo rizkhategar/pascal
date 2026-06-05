@@ -14,7 +14,8 @@ class ListStrukturOrganisasis extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Tambah Struktur Organisasi'),
+                ->label('Tambah Struktur Organisasi')
+                ->url(route('admin.struktur-organisasi-upload.create')),
         ];
     }
 }
