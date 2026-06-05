@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\VisiMisiController;
+use App\Http\Controllers\StrukturOrganisasiController;
 
 Route::get('/', function () {
     return view('home');
@@ -16,3 +17,4 @@ Route::get('/akademik/magister-hukum', function () {
 })->name('akademik.hukum');
 
 Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi');
+Route::get('/profil/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('profil.struktur-organisasi');
