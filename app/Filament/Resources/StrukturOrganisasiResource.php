@@ -46,14 +46,19 @@ class StrukturOrganisasiResource extends Resource
 
                 FileUpload::make('image_path')
                     ->label('Gambar Struktur Organisasi')
-                    ->image()
-                    ->directory('struktur-organisasi')
                     ->disk('public')
+                    ->directory('struktur-organisasi')
                     ->visibility('public')
-                    ->imagePreviewHeight('280')
-                    ->maxSize(4096)
-                    ->downloadable()
-                    ->openable()
+                    ->acceptedFileTypes([
+                        'image/jpeg',
+                        'image/png',
+                        'image/webp',
+                    ])
+                    ->maxSize(10240)
+                    ->imagePreviewHeight(180)
+                    ->previewable(true)
+                    ->preserveFilenames()
+                    ->helperText('Gunakan gambar JPG, PNG, atau WEBP. Maksimal 10 MB.')
                     ->required(),
 
                 Toggle::make('is_active')
