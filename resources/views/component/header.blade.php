@@ -1,17 +1,30 @@
 <style>
+    :root {
+        --primary: #072b57;
+        --primary-dark: #052044;
+        --yellow: #f7b500;
+        --white: #ffffff;
+        --light: #eef4f5;
+        --text: #111827;
+    }
+
     .site-header {
         position: sticky;
         top: 0;
         width: 100%;
         z-index: 9999;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-        transition: 0.25s ease;
     }
 
     .top-header {
         width: 100%;
-        background: #eef4f5;
+        background: var(--light);
         padding: 13px 0;
+    }
+
+    .container {
+        width: min(100% - 32px, 1120px);
+        margin: 0 auto;
     }
 
     .brand-wrapper {
@@ -72,11 +85,10 @@
     }
 
     .navbar {
-        background: var(--primary);
+        background: var(--primary) !important;
         min-height: 64px;
         position: relative;
         z-index: 1000;
-        transition: 0.25s ease;
     }
 
     .nav-content {
@@ -84,20 +96,27 @@
         align-items: stretch;
         min-height: 64px;
         position: relative;
+        overflow: visible;
     }
 
     .nav-menu {
         display: flex;
         align-items: stretch;
-        height: auto;
+        height: 64px;
         min-height: 64px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        background: transparent !important;
     }
 
     .nav-item {
         position: relative;
-        height: auto;
+        height: 64px;
         display: flex;
         flex-direction: column;
+        background: transparent !important;
     }
 
     .nav-link {
@@ -108,29 +127,27 @@
         gap: 8px;
         font-size: 12px;
         font-weight: 700;
-        color: var(--white);
+        color: var(--white) !important;
         text-transform: uppercase;
+        text-decoration: none;
         transition: 0.25s ease;
         white-space: nowrap;
         border: none;
-        background: transparent;
+        background: transparent !important;
         cursor: pointer;
     }
 
     .nav-link:hover,
-    .nav-link.nav-click-active {
-        background: var(--yellow);
-        color: var(--white);
+    .nav-link.nav-click-active,
+    .nav-item:hover > .nav-link,
+    .nav-item.open > .nav-link {
+        background: var(--yellow) !important;
+        color: var(--white) !important;
     }
 
-    .nav-item.home-active .nav-link {
-        color: var(--yellow);
-        background: transparent;
-    }
-
-    .nav-item.home-active .nav-link:hover {
-        color: var(--white);
-        background: var(--yellow);
+    .nav-item.home-active > .nav-link:not(:hover):not(.nav-click-active) {
+        color: var(--yellow) !important;
+        background: transparent !important;
     }
 
     .nav-item.home-active::after {
@@ -138,12 +155,14 @@
         position: absolute;
         left: 16px;
         right: 16px;
-        top: 59px;
+        bottom: 0;
         height: 5px;
         border-radius: 8px 8px 0 0;
         background: var(--yellow);
+        pointer-events: none;
     }
 
+    .nav-item.home-active:hover::after,
     .nav-item.home-active.hide-indicator::after {
         display: none;
     }
@@ -166,21 +185,20 @@
         transform: rotate(225deg) translateY(-1px);
     }
 
-    /* PENGATURAN DROPDOWN DESKTOP DIPERBAIKI */
     .dropdown {
         position: absolute;
         top: 64px;
         left: 0;
         min-width: 255px;
-        background: var(--white);
+        background: #ffffff !important;
         border-radius: 0 0 6px 6px;
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
-        padding: 12px 0;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        padding: 8px 0;
         opacity: 0;
         visibility: hidden;
         transform: translateY(8px);
         transition: 0.25s ease;
-        z-index: 2000;
+        z-index: 99999;
     }
 
     .nav-item:hover .dropdown,
@@ -188,24 +206,27 @@
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+        background: #ffffff !important;
     }
-
-    /* BATAS PERBAIKAN DROPDOWN DESKTOP */
 
     .dropdown a {
         display: block;
         width: 100%;
+        min-width: 255px;
         padding: 11px 18px;
         font-size: 12px;
         font-weight: 600;
-        color: #111827;
+        color: #111827 !important;
+        text-decoration: none;
         transition: 0.2s ease;
-        white-space: normal;
+        white-space: nowrap;
+        background: #ffffff !important;
     }
 
-    .dropdown a:hover {
-        background: #f3f4f6;
-        color: var(--primary);
+    .dropdown a:hover,
+    .dropdown a:focus {
+        background: #f3f4f6 !important;
+        color: var(--primary) !important;
         padding-left: 23px;
     }
 
@@ -222,19 +243,16 @@
         justify-content: center;
         flex-direction: column;
         gap: 7px;
-        line-height: 1;
     }
 
     .hamburger span {
         display: block;
-        width: 26px;
+        width: 28px;
         height: 3px;
         background: var(--primary);
         border-radius: 10px;
         margin: 0;
-        padding: 0;
         flex: 0 0 3px;
-        transition: 0.25s ease;
     }
 
     .hero-slide {
@@ -270,7 +288,7 @@
             right: 24px;
             width: auto;
             min-height: 0;
-            background: transparent;
+            background: transparent !important;
             box-shadow: none;
         }
 
@@ -298,9 +316,6 @@
             max-width: 30px;
             height: 3px;
             flex: 0 0 3px;
-            margin: 0;
-            padding: 0;
-            background: var(--primary);
         }
 
         .site-header.nav-collapsed .nav-menu {
@@ -315,7 +330,7 @@
             flex-direction: column;
             align-items: stretch;
             padding: 8px 0 14px;
-            background: var(--primary);
+            background: var(--primary) !important;
             border-radius: 0;
             box-shadow: none;
         }
@@ -335,23 +350,21 @@
             padding: 0 16px;
             justify-content: space-between;
             font-size: 12px;
-            color: var(--white);
         }
 
         .site-header.nav-collapsed .nav-item.home-active::after {
             display: none;
         }
 
-        /* PENGATURAN DROPDOWN SAAT NAVIGASI STICKY COLLAPSED */
         .site-header.nav-collapsed .dropdown {
             position: static;
+            min-width: 100%;
             box-shadow: none;
             padding: 5px 0;
             transform: none;
-            display: none;
-            /* Sembunyikan secara visual di mode collapsed */
             opacity: 1;
             visibility: visible;
+            display: none;
         }
 
         .site-header.nav-collapsed .nav-item:hover .dropdown {
@@ -372,18 +385,11 @@
 
     @media (max-width: 992px) {
         .site-header {
-            position: sticky;
-            top: 0;
-            background: #eef4f5;
+            background: var(--light);
         }
 
         .top-header {
             padding: 10px 74px 10px 0;
-        }
-
-        .brand-wrapper {
-            justify-content: flex-start;
-            gap: 12px;
         }
 
         .brand-main {
@@ -400,8 +406,7 @@
             right: 14px;
             width: auto;
             min-height: 0;
-            background: transparent;
-            border-radius: 0;
+            background: transparent !important;
             box-shadow: none;
         }
 
@@ -413,7 +418,6 @@
         .nav-content {
             min-height: 0;
             justify-content: flex-end;
-            position: relative;
         }
 
         .hamburger {
@@ -421,18 +425,7 @@
             width: 46px;
             height: 46px;
             margin-left: 0;
-            border-radius: 0;
             background: transparent;
-            gap: 7px;
-        }
-
-        .hamburger span {
-            width: 28px;
-            min-width: 28px;
-            max-width: 28px;
-            height: 3px;
-            flex: 0 0 3px;
-            background: var(--primary);
         }
 
         .nav-menu {
@@ -448,9 +441,7 @@
             flex-direction: column;
             align-items: stretch;
             padding: 0 0 12px;
-            background: var(--primary);
-            border-radius: 0;
-            box-shadow: none;
+            background: var(--primary) !important;
             z-index: 10050;
         }
 
@@ -469,46 +460,10 @@
             padding: 0 18px;
             justify-content: space-between;
             font-size: 12px;
-            background: transparent;
-            color: var(--white);
-        }
-
-        .nav-link:hover {
-            background: transparent;
-            color: var(--white);
-        }
-
-        .nav-link.nav-click-active {
-            background: var(--yellow);
-            color: var(--white);
-        }
-
-        .nav-item.home-active .nav-link {
-            color: var(--yellow);
-            background: transparent;
-        }
-
-        .nav-item.home-active .nav-link:hover {
-            color: var(--yellow);
-            background: transparent;
         }
 
         .nav-item.home-active::after {
             display: none;
-        }
-
-        /* PERBAIKAN RESET DROPDOWN UNTUK MOBILE */
-        .dropdown {
-            position: static;
-            min-width: 100%;
-            box-shadow: none;
-            border-radius: 0;
-            opacity: 1;
-            visibility: visible;
-            transform: none;
-            display: none;
-            padding: 5px 0;
-            background: #ffffff;
         }
 
         .nav-item:hover .dropdown {
@@ -519,9 +474,23 @@
             display: block;
         }
 
+        .dropdown {
+            position: static;
+            min-width: 100%;
+            width: 100%;
+            box-shadow: none;
+            border-radius: 0;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            display: none;
+            padding: 5px 0;
+        }
+
         .dropdown a {
+            min-width: 100%;
             padding: 12px 24px;
-            font-size: 12px;
+            white-space: normal;
         }
     }
 
@@ -529,10 +498,6 @@
         .brand-logo {
             width: 52px;
             height: 52px;
-        }
-
-        .brand-unw {
-            gap: 10px;
         }
 
         .brand-main {
@@ -557,11 +522,6 @@
             padding: 9px 70px 9px 0;
         }
 
-        .brand-wrapper {
-            justify-content: flex-start;
-            gap: 9px;
-        }
-
         .brand-logo {
             width: 46px;
             height: 46px;
@@ -579,14 +539,9 @@
             font-size: 6.5px;
         }
 
-        .brand-divider {
-            width: 1.5px;
-            height: 34px;
-        }
-
+        .brand-divider,
         .brand-school {
-            font-size: 10px;
-            white-space: normal;
+            display: none;
         }
 
         .navbar {
@@ -602,26 +557,11 @@
 
         .hamburger span {
             width: 26px;
-            min-width: 26px;
-            max-width: 26px;
-            height: 3px;
-            flex: 0 0 3px;
         }
 
         .nav-menu {
             top: 66px;
             max-height: calc(100vh - 66px);
-        }
-    }
-
-    @media (max-width: 420px) {
-        .brand-wrapper {
-            align-items: center;
-        }
-
-        .brand-school,
-        .brand-divider {
-            display: none;
         }
     }
 </style>
@@ -668,13 +608,13 @@
 
                     <li class="nav-item has-dropdown">
                         <a href="#" class="nav-link dropdown-trigger">
-                            <span>Profile</span>
+                            <span>Profil</span>
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
                             <a href="#">Tentang Pascasarjana</a>
                             <a href="{{ route('visi-misi') }}">Visi dan Misi</a>
-                            <a href="#">Struktur Organisasi</a>
+                            <a href="{{ route('profil.struktur-organisasi') }}">Struktur Organisasi</a>
                         </div>
                     </li>
 
@@ -685,10 +625,8 @@
                         </a>
                         <div class="dropdown">
                             <a href="{{ route('akademik.show', 'magister-hukum') }}">Magister Hukum</a>
-                            <a href="{{ route('akademik.show', 'magister-manajemen-pendidikan') }}">Magister Manajemen
-                                Pendidikan</a>
-                            <a href="{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}">Magister Kesehatan
-                                Masyarakat</a>
+                            <a href="{{ route('akademik.show', 'magister-manajemen-pendidikan') }}">Magister Manajemen Pendidikan</a>
+                            <a href="{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}">Magister Kesehatan Masyarakat</a>
                             <a href="{{ route('akademik.show', 'magister-keperawatan') }}">Magister Keperawatan</a>
                         </div>
                     </li>
@@ -741,6 +679,7 @@
         const navMenu = document.getElementById('navMenu');
         const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
         const heroSlides = document.querySelectorAll('.hero-slide');
+        const navLinks = document.querySelectorAll('.nav-link');
         let lastScrollY = window.scrollY;
         let lastHeroActive = document.querySelector('.hero-slide.active');
         let heroObserverLock = false;
@@ -757,6 +696,16 @@
             document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
                 item.classList.remove('open');
             });
+        }
+
+        function setActiveNav(link) {
+            navLinks.forEach((item) => item.classList.remove('nav-click-active'));
+            link.classList.add('nav-click-active');
+
+            const homeNavItem = document.getElementById('homeNavItem');
+            if (homeNavItem && link.dataset.nav !== 'home') {
+                homeNavItem.classList.add('hide-indicator');
+            }
         }
 
         function normalizeHeroSlides() {
@@ -794,7 +743,6 @@
 
             currentActive.classList.remove('slide-ready-right', 'slide-out-left');
             currentActive.classList.add('was-active');
-            const oldActive = lastHeroActive;
             lastHeroActive = currentActive;
 
             setTimeout(() => {
@@ -825,10 +773,15 @@
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 navMenu.classList.toggle('show');
-                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' :
-                    'false');
+                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('show') ? 'true' : 'false');
             }, true);
         }
+
+        navLinks.forEach((link) => {
+            link.addEventListener('click', function() {
+                setActiveNav(link);
+            });
+        });
 
         dropdownTriggers.forEach((trigger) => {
             trigger.addEventListener('click', function(event) {
@@ -836,6 +789,7 @@
 
                 event.preventDefault();
                 event.stopImmediatePropagation();
+                setActiveNav(trigger);
 
                 const currentItem = trigger.closest('.nav-item');
 
