@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visi & Misi | Pascasarjana Universitas Ngudi Waluyo</title>
     <link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --primary: #072b57;
@@ -47,6 +49,7 @@
             width: min(1120px, 92%);
             margin: 0 auto;
         }
+
         /* ------------------------------------------- */
 
         body {
@@ -151,9 +154,11 @@
                 width: min(100% - 28px, 1120px);
             }
         }
+
         /* ----------------------------------------------------- */
     </style>
 </head>
+
 <body>
 
     @include('component.header')
@@ -169,20 +174,20 @@
     <!-- Konten Utama -->
     <div class="content-wrapper">
 
-        <!-- VISI -->
         <div class="visi-misi-card">
             <div class="card-header">
-                <h2>Visi</h2>
+                {{-- Ubah pemanggilan judul visi di sini --}}
+                <h2>{{ $visiMisi->judul_visi ?? 'Visi' }}</h2>
             </div>
             <div class="card-content">
                 {!! $visiMisi->visi ?? '<p><em>Belum ada konten visi. Silakan isi melalui Admin Panel.</em></p>' !!}
             </div>
         </div>
 
-        <!-- MISI -->
         <div class="visi-misi-card">
             <div class="card-header">
-                <h2>Misi</h2>
+                {{-- Ubah pemanggilan judul misi di sini --}}
+                <h2>{{ $visiMisi->judul_misi ?? 'Misi' }}</h2>
             </div>
             <div class="card-content">
                 {!! $visiMisi->misi ?? '<p><em>Belum ada konten misi. Silakan isi melalui Admin Panel.</em></p>' !!}
@@ -194,4 +199,5 @@
     @include('component.footer')
 
 </body>
+
 </html>
