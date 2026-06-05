@@ -34,6 +34,8 @@ class StrukturOrganisasiResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Profil';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -66,13 +68,20 @@ class StrukturOrganisasiResource extends Resource
             ->columns([
                 ImageColumn::make('image_path')
                     ->label('Gambar')
-                    ->disk('public')
-                    ->height(72),
+                    ->getStateUsing(fn (StrukturOrganisasi $record): ?string => $record->image_path ? asset('storage/' . $record->image_path) : null)
+                    ->height(72)
+                    ->width(110)
+                    ->square(false),
 
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('image_path')
+                    ->label('Path')
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_active')
                     ->label('Aktif')
