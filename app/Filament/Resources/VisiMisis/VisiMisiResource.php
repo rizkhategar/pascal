@@ -10,19 +10,24 @@ use App\Filament\Resources\VisiMisis\Tables\VisiMisisTable;
 use App\Models\VisiMisi;
 use BackedEnum;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema; // Menggunakan Schema kembali
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class VisiMisiResource extends Resource
 {
     protected static ?string $model = VisiMisi::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
-    
+
     protected static ?string $navigationLabel = 'Visi & Misi';
+
     protected static ?string $pluralModelLabel = 'Visi & Misi';
 
-    // Disini wajib pakai Schema $schema sesuai bawaan Filament versimu
+    protected static string|UnitEnum|null $navigationGroup = 'Profil';
+
+    protected static ?int $navigationSort = 2;
+
     public static function form(Schema $schema): Schema
     {
         return VisiMisiForm::configure($schema);
