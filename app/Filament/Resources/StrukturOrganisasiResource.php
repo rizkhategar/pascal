@@ -54,11 +54,11 @@ class StrukturOrganisasiResource extends Resource
                         'image/png',
                         'image/webp',
                     ])
-                    ->maxSize(10240)
-                    ->imagePreviewHeight(180)
-                    ->previewable(true)
-                    ->preserveFilenames()
-                    ->helperText('Gunakan gambar JPG, PNG, atau WEBP. Maksimal 10 MB.')
+                    ->maxSize(5120)
+                    ->multiple(false)
+                    ->storeFiles(true)
+                    ->previewable(false)
+                    ->helperText('Upload gambar JPG, PNG, atau WEBP. Maksimal 5 MB.')
                     ->required(),
 
                 Toggle::make('is_active')
