@@ -18,6 +18,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use UnitEnum;
 
 class StrukturOrganisasiResource extends Resource
@@ -51,14 +53,18 @@ class StrukturOrganisasiResource extends Resource
                     ->visibility('public')
                     ->acceptedFileTypes([
                         'image/jpeg',
+                        'image/jpg',
                         'image/png',
                         'image/webp',
                     ])
-                    ->maxSize(10240)
-                    ->imagePreviewHeight(180)
-                    ->previewable(true)
-                    ->preserveFilenames()
-                    ->helperText('Gunakan gambar JPG, PNG, atau WEBP. Maksimal 10 MB.')
+                    ->maxSize(5120)
+                    ->multiple(false)
+                    ->previewable(false)
+                    ->imagePreviewHeight(null)
+                    ->getUploadedFileNameForStorageUsing(
+                        fn (TemporaryUploadedFile $file): string => 'struktur-organisasi-' . now()->format('YmdHis') . '-' . Str::random(8) . '.' . $file->getClientOriginalExtension()
+                    )
+                    ->helperText('Upload gambar JPG, PNG, atau WEBP. Maksimal 5 MB. Nama file akan dibuat otomatis agar proses upload tidak macet.')
                     ->required(),
 
                 Toggle::make('is_active')
