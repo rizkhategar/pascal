@@ -46,7 +46,7 @@ class StrukturOrganisasiResource extends Resource
 
                 Placeholder::make('upload_info')
                     ->label('Upload Gambar Struktur Organisasi')
-                    ->content('Gunakan halaman create/edit khusus. Upload file diproses saat tombol simpan ditekan, bukan lewat FilePond, agar tidak stuck di Uploading 100%.'),
+                    ->content('Gunakan tombol Tambah/Edit dari tabel. Upload file diproses saat tombol simpan ditekan, bukan lewat FilePond.'),
 
                 TextInput::make('image_path')
                     ->label('Path Gambar')
@@ -84,7 +84,8 @@ class StrukturOrganisasiResource extends Resource
                     ->sortable(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->url(fn (StrukturOrganisasi $record): string => route('admin.struktur-organisasi-upload.edit', $record)),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
