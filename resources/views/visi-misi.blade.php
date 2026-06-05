@@ -172,7 +172,6 @@
         <!-- VISI -->
         <div class="visi-misi-card">
             <div class="card-header">
-                <div class="card-icon">👁️</div>
                 <h2>Visi</h2>
             </div>
             <div class="card-content">
@@ -183,7 +182,6 @@
         <!-- MISI -->
         <div class="visi-misi-card">
             <div class="card-header">
-                <div class="card-icon">🎯</div>
                 <h2>Misi</h2>
             </div>
             <div class="card-content">
