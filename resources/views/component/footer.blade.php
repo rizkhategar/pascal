@@ -20,6 +20,11 @@
     pointer-events: auto;
 }
 
+.program-section .program-card,
+.program-section .program-detail {
+    cursor: pointer;
+}
+
 .footer{
     background:#022B63;
     color:#fff;
@@ -223,7 +228,7 @@
                     </li>
 
                     <li>
-                        <a href="#">Admisi</a>
+                        <a href="https://pmb.unw.ac.id/">Admisi</a>
                     </li>
 
                     <li>
@@ -269,3 +274,59 @@
 
     </div>
 </footer>
+
+<script>
+    (function () {
+        function bindProgramDetailLinks() {
+            const programCards = document.querySelectorAll('.program-section .program-card');
+
+            const programDetailRoutes = [
+                "{{ route('akademik.show', 'magister-hukum') }}",
+                "{{ route('akademik.show', 'magister-manajemen-pendidikan') }}",
+                "{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}",
+                "{{ route('akademik.show', 'magister-keperawatan') }}",
+            ];
+
+            programCards.forEach(function (card, index) {
+                const url = programDetailRoutes[index];
+                if (!url) return;
+
+                card.setAttribute('href', url);
+                card.setAttribute('aria-label', 'Lihat detail program studi');
+
+                const detailText = card.querySelector('.program-detail');
+
+                if (detailText) {
+                    detailText.setAttribute('role', 'link');
+                    detailText.setAttribute('tabindex', '0');
+                    detailText.dataset.href = url;
+                }
+            });
+        }
+
+        document.addEventListener('click', function (event) {
+            const detailText = event.target.closest('.program-section .program-detail');
+            if (!detailText || !detailText.dataset.href) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+            window.location.href = detailText.dataset.href;
+        }, true);
+
+        document.addEventListener('keydown', function (event) {
+            const detailText = event.target.closest('.program-section .program-detail');
+            if (!detailText || !detailText.dataset.href) return;
+
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                window.location.href = detailText.dataset.href;
+            }
+        }, true);
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bindProgramDetailLinks);
+        } else {
+            bindProgramDetailLinks();
+        }
+    })();
+</script>
