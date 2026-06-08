@@ -29,6 +29,7 @@ class HomeHeroSlideUploadController extends Controller
             'subtitle' => ['required', 'string', 'max:255'],
             'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
+            'duration_ms' => ['nullable', 'integer', 'min:1000', 'max:30000'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
@@ -43,6 +44,7 @@ class HomeHeroSlideUploadController extends Controller
             'subtitle' => $validated['subtitle'],
             'image_path' => $path,
             'sort_order' => $validated['sort_order'] ?? 0,
+            'duration_ms' => $validated['duration_ms'] ?? 3000,
             'is_active' => $request->boolean('is_active'),
         ]);
 
@@ -58,6 +60,7 @@ class HomeHeroSlideUploadController extends Controller
             'subtitle' => ['required', 'string', 'max:255'],
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
+            'duration_ms' => ['nullable', 'integer', 'min:1000', 'max:30000'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
@@ -65,6 +68,7 @@ class HomeHeroSlideUploadController extends Controller
             'title' => $validated['title'],
             'subtitle' => $validated['subtitle'],
             'sort_order' => $validated['sort_order'] ?? 0,
+            'duration_ms' => $validated['duration_ms'] ?? 3000,
             'is_active' => $request->boolean('is_active'),
         ];
 
