@@ -18,6 +18,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 use UnitEnum;
 
 class HomeHeroSlideResource extends Resource
@@ -77,7 +78,9 @@ class HomeHeroSlideResource extends Resource
             ->columns([
                 ImageColumn::make('image_path')
                     ->label('Gambar')
-                    ->getStateUsing(fn (HomeHeroSlide $record): ?string => $record->image_path ? asset('storage/' . $record->image_path) : null)
+                    ->getStateUsing(fn (HomeHeroSlide $record): ?string => $record->image_path && Storage::disk('public')->exists($record->image_path)
+                        ? Storage::disk('public')->url($record->image_path)
+                        : null)
                     ->height(72)
                     ->width(128)
                     ->square(false),
@@ -91,6 +94,11 @@ class HomeHeroSlideResource extends Resource
                     ->label('Subtitle')
                     ->searchable()
                     ->limit(42),
+
+                TextColumn::make('image_path')
+                    ->label('Path')
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('sort_order')
                     ->label('Urutan')
