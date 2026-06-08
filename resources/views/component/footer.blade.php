@@ -61,6 +61,27 @@
     cursor: pointer;
 }
 
+.nav-link.nav-route-active,
+.nav-item.route-active > .nav-link {
+    background: var(--yellow) !important;
+    color: var(--white) !important;
+}
+
+.dropdown a.dropdown-route-active {
+    background: #f3f4f6 !important;
+    color: var(--primary) !important;
+    font-weight: 800 !important;
+    padding-left: 23px !important;
+}
+
+.nav-item.home-active:not(.route-active)::after {
+    display: none !important;
+}
+
+.nav-item.home-active.route-active::after {
+    display: block !important;
+}
+
 .footer{
     background:#022B63;
     color:#fff;
@@ -421,6 +442,116 @@
 
 <script>
     (function () {
+        function isUsableRouteLink(link) {
+            const rawHref = link.getAttribute('href') || '';
+            const trimmedHref = rawHref.trim();
+
+            if (!trimmedHref || trimmedHref === '#' || trimmedHref.startsWith('#') || trimmedHref.toLowerCase().startsWith('javascript:')) {
+                return false;
+            }
+
+            try {
+                const url = new URL(link.href, window.location.origin);
+                return url.origin === window.location.origin;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function normalizePath(value) {
+            try {
+                const url = new URL(value, window.location.origin);
+                return url.pathname.replace(/\/+$/, '') || '/';
+            } catch (error) {
+                return String(value || '').replace(/\/+$/, '') || '/';
+            }
+        }
+
+        function activateHeaderByCurrentPage() {
+            const currentPath = normalizePath(window.location.pathname);
+            const navMenu = document.getElementById('navMenu');
+            if (!navMenu) return;
+
+            const navItems = navMenu.querySelectorAll('.nav-item');
+            const navLinks = navMenu.querySelectorAll('.nav-link');
+            const dropdownLinks = navMenu.querySelectorAll('.dropdown a');
+            const homeNavItem = document.getElementById('homeNavItem');
+
+            navItems.forEach((item) => item.classList.remove('route-active'));
+            navLinks.forEach((link) => link.classList.remove('nav-route-active', 'nav-click-active'));
+            dropdownLinks.forEach((link) => link.classList.remove('dropdown-route-active'));
+
+            let activeTopLink = null;
+            let activeDropdownLink = null;
+
+            dropdownLinks.forEach((link) => {
+                if (!isUsableRouteLink(link)) return;
+
+                const linkPath = normalizePath(link.href);
+                if (linkPath === currentPath) {
+                    activeDropdownLink = link;
+                }
+            });
+
+            if (activeDropdownLink) {
+                const parentItem = activeDropdownLink.closest('.nav-item');
+                const parentLink = parentItem?.querySelector(':scope > .nav-link');
+
+                activeDropdownLink.classList.add('dropdown-route-active');
+                parentItem?.classList.add('route-active');
+                parentLink?.classList.add('nav-route-active');
+                homeNavItem?.classList.add('hide-indicator');
+                return;
+            }
+
+            navLinks.forEach((link) => {
+                if (!isUsableRouteLink(link)) return;
+
+                const linkPath = normalizePath(link.href);
+                if (linkPath === currentPath) {
+                    activeTopLink = link;
+                }
+            });
+
+            if (activeTopLink) {
+                const parentItem = activeTopLink.closest('.nav-item');
+                parentItem?.classList.add('route-active');
+                activeTopLink.classList.add('nav-route-active');
+
+                if (parentItem?.id === 'homeNavItem') {
+                    homeNavItem?.classList.remove('hide-indicator');
+                } else {
+                    homeNavItem?.classList.add('hide-indicator');
+                }
+                return;
+            }
+
+            if (currentPath.startsWith('/akademik')) {
+                const akademikItem = Array.from(navItems).find((item) => item.textContent.trim().toLowerCase().startsWith('akademik'));
+                const akademikLink = akademikItem?.querySelector(':scope > .nav-link');
+                akademikItem?.classList.add('route-active');
+                akademikLink?.classList.add('nav-route-active');
+                homeNavItem?.classList.add('hide-indicator');
+                return;
+            }
+
+            if (currentPath.startsWith('/profil') || currentPath === '/visi-misi' || currentPath === '/tentang-pascasarjana') {
+                const profilItem = Array.from(navItems).find((item) => item.textContent.trim().toLowerCase().startsWith('profil'));
+                const profilLink = profilItem?.querySelector(':scope > .nav-link');
+                profilItem?.classList.add('route-active');
+                profilLink?.classList.add('nav-route-active');
+                homeNavItem?.classList.add('hide-indicator');
+                return;
+            }
+
+            if (currentPath === '/') {
+                const homeLink = homeNavItem?.querySelector('.nav-link');
+                homeNavItem?.classList.add('route-active');
+                homeLink?.classList.add('nav-route-active');
+                homeNavItem?.classList.remove('hide-indicator');
+            }
+        }
+
         function bindProgramDetailLinks() {
             const programCards = document.querySelectorAll('.program-section .program-card');
             const programDetailRoutes = [
@@ -467,9 +598,13 @@
         }, true);
 
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', bindProgramDetailLinks);
+            document.addEventListener('DOMContentLoaded', function () {
+                bindProgramDetailLinks();
+                activateHeaderByCurrentPage();
+            });
         } else {
             bindProgramDetailLinks();
+            activateHeaderByCurrentPage();
         }
     })();
 </script>
