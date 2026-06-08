@@ -155,7 +155,7 @@
 
                         <div class="struktur-image-wrapper">
                             <img
-                                src="{{ asset('storage/' . $strukturOrganisasi->image_path) }}"
+                                src="{{ route('struktur-organisasi.image', $strukturOrganisasi) }}"
                                 alt="{{ $strukturOrganisasi->title }}"
                                 class="struktur-image"
                             >
