@@ -1363,7 +1363,7 @@
         <div class="container">
             <div class="program-grid">
 
-                <a href="#" class="program-card">
+                <a href="{{ route('akademik.show', 'magister-hukum') }}" class="program-card">
                     <div class="program-icon">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path
@@ -1374,7 +1374,7 @@
                     <span class="program-detail">Detail</span>
                 </a>
 
-                <a href="#" class="program-card">
+                <a href="{{ route('akademik.show', 'magister-manajemen-pendidikan') }}" class="program-card">
                     <div class="program-icon">
                         <svg viewBox="0 0 24 24">
                             <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 14.2L5 13.4V17l7 4 7-4v-3.6l-7 3.8Z" />
@@ -1384,7 +1384,7 @@
                     <span class="program-detail">Detail</span>
                 </a>
 
-                <a href="#" class="program-card">
+                <a href="{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}" class="program-card">
                     <div class="program-icon">
                         <svg viewBox="0 0 24 24">
                             <path
@@ -1395,7 +1395,7 @@
                     <span class="program-detail">Detail</span>
                 </a>
 
-                <a href="#" class="program-card">
+                <a href="{{ route('akademik.show', 'magister-keperawatan') }}" class="program-card">
                     <div class="program-icon">
                         <svg viewBox="0 0 24 24">
                             <path
