@@ -7,14 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class TentangPascasarjana extends Model
 {
     protected $fillable = [
+        'hero_image',
         'subheading',
         'heading',
         'description',
         'points',
-        'direktur_image',   // Tambahan baru
-        'direktur_name',    // Tambahan baru
-        'direktur_title',   // Tambahan baru
-        'direktur_message', // Tambahan baru
+        'direktur_heading',  
+        'direktur_greeting',
+        'direktur_name',    
+        'direktur_title',   
+        'direktur_image',   
+        'direktur_message', 
     ];
 
     protected $casts = [
