@@ -94,7 +94,7 @@ class StrukturOrganisasiResource extends Resource
             ])
             ->recordActions([
                 EditAction::make()
-                    ->url(fn (StrukturOrganisasi $record): string => route('admin.struktur-organisasi-upload.edit', $record)),
+                    ->url(fn (StrukturOrganisasi $record): string => static::getUrl('edit', ['record' => $record])),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
