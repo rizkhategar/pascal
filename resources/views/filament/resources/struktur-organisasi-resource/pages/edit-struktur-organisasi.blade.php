@@ -1,12 +1,35 @@
 <x-filament-panels::page>
-    <form action="{{ route('admin.struktur-organisasi-upload.update', $this->record) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <style>
+        .custom-filament-form { width: min(100%, 920px); display: grid; gap: 24px; }
+        .custom-form-card { border: 1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.035); border-radius: 16px; padding: 24px; }
+        .custom-form-grid { display: grid; gap: 22px; }
+        .custom-field label, .custom-checkbox span { display: block; margin-bottom: 8px; color: #f4f4f5; font-size: 14px; font-weight: 700; }
+        .custom-field input[type="text"], .custom-field input[type="number"], .custom-field input[type="file"] { display: block; width: 100%; min-height: 42px; border: 1px solid rgba(255,255,255,.14); background: #111114; color: #f4f4f5; border-radius: 10px; padding: 10px 12px; outline: none; }
+        .custom-field input:focus { border-color: #f59e0b; box-shadow: 0 0 0 1px #f59e0b; }
+        .custom-field input[type="file"]::file-selector-button { border: 0; border-radius: 8px; background: #f59e0b; color: #111827; font-weight: 800; padding: 8px 12px; margin-right: 14px; cursor: pointer; }
+        .custom-help { margin-top: 8px; color: #a1a1aa; font-size: 14px; line-height: 1.5; }
+        .custom-preview { display: block; width: 100%; max-height: 360px; object-fit: contain; border: 1px solid rgba(255,255,255,.12); background: #fff; border-radius: 14px; }
+        .custom-checkbox { display: flex; align-items: center; gap: 10px; color: #f4f4f5; font-size: 14px; font-weight: 700; }
+        .custom-checkbox span { margin-bottom: 0; }
+        .custom-checkbox input { width: 18px; height: 18px; accent-color: #f59e0b; }
+        .custom-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+        .custom-btn-primary, .custom-btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 9px 16px; border-radius: 9px; font-size: 14px; font-weight: 800; text-decoration: none; cursor: pointer; }
+        .custom-btn-primary { border: 0; background: #f59e0b; color: #111827; }
+        .custom-btn-primary:hover { background: #fbbf24; }
+        .custom-btn-secondary { border: 1px solid rgba(255,255,255,.14); background: transparent; color: #f4f4f5; }
+        .custom-btn-secondary:hover { background: rgba(255,255,255,.06); }
+        .custom-error { border: 1px solid rgba(239,68,68,.65); background: rgba(127,29,29,.25); color: #fecaca; border-radius: 14px; padding: 14px 18px; font-size: 14px; }
+        .custom-error ul { margin: 8px 0 0; padding-left: 20px; }
+    </style>
+
+    <form action="{{ route('admin.struktur-organisasi-upload.update', $this->record) }}" method="POST" enctype="multipart/form-data" class="custom-filament-form">
         @csrf
         @method('PUT')
 
         @if ($errors->any())
-            <div class="rounded-xl border border-danger-500/50 bg-danger-500/10 p-4 text-sm text-danger-200">
+            <div class="custom-error">
                 <strong>Data belum valid.</strong>
-                <ul class="mt-2 list-disc ps-5">
+                <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -14,38 +37,38 @@
             </div>
         @endif
 
-        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-6 shadow-sm">
-            <div class="grid gap-6">
-                <div>
-                    <label for="title" class="mb-2 block text-sm font-medium text-white">Judul</label>
-                    <input type="text" id="title" name="title" value="{{ old('title', $this->record->title) }}" required class="block w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+        <div class="custom-form-card">
+            <div class="custom-form-grid">
+                <div class="custom-field">
+                    <label for="title">Judul</label>
+                    <input type="text" id="title" name="title" value="{{ old('title', $this->record->title) }}" required>
                 </div>
 
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-white">Gambar Saat Ini</label>
+                <div class="custom-field">
+                    <label>Gambar Saat Ini</label>
                     @if ($this->record->image_path)
-                        <img src="{{ asset('storage/' . $this->record->image_path) }}" alt="{{ $this->record->title }}" class="max-h-80 w-full rounded-xl border border-white/10 bg-white object-contain">
+                        <img src="{{ asset('storage/' . $this->record->image_path) }}" alt="{{ $this->record->title }}" class="custom-preview">
                     @else
-                        <p class="text-sm text-gray-400">Belum ada gambar.</p>
+                        <p class="custom-help">Belum ada gambar.</p>
                     @endif
                 </div>
 
-                <div>
-                    <label for="image" class="mb-2 block text-sm font-medium text-white">Ganti Gambar Struktur Organisasi</label>
-                    <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp" class="block w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white file:me-4 file:rounded-md file:border-0 file:bg-primary-500 file:px-3 file:py-2 file:font-semibold file:text-gray-950">
-                    <p class="mt-2 text-sm text-gray-400">Kosongkan jika tidak ingin mengganti gambar. File JPG, PNG, atau WEBP. Maksimal 5 MB.</p>
+                <div class="custom-field">
+                    <label for="image">Ganti Gambar Struktur Organisasi</label>
+                    <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                    <p class="custom-help">Kosongkan jika tidak ingin mengganti gambar. File JPG, PNG, atau WEBP. Maksimal 5 MB.</p>
                 </div>
 
-                <label class="flex items-center gap-3 text-sm font-medium text-white">
-                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $this->record->is_active) ? 'checked' : '' }} class="rounded border-white/10 bg-white/[0.04] text-primary-500 focus:ring-primary-500">
-                    Aktif
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $this->record->is_active) ? 'checked' : '' }}>
+                    <span>Aktif</span>
                 </label>
             </div>
         </div>
 
-        <div class="flex flex-wrap gap-3">
-            <button type="submit" class="rounded-lg bg-primary-500 px-4 py-2 text-sm font-semibold text-gray-950 hover:bg-primary-400">Simpan Perubahan</button>
-            <a href="{{ \App\Filament\Resources\StrukturOrganisasiResource::getUrl('index') }}" class="rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/5">Batal</a>
+        <div class="custom-actions">
+            <button type="submit" class="custom-btn-primary">Simpan Perubahan</button>
+            <a href="{{ \App\Filament\Resources\StrukturOrganisasiResource::getUrl('index') }}" class="custom-btn-secondary">Batal</a>
         </div>
     </form>
 </x-filament-panels::page>
