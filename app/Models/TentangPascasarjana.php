@@ -11,6 +11,10 @@ class TentangPascasarjana extends Model
         'heading',
         'description',
         'points',
+        'direktur_image',   // Tambahan baru
+        'direktur_name',    // Tambahan baru
+        'direktur_title',   // Tambahan baru
+        'direktur_message', // Tambahan baru
     ];
 
     protected $casts = [

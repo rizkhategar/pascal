@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Pascasarjana | Universitas Ngudi Waluyo</title>
     <link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -32,18 +32,19 @@
         }
         .page-hero h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 10px; }
 
-        /* GRID LAYOUT UNTUK KONTEN */
+        /* ==========================================
+           1. BAGIAN TENTANG KAMI UTAMA (ATAS)
+           ========================================== */
         .about-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             max-width: 1100px;
-            margin: 70px auto;
+            margin: 70px auto 60px; /* Margin bottom diubah agar ada jarak dengan sambutan */
             padding: 0 20px;
             align-items: start;
         }
 
-        /* BAGIAN KIRI (TEKS UTAMA) */
         .about-left .subheading {
             color: var(--yellow);
             font-weight: 700;
@@ -67,7 +68,6 @@
             text-align: justify;
         }
 
-        /* BAGIAN KANAN (POIN FITUR/KEUNGGULAN) */
         .about-right {
             display: flex;
             flex-direction: column;
@@ -90,7 +90,7 @@
             width: 65px;
             height: 65px;
             flex-shrink: 0;
-            background: #fdfaf3; /* Warna krem tipis */
+            background: #fdfaf3;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -114,10 +114,88 @@
             line-height: 1.6;
         }
 
-        /* RESPONSIVE UNTUK HP & TABLET */
+        /* ==========================================
+           2. BAGIAN SAMBUTAN DIREKTUR (BAWAH)
+           ========================================== */
+        .sambutan-wrapper { 
+            max-width: 1100px; 
+            margin: 0 auto 90px; 
+            padding: 0 20px; 
+        }
+        .sambutan-card { 
+            background: white; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06); 
+            display: flex; 
+            overflow: hidden; 
+        }
+        .sambutan-img { 
+            flex: 0 0 35%; 
+            background: var(--primary-dark); 
+            position: relative; 
+        }
+        .sambutan-img img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: top center; 
+            min-height: 400px; 
+        }
+        .sambutan-content { 
+            padding: 50px 50px; 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            background: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Efek tekstur tipis elegan */
+        }
+        .quote-icon { 
+            color: var(--yellow); 
+            opacity: 0.4; 
+            width: 45px; 
+            height: 45px; 
+            margin-bottom: 20px; 
+        }
+        .sambutan-text { 
+            font-size: 1.15rem; 
+            line-height: 1.85; 
+            color: #374151; 
+            font-style: italic; 
+            margin-bottom: 35px; 
+        }
+        .sambutan-text p { 
+            margin-bottom: 15px; 
+        }
+        .direktur-info { 
+            border-left: 4px solid var(--yellow); 
+            padding-left: 15px; 
+        }
+        .direktur-info h4 { 
+            color: var(--primary); 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            margin-bottom: 6px; 
+            letter-spacing: -0.5px; 
+        }
+        .direktur-info p { 
+            color: #6b7280; 
+            font-weight: 600; 
+            font-size: 0.95rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
+        /* ==========================================
+           RESPONSIVE UNTUK HP & TABLET
+           ========================================== */
         @media (max-width: 992px) {
             .about-wrapper { grid-template-columns: 1fr; gap: 40px; margin: 50px auto; }
             .about-left h2 { font-size: 2rem; }
+            
+            /* Penyesuaian Sambutan untuk HP */
+            .sambutan-card { flex-direction: column; }
+            .sambutan-img { flex: none; height: 450px; }
+            .sambutan-content { padding: 40px 30px; }
         }
     </style>
 </head>
@@ -170,6 +248,39 @@
             </div>
         @endif
     </div>
+
+    @if($tentang && (!empty($tentang->direktur_name) || !empty($tentang->direktur_message)))
+    <div class="sambutan-wrapper">
+        <div class="sambutan-card">
+            
+            <div class="sambutan-img">
+                @if(!empty($tentang->direktur_image))
+                    <img src="{{ asset('storage/' . $tentang->direktur_image) }}" alt="{{ $tentang->direktur_name }}">
+                @else
+                    <div style="width: 100%; height: 100%; min-height: 400px; display: flex; align-items: center; justify-content: center; background: #e2e8f0; color: #94a3b8;">
+                        <svg width="80" height="80" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                @endif
+            </div>
+
+            <div class="sambutan-content">
+                <svg class="quote-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                
+                <div class="sambutan-text">
+                    {!! $tentang->direktur_message ?? '<p>Pesan sambutan pimpinan belum ditambahkan.</p>' !!}
+                </div>
+                
+                <div class="direktur-info">
+                    <h4>{{ $tentang->direktur_name ?? 'Nama Direktur Belum Diisi' }}</h4>
+                    <p>{{ $tentang->direktur_title ?? 'Direktur Pascasarjana Universitas Ngudi Waluyo' }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @endif
 
     @include('component.footer')
 
