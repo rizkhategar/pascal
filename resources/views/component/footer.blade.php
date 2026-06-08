@@ -315,7 +315,7 @@
             return [
                 'title' => $slide->title,
                 'subtitle' => $slide->subtitle,
-                'image' => asset('storage/' . $slide->image_path),
+                'image' => route('hero-campus.image', $slide),
             ];
         })->values();
     @endphp
