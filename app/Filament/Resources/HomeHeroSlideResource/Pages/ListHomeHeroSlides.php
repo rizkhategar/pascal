@@ -15,7 +15,7 @@ class ListHomeHeroSlides extends ListRecords
         return [
             CreateAction::make()
                 ->label('Tambah Hero Campus')
-                ->url(route('admin.home-hero-slides.create-custom')),
+                ->url(HomeHeroSlideResource::getUrl('create')),
         ];
     }
 }
