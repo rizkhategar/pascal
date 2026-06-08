@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\TentangPascasarjanas;
+namespace App\Filament\Resources\TentangPascasarjanas; 
 
 use App\Filament\Resources\TentangPascasarjanas\Pages;
 use App\Filament\Resources\TentangPascasarjanas\Schemas\TentangPascasarjanaForm;
@@ -44,6 +44,7 @@ class TentangPascasarjanaResource extends Resource
         ];
     }
 
+    // Membatasi hanya boleh ada 1 data Tentang Kami
     public static function canCreate(): bool
     {
         return TentangPascasarjana::count() === 0;

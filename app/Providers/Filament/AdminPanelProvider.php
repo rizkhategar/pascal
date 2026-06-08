@@ -36,6 +36,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
+                    ->label('Beranda')
+                    ->collapsed(false),
+
+                NavigationGroup::make()
                     ->label('Profil')
                     ->collapsed(false),
 
