@@ -43,7 +43,7 @@ class HomeHeroSlideResource extends Resource
             ->components([
                 Placeholder::make('upload_info')
                     ->label('Pengaturan Hero Campus')
-                    ->content('Gunakan tombol Tambah/Edit dari tabel. Upload gambar memakai form biasa agar tidak stuck di Uploading 100%.'),
+                    ->content('Gunakan tombol Tambah/Edit dari tabel. Upload gambar diproses saat tombol simpan ditekan.'),
 
                 TextInput::make('title')
                     ->label('Judul')
@@ -84,7 +84,7 @@ class HomeHeroSlideResource extends Resource
                 ImageColumn::make('image_path')
                     ->label('Gambar')
                     ->getStateUsing(fn (HomeHeroSlide $record): ?string => $record->image_path && Storage::disk('public')->exists($record->image_path)
-                        ? Storage::disk('public')->url($record->image_path)
+                        ? route('hero-campus.image', $record)
                         : null)
                     ->height(72)
                     ->width(128)

@@ -18,6 +18,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 use UnitEnum;
 
 class StrukturOrganisasiResource extends Resource
@@ -48,7 +49,7 @@ class StrukturOrganisasiResource extends Resource
 
                 Placeholder::make('upload_info')
                     ->label('Upload Gambar Struktur Organisasi')
-                    ->content('Gunakan tombol Tambah/Edit dari tabel. Upload file diproses saat tombol simpan ditekan, bukan lewat FilePond.'),
+                    ->content('Gunakan tombol Tambah/Edit dari tabel. Upload file diproses saat tombol simpan ditekan.'),
 
                 TextInput::make('image_path')
                     ->label('Path Gambar')
@@ -68,7 +69,9 @@ class StrukturOrganisasiResource extends Resource
             ->columns([
                 ImageColumn::make('image_path')
                     ->label('Gambar')
-                    ->getStateUsing(fn (StrukturOrganisasi $record): ?string => $record->image_path ? asset('storage/' . $record->image_path) : null)
+                    ->getStateUsing(fn (StrukturOrganisasi $record): ?string => $record->image_path && Storage::disk('public')->exists($record->image_path)
+                        ? route('struktur-organisasi.image', $record)
+                        : null)
                     ->height(72)
                     ->width(110)
                     ->square(false),
