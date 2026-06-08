@@ -6,8 +6,8 @@ use App\Filament\Resources\TentangPascasarjanaResource\Pages;
 use App\Models\TentangPascasarjana;
 use BackedEnum;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -26,10 +26,10 @@ class TentangPascasarjanaResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Forms\Components\Section::make('Teks Utama (Bagian Kiri)')
                     ->schema([
                         Forms\Components\TextInput::make('subheading')
@@ -37,15 +37,18 @@ class TentangPascasarjanaResource extends Resource
                             ->default('Tentang Kami')
                             ->label('Sub Judul')
                             ->maxLength(255),
+
                         Forms\Components\TextInput::make('heading')
                             ->required()
                             ->label('Judul Utama')
                             ->maxLength(255),
+
                         Forms\Components\Textarea::make('description')
                             ->required()
                             ->label('Deskripsi')
                             ->rows(6),
-                    ])->columnSpan(1),
+                    ])
+                    ->columnSpan(1),
 
                 Forms\Components\Section::make('Poin-Poin Utama (Bagian Kanan)')
                     ->schema([
@@ -55,18 +58,22 @@ class TentangPascasarjanaResource extends Resource
                                     ->image()
                                     ->directory('tentang-icons')
                                     ->label('Ikon (SVG/PNG transparan)'),
+
                                 Forms\Components\TextInput::make('title')
                                     ->required()
                                     ->label('Judul Poin (Contoh: Kelebihan)'),
+
                                 Forms\Components\Textarea::make('description')
                                     ->required()
                                     ->label('Deskripsi Singkat')
                                     ->rows(3),
                             ])
                             ->defaultItems(3)
-                            ->columns(1)
-                    ])->columnSpan(1)
-            ])->columns(2);
+                            ->columns(1),
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns(2);
     }
 
     public static function table(Table $table): Table
