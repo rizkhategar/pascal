@@ -11,6 +11,7 @@ class HomeHeroSlide extends Model
         'subtitle',
         'image_path',
         'sort_order',
+        'duration_ms',
         'is_active',
     ];
 
@@ -18,6 +19,7 @@ class HomeHeroSlide extends Model
     {
         return [
             'sort_order' => 'integer',
+            'duration_ms' => 'integer',
             'is_active' => 'boolean',
         ];
     }
