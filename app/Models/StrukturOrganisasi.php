@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class StrukturOrganisasi extends Model
 {
@@ -19,5 +20,14 @@ class StrukturOrganisasi extends Model
         return [
             'is_active' => 'boolean',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (StrukturOrganisasi $strukturOrganisasi): void {
+            if ($strukturOrganisasi->image_path && Storage::disk('public')->exists($strukturOrganisasi->image_path)) {
+                Storage::disk('public')->delete($strukturOrganisasi->image_path);
+            }
+        });
     }
 }
