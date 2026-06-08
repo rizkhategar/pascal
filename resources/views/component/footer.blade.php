@@ -207,10 +207,7 @@
 
 <footer class="footer">
     <div class="container">
-
         <div class="footer-content">
-
-            {{-- KONTAK --}}
             <div class="footer-column">
                 <h3>KONTAK</h3>
 
@@ -237,7 +234,6 @@
                 </div>
             </div>
 
-            {{-- LOKASI --}}
             <div class="footer-column">
                 <h3>LOKASI</h3>
 
@@ -252,60 +248,32 @@
                 </div>
             </div>
 
-            {{-- LINK CEPAT --}}
             <div class="footer-column">
                 <h3>LINK CEPAT</h3>
 
                 <ul class="footer-links">
-                    <li>
-                        <a href="#">Akreditasi</a>
-                    </li>
-
-                    <li>
-                        <a href="https://pmb.unw.ac.id/">Admisi</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Penjaminan Mutu</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Riset & PDM</a>
-                    </li>
+                    <li><a href="#">Akreditasi</a></li>
+                    <li><a href="https://pmb.unw.ac.id/">Admisi</a></li>
+                    <li><a href="#">Penjaminan Mutu</a></li>
+                    <li><a href="#">Riset & PDM</a></li>
                 </ul>
             </div>
 
-            {{-- MEDIA SOSIAL --}}
             <div class="footer-column">
                 <h3>MEDIA SOSIAL</h3>
 
                 <div class="social-icons">
-
-                    <a href="#">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-
-                    <a href="#">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-
-                    <a href="#">
-                        <i class="fab fa-x-twitter"></i>
-                    </a>
-
-                    <a href="#">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-
         </div>
 
         <div class="footer-bottom">
             © {{ date('Y') }} Universitas Ngudi Waluyo. All Rights Reserved
         </div>
-
     </div>
 </footer>
 
@@ -316,6 +284,7 @@
                 'title' => $slide->title,
                 'subtitle' => $slide->subtitle,
                 'image' => route('hero-campus.image', $slide),
+                'duration' => (int) ($slide->duration_ms ?? 3000),
             ];
         })->values();
     @endphp
@@ -324,6 +293,51 @@
         (function () {
             const heroSlidesData = @json($heroSlidesData);
             if (!heroSlidesData.length) return;
+
+            const fakeIntervals = new Map();
+            let fakeIntervalId = 900000;
+            const nativeSetInterval = window.setInterval.bind(window);
+            const nativeClearInterval = window.clearInterval.bind(window);
+
+            function currentDuration() {
+                const activeIndex = Math.max(0, [...document.querySelectorAll('.hero-slide')].findIndex((slide) => slide.classList.contains('active')));
+                const duration = Number(heroSlidesData[activeIndex]?.duration || heroSlidesData[0]?.duration || 3000);
+                return Math.min(30000, Math.max(1000, duration));
+            }
+
+            window.setInterval = function (callback, delay, ...args) {
+                const callbackName = callback && callback.name ? callback.name : '';
+                const shouldControlHero = delay === 2500 && (callbackName === 'goToNextSlide' || document.querySelector('.hero'));
+
+                if (!shouldControlHero) {
+                    return nativeSetInterval(callback, delay, ...args);
+                }
+
+                const id = ++fakeIntervalId;
+                const state = { cleared: false, timeoutId: null };
+                fakeIntervals.set(id, state);
+
+                const run = () => {
+                    if (state.cleared) return;
+                    callback(...args);
+                    state.timeoutId = setTimeout(run, currentDuration());
+                };
+
+                state.timeoutId = setTimeout(run, currentDuration());
+                return id;
+            };
+
+            window.clearInterval = function (id) {
+                if (fakeIntervals.has(id)) {
+                    const state = fakeIntervals.get(id);
+                    state.cleared = true;
+                    clearTimeout(state.timeoutId);
+                    fakeIntervals.delete(id);
+                    return;
+                }
+
+                nativeClearInterval(id);
+            };
 
             const hero = document.querySelector('.hero');
             const dotsWrapper = document.getElementById('heroDots');
@@ -366,20 +380,47 @@
                 }
             }
 
-            function normalizeSlidePositions() {
-                const slides = document.querySelectorAll('.hero-slide');
+            let lastActiveIndex = 0;
+
+            function syncSlideAnimation() {
+                const slides = [...document.querySelectorAll('.hero-slide')];
+                const dots = [...document.querySelectorAll('.hero-dot')];
+                const activeIndex = slides.findIndex((slide) => slide.classList.contains('active'));
+
+                if (activeIndex < 0) return;
+
                 slides.forEach((slide, index) => {
-                    slide.classList.remove('was-active', 'slide-out-left');
-                    if (index === 0) {
-                        slide.classList.add('active');
-                    } else {
-                        slide.classList.remove('active');
+                    if (index !== activeIndex && index !== lastActiveIndex) {
+                        slide.classList.remove('was-active', 'slide-out-left');
                     }
                 });
-                updateHeroText(0);
+
+                if (lastActiveIndex !== activeIndex && slides[lastActiveIndex]) {
+                    slides[lastActiveIndex].classList.remove('active');
+                    slides[lastActiveIndex].classList.add('was-active', 'slide-out-left');
+                }
+
+                slides[activeIndex].classList.remove('was-active', 'slide-out-left');
+                slides[activeIndex].classList.add('active');
+                dots.forEach((dot, index) => dot.classList.toggle('active', index === activeIndex));
+                updateHeroText(activeIndex);
+
+                const previousIndex = lastActiveIndex;
+                lastActiveIndex = activeIndex;
+
+                setTimeout(() => {
+                    if (slides[previousIndex] && previousIndex !== activeIndex) {
+                        slides[previousIndex].classList.remove('was-active', 'slide-out-left');
+                    }
+                }, 780);
             }
 
-            normalizeSlidePositions();
+            const observer = new MutationObserver(syncSlideAnimation);
+            document.querySelectorAll('.hero-slide').forEach((slide) => {
+                observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+            });
+
+            updateHeroText(0);
             window.__homeHeroSlidesData = heroSlidesData;
             window.__updateHomeHeroText = updateHeroText;
         })();
