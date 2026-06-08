@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\StrukturOrganisasiUploadController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Admin\HomeHeroSlideUploadController;
 use App\Models\HomeHeroSlide;
+use App\Models\StrukturOrganisasi;
 
 Route::get('/', function () {
     $heroSlides = HomeHeroSlide::query()
@@ -26,6 +27,13 @@ Route::get('/hero-campus/{homeHeroSlide}/image', function (HomeHeroSlide $homeHe
 
     return response()->file(Storage::disk('public')->path($homeHeroSlide->image_path));
 })->name('hero-campus.image');
+
+Route::get('/struktur-organisasi-image/{strukturOrganisasi}', function (StrukturOrganisasi $strukturOrganisasi) {
+    abort_unless($strukturOrganisasi->image_path, 404);
+    abort_unless(Storage::disk('public')->exists($strukturOrganisasi->image_path), 404);
+
+    return response()->file(Storage::disk('public')->path($strukturOrganisasi->image_path));
+})->name('struktur-organisasi.image');
 
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
 
