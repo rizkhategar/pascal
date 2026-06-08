@@ -615,7 +615,7 @@
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
-                            <a href="#">Tentang Pascasarjana</a>
+                            <a href="{{ route('tentang') }}">Tentang Pascasarjana</a>
                             <a href="{{ route('visi-misi') }}">Visi dan Misi</a>
                             <a href="{{ route('profil.struktur-organisasi') }}">Struktur Organisasi</a>
                         </div>
