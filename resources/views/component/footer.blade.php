@@ -223,7 +223,7 @@
                     </li>
 
                     <li>
-                        <a href="#">Admisi</a>
+                        <a href="https://pmb.unw.ac.id/">Admisi</a>
                     </li>
 
                     <li>
@@ -269,3 +269,23 @@
 
     </div>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const programCards = document.querySelectorAll('.program-section .program-card');
+
+        const programDetailRoutes = [
+            "{{ route('akademik.show', 'magister-hukum') }}",
+            "{{ route('akademik.show', 'magister-manajemen-pendidikan') }}",
+            "{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}",
+            "{{ route('akademik.show', 'magister-keperawatan') }}",
+        ];
+
+        programCards.forEach((card, index) => {
+            if (!programDetailRoutes[index]) return;
+
+            card.setAttribute('href', programDetailRoutes[index]);
+            card.setAttribute('aria-label', `Lihat detail ${card.querySelector('.program-title')?.innerText.replace(/\s+/g, ' ').trim() || 'program studi'}`);
+        });
+    });
+</script>
