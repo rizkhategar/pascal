@@ -20,6 +20,44 @@
     pointer-events: auto;
 }
 
+.hero {
+    background: #052044 !important;
+}
+
+.hero .hero-slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.75s ease-in-out !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    filter: brightness(1.08) !important;
+    z-index: 1 !important;
+    will-change: transform;
+}
+
+.hero .hero-slide.active {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    z-index: 3 !important;
+}
+
+.hero .hero-slide.was-active,
+.hero .hero-slide.slide-out-left {
+    opacity: 1 !important;
+    transform: translateX(-100%) !important;
+    z-index: 2 !important;
+}
+
+.hero .hero-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(7, 43, 87, 0.34), rgba(7, 43, 87, 0.20), rgba(7, 43, 87, 0.44)) !important;
+    pointer-events: none;
+}
+
 .program-section .program-card,
 .program-section .program-detail {
     cursor: pointer;
@@ -123,7 +161,6 @@
     font-weight:600;
 }
 
-/* MAP */
 .map-container{
     width:100%;
     max-width:280px;
@@ -137,9 +174,7 @@
     display:block;
 }
 
-/* RESPONSIVE */
 @media(max-width:992px){
-
     .footer-content{
         grid-template-columns:repeat(2,1fr);
         gap:35px;
@@ -147,7 +182,6 @@
 }
 
 @media(max-width:768px){
-
     .footer{
         text-align:center;
     }
@@ -289,13 +323,13 @@
     <script>
         (function () {
             const heroSlidesData = @json($heroSlidesData);
-
             if (!heroSlidesData.length) return;
 
             const hero = document.querySelector('.hero');
             const dotsWrapper = document.getElementById('heroDots');
             const titleEl = document.querySelector('.hero-title');
             const subtitleEl = document.querySelector('.hero-subtitle');
+            const leftArrow = document.getElementById('prevSlide');
 
             if (!hero || !dotsWrapper) return;
 
@@ -305,8 +339,13 @@
             heroSlidesData.forEach((item, index) => {
                 const slide = document.createElement('div');
                 slide.className = index === 0 ? 'hero-slide active' : 'hero-slide';
-                slide.style.backgroundImage = `url('${item.image}')`;
-                hero.insertBefore(slide, hero.firstElementChild);
+                slide.style.backgroundImage = `url("${item.image}")`;
+
+                if (leftArrow) {
+                    hero.insertBefore(slide, leftArrow);
+                } else {
+                    hero.prepend(slide);
+                }
 
                 const dot = document.createElement('button');
                 dot.className = index === 0 ? 'hero-dot active' : 'hero-dot';
@@ -315,15 +354,34 @@
                 dotsWrapper.appendChild(dot);
             });
 
-            if (titleEl) {
-                titleEl.innerHTML = heroSlidesData[0].title.replace(/\n/g, '<br>');
+            function updateHeroText(index) {
+                const data = heroSlidesData[index] || heroSlidesData[0];
+
+                if (titleEl) {
+                    titleEl.innerHTML = String(data.title || '').replace(/\n/g, '<br>');
+                }
+
+                if (subtitleEl) {
+                    subtitleEl.textContent = data.subtitle || '';
+                }
             }
 
-            if (subtitleEl) {
-                subtitleEl.textContent = heroSlidesData[0].subtitle;
+            function normalizeSlidePositions() {
+                const slides = document.querySelectorAll('.hero-slide');
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('was-active', 'slide-out-left');
+                    if (index === 0) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+                updateHeroText(0);
             }
 
+            normalizeSlidePositions();
             window.__homeHeroSlidesData = heroSlidesData;
+            window.__updateHomeHeroText = updateHeroText;
         })();
     </script>
 @endif
