@@ -16,9 +16,7 @@
             --border: #e5e7eb;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -62,9 +60,7 @@
             line-height: 1.7;
         }
 
-        .content-section {
-            padding: 64px 0 80px;
-        }
+        .content-section { padding: 64px 0 80px; }
 
         .image-card,
         .empty-card {
@@ -76,9 +72,7 @@
         }
 
         .image-card-header,
-        .empty-card {
-            padding: 28px;
-        }
+        .empty-card { padding: 28px; }
 
         .image-card-header h2,
         .empty-card h2 {
@@ -95,9 +89,7 @@
             line-height: 1.7;
         }
 
-        .struktur-image-wrapper {
-            padding: 0 28px 28px;
-        }
+        .struktur-image-wrapper { padding: 0 28px 28px; }
 
         .struktur-image {
             width: 100%;
@@ -108,18 +100,11 @@
             background: #fff;
         }
 
-        .empty-card {
-            text-align: center;
-        }
+        .empty-card { text-align: center; }
 
         @media (max-width: 768px) {
-            .page-hero {
-                padding: 54px 0;
-            }
-
-            .content-section {
-                padding: 44px 0 60px;
-            }
+            .page-hero { padding: 54px 0; }
+            .content-section { padding: 44px 0 60px; }
 
             .image-card-header,
             .empty-card,
@@ -155,7 +140,7 @@
 
                         <div class="struktur-image-wrapper">
                             <img
-                                src="{{ route('struktur-organisasi.image', $strukturOrganisasi) }}"
+                                src="{{ route('struktur-organisasi.image', $strukturOrganisasi) }}?v={{ optional($strukturOrganisasi->updated_at)->timestamp }}"
                                 alt="{{ $strukturOrganisasi->title }}"
                                 class="struktur-image"
                             >
