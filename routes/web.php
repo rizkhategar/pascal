@@ -5,6 +5,7 @@ use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\Admin\StrukturOrganisasiUploadController;
+use App\Http\Controllers\TentangController;
 
 Route::get('/', function () {
     return view('home');
@@ -18,6 +19,8 @@ Route::get('/akademik/magister-hukum', function () {
 
 Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi');
 Route::get('/profil/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('profil.struktur-organisasi');
+
+Route::get('/tentang-pascasarjana', [TentangController::class, 'index'])->name('tentang');
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/struktur-organisasis/custom-create', [StrukturOrganisasiUploadController::class, 'create'])->name('admin.struktur-organisasi-upload.create');
