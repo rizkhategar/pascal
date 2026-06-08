@@ -22,6 +22,7 @@
 
 .hero {
     background: #052044 !important;
+    overflow: hidden !important;
 }
 
 .hero .hero-slide {
@@ -38,14 +39,11 @@
 }
 
 .hero .hero-slide.active {
-    opacity: 1 !important;
     transform: translateX(0) !important;
     z-index: 3 !important;
 }
 
-.hero .hero-slide.was-active,
 .hero .hero-slide.slide-out-left {
-    opacity: 1 !important;
     transform: translateX(-100%) !important;
     z-index: 2 !important;
 }
@@ -210,33 +208,17 @@
         <div class="footer-content">
             <div class="footer-column">
                 <h3>KONTAK</h3>
-
-                <div class="footer-item">
-                    <i class="fas fa-location-dot"></i>
-                    <span>Universitas Ngudi Waluyo</span>
-                </div>
-
-                <div class="footer-item">
-                    <i class="fas fa-phone"></i>
-                    <span>0261 438-3363</span>
-                </div>
-
-                <div class="footer-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>0561 438-3363</span>
-                </div>
-
+                <div class="footer-item"><i class="fas fa-location-dot"></i><span>Universitas Ngudi Waluyo</span></div>
+                <div class="footer-item"><i class="fas fa-phone"></i><span>0261 438-3363</span></div>
+                <div class="footer-item"><i class="fab fa-whatsapp"></i><span>0561 438-3363</span></div>
                 <div class="footer-item">
                     <i class="fas fa-globe"></i>
-                    <a href="https://www.unw.ac.id" target="_blank">
-                        universitasngudiwaluyo.com
-                    </a>
+                    <a href="https://www.unw.ac.id" target="_blank">universitasngudiwaluyo.com</a>
                 </div>
             </div>
 
             <div class="footer-column">
                 <h3>LOKASI</h3>
-
                 <div class="map-container">
                     <iframe
                         class="footer-map"
@@ -250,7 +232,6 @@
 
             <div class="footer-column">
                 <h3>LINK CEPAT</h3>
-
                 <ul class="footer-links">
                     <li><a href="#">Akreditasi</a></li>
                     <li><a href="https://pmb.unw.ac.id/">Admisi</a></li>
@@ -261,7 +242,6 @@
 
             <div class="footer-column">
                 <h3>MEDIA SOSIAL</h3>
-
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-facebook"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -294,56 +274,36 @@
             const heroSlidesData = @json($heroSlidesData);
             if (!heroSlidesData.length) return;
 
-            const fakeIntervals = new Map();
-            let fakeIntervalId = 900000;
-            const nativeSetInterval = window.setInterval.bind(window);
-            const nativeClearInterval = window.clearInterval.bind(window);
-
-            function currentDuration() {
-                const activeIndex = Math.max(0, [...document.querySelectorAll('.hero-slide')].findIndex((slide) => slide.classList.contains('active')));
-                const duration = Number(heroSlidesData[activeIndex]?.duration || heroSlidesData[0]?.duration || 3000);
-                return Math.min(30000, Math.max(1000, duration));
-            }
+            const originalSetInterval = window.setInterval.bind(window);
+            const originalClearInterval = window.clearInterval.bind(window);
+            const blockedHeroIntervals = new Set();
+            let blockedId = 800000;
 
             window.setInterval = function (callback, delay, ...args) {
-                const callbackName = callback && callback.name ? callback.name : '';
-                const shouldControlHero = delay === 2500 && (callbackName === 'goToNextSlide' || document.querySelector('.hero'));
-
-                if (!shouldControlHero) {
-                    return nativeSetInterval(callback, delay, ...args);
+                if (delay === 2500 && callback && callback.name === 'goToNextSlide') {
+                    const id = ++blockedId;
+                    blockedHeroIntervals.add(id);
+                    return id;
                 }
 
-                const id = ++fakeIntervalId;
-                const state = { cleared: false, timeoutId: null };
-                fakeIntervals.set(id, state);
-
-                const run = () => {
-                    if (state.cleared) return;
-                    callback(...args);
-                    state.timeoutId = setTimeout(run, currentDuration());
-                };
-
-                state.timeoutId = setTimeout(run, currentDuration());
-                return id;
+                return originalSetInterval(callback, delay, ...args);
             };
 
             window.clearInterval = function (id) {
-                if (fakeIntervals.has(id)) {
-                    const state = fakeIntervals.get(id);
-                    state.cleared = true;
-                    clearTimeout(state.timeoutId);
-                    fakeIntervals.delete(id);
+                if (blockedHeroIntervals.has(id)) {
+                    blockedHeroIntervals.delete(id);
                     return;
                 }
 
-                nativeClearInterval(id);
+                return originalClearInterval(id);
             };
 
             const hero = document.querySelector('.hero');
             const dotsWrapper = document.getElementById('heroDots');
             const titleEl = document.querySelector('.hero-title');
             const subtitleEl = document.querySelector('.hero-subtitle');
-            const leftArrow = document.getElementById('prevSlide');
+            const prevButton = document.getElementById('prevSlide');
+            const nextButton = document.getElementById('nextSlide');
 
             if (!hero || !dotsWrapper) return;
 
@@ -354,12 +314,7 @@
                 const slide = document.createElement('div');
                 slide.className = index === 0 ? 'hero-slide active' : 'hero-slide';
                 slide.style.backgroundImage = `url("${item.image}")`;
-
-                if (leftArrow) {
-                    hero.insertBefore(slide, leftArrow);
-                } else {
-                    hero.prepend(slide);
-                }
+                hero.insertBefore(slide, prevButton || hero.firstElementChild);
 
                 const dot = document.createElement('button');
                 dot.className = index === 0 ? 'hero-dot active' : 'hero-dot';
@@ -368,7 +323,18 @@
                 dotsWrapper.appendChild(dot);
             });
 
-            function updateHeroText(index) {
+            const slides = Array.from(document.querySelectorAll('.hero-slide'));
+            const dots = Array.from(document.querySelectorAll('.hero-dot'));
+            let currentIndex = 0;
+            let timerId = null;
+            let isAnimating = false;
+
+            function safeDuration(index) {
+                const duration = Number(heroSlidesData[index]?.duration || 3000);
+                return Math.min(30000, Math.max(1000, duration));
+            }
+
+            function updateText(index) {
                 const data = heroSlidesData[index] || heroSlidesData[0];
 
                 if (titleEl) {
@@ -380,49 +346,76 @@
                 }
             }
 
-            let lastActiveIndex = 0;
-
-            function syncSlideAnimation() {
-                const slides = [...document.querySelectorAll('.hero-slide')];
-                const dots = [...document.querySelectorAll('.hero-dot')];
-                const activeIndex = slides.findIndex((slide) => slide.classList.contains('active'));
-
-                if (activeIndex < 0) return;
-
-                slides.forEach((slide, index) => {
-                    if (index !== activeIndex && index !== lastActiveIndex) {
-                        slide.classList.remove('was-active', 'slide-out-left');
-                    }
-                });
-
-                if (lastActiveIndex !== activeIndex && slides[lastActiveIndex]) {
-                    slides[lastActiveIndex].classList.remove('active');
-                    slides[lastActiveIndex].classList.add('was-active', 'slide-out-left');
-                }
-
-                slides[activeIndex].classList.remove('was-active', 'slide-out-left');
-                slides[activeIndex].classList.add('active');
-                dots.forEach((dot, index) => dot.classList.toggle('active', index === activeIndex));
-                updateHeroText(activeIndex);
-
-                const previousIndex = lastActiveIndex;
-                lastActiveIndex = activeIndex;
-
-                setTimeout(() => {
-                    if (slides[previousIndex] && previousIndex !== activeIndex) {
-                        slides[previousIndex].classList.remove('was-active', 'slide-out-left');
-                    }
-                }, 780);
+            function setActiveDot(index) {
+                dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
             }
 
-            const observer = new MutationObserver(syncSlideAnimation);
-            document.querySelectorAll('.hero-slide').forEach((slide) => {
-                observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+            function goToSlide(nextIndex) {
+                if (isAnimating || !slides.length) return;
+
+                const total = slides.length;
+                const targetIndex = (nextIndex + total) % total;
+                if (targetIndex === currentIndex) return;
+
+                isAnimating = true;
+
+                const currentSlide = slides[currentIndex];
+                const nextSlide = slides[targetIndex];
+
+                nextSlide.classList.remove('slide-out-left');
+                nextSlide.classList.add('active');
+                currentSlide.classList.add('slide-out-left');
+                currentSlide.classList.remove('active');
+
+                currentIndex = targetIndex;
+                updateText(currentIndex);
+                setActiveDot(currentIndex);
+
+                setTimeout(() => {
+                    currentSlide.classList.remove('slide-out-left');
+                    isAnimating = false;
+                }, 800);
+            }
+
+            function scheduleNext() {
+                clearTimeout(timerId);
+                timerId = setTimeout(() => {
+                    goToSlide(currentIndex + 1);
+                    scheduleNext();
+                }, safeDuration(currentIndex));
+            }
+
+            function resetAutoSlide() {
+                clearTimeout(timerId);
+                scheduleNext();
+            }
+
+            prevButton?.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                goToSlide(currentIndex - 1);
+                resetAutoSlide();
+            }, true);
+
+            nextButton?.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                goToSlide(currentIndex + 1);
+                resetAutoSlide();
+            }, true);
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    goToSlide(index);
+                    resetAutoSlide();
+                }, true);
             });
 
-            updateHeroText(0);
-            window.__homeHeroSlidesData = heroSlidesData;
-            window.__updateHomeHeroText = updateHeroText;
+            updateText(0);
+            setActiveDot(0);
+            scheduleNext();
         })();
     </script>
 @endif
@@ -431,7 +424,6 @@
     (function () {
         function bindProgramDetailLinks() {
             const programCards = document.querySelectorAll('.program-section .program-card');
-
             const programDetailRoutes = [
                 "{{ route('akademik.show', 'magister-hukum') }}",
                 "{{ route('akademik.show', 'magister-manajemen-pendidikan') }}",
