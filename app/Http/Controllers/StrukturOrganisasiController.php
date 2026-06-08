@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\StrukturOrganisasi;
-use Illuminate\View\View;
+use Illuminate\Http\Response;
 
 class StrukturOrganisasiController extends Controller
 {
-    public function index(): View
+    public function index(): Response
     {
         $strukturOrganisasi = StrukturOrganisasi::query()
             ->where('is_active', true)
