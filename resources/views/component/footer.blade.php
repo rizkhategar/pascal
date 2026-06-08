@@ -442,6 +442,22 @@
 
 <script>
     (function () {
+        function isUsableRouteLink(link) {
+            const rawHref = link.getAttribute('href') || '';
+            const trimmedHref = rawHref.trim();
+
+            if (!trimmedHref || trimmedHref === '#' || trimmedHref.startsWith('#') || trimmedHref.toLowerCase().startsWith('javascript:')) {
+                return false;
+            }
+
+            try {
+                const url = new URL(link.href, window.location.origin);
+                return url.origin === window.location.origin;
+            } catch (error) {
+                return false;
+            }
+        }
+
         function normalizePath(value) {
             try {
                 const url = new URL(value, window.location.origin);
@@ -469,6 +485,8 @@
             let activeDropdownLink = null;
 
             dropdownLinks.forEach((link) => {
+                if (!isUsableRouteLink(link)) return;
+
                 const linkPath = normalizePath(link.href);
                 if (linkPath === currentPath) {
                     activeDropdownLink = link;
@@ -487,6 +505,8 @@
             }
 
             navLinks.forEach((link) => {
+                if (!isUsableRouteLink(link)) return;
+
                 const linkPath = normalizePath(link.href);
                 if (linkPath === currentPath) {
                     activeTopLink = link;
