@@ -36,10 +36,16 @@ class StrukturOrganisasiUploadController extends Controller
             'public'
         );
 
+        $isActive = $request->boolean('is_active');
+
+        if ($isActive) {
+            StrukturOrganisasi::query()->update(['is_active' => false]);
+        }
+
         StrukturOrganisasi::create([
             'title' => $validated['title'],
             'image_path' => $path,
-            'is_active' => $request->boolean('is_active'),
+            'is_active' => $isActive,
         ]);
 
         return redirect()
@@ -55,9 +61,17 @@ class StrukturOrganisasiUploadController extends Controller
             'is_active' => ['nullable', 'boolean'],
         ]);
 
+        $isActive = $request->boolean('is_active');
+
+        if ($isActive) {
+            StrukturOrganisasi::query()
+                ->whereKeyNot($strukturOrganisasi->getKey())
+                ->update(['is_active' => false]);
+        }
+
         $data = [
             'title' => $validated['title'],
-            'is_active' => $request->boolean('is_active'),
+            'is_active' => $isActive,
         ];
 
         if ($request->hasFile('image')) {
