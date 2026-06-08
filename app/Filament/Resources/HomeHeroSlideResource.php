@@ -126,7 +126,7 @@ class HomeHeroSlideResource extends Resource
             ->defaultSort('sort_order')
             ->recordActions([
                 EditAction::make()
-                    ->url(fn (HomeHeroSlide $record): string => route('admin.home-hero-slides.edit-custom', $record)),
+                    ->url(fn (HomeHeroSlide $record): string => static::getUrl('edit', ['record' => $record])),
                 DeleteAction::make(),
             ])
             ->toolbarActions([

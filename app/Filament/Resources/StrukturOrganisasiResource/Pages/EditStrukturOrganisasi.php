@@ -3,17 +3,24 @@
 namespace App\Filament\Resources\StrukturOrganisasiResource\Pages;
 
 use App\Filament\Resources\StrukturOrganisasiResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
+use App\Models\StrukturOrganisasi;
+use Filament\Resources\Pages\Page;
 
-class EditStrukturOrganisasi extends EditRecord
+class EditStrukturOrganisasi extends Page
 {
     protected static string $resource = StrukturOrganisasiResource::class;
 
-    protected function getHeaderActions(): array
+    protected string $view = 'filament.resources.struktur-organisasi-resource.pages.edit-struktur-organisasi';
+
+    public StrukturOrganisasi $record;
+
+    public function mount(StrukturOrganisasi $record): void
     {
-        return [
-            DeleteAction::make(),
-        ];
+        $this->record = $record;
+    }
+
+    public function getTitle(): string
+    {
+        return 'Edit Struktur Organisasi';
     }
 }
