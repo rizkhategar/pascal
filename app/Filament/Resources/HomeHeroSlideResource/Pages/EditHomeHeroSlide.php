@@ -3,17 +3,24 @@
 namespace App\Filament\Resources\HomeHeroSlideResource\Pages;
 
 use App\Filament\Resources\HomeHeroSlideResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
+use App\Models\HomeHeroSlide;
+use Filament\Resources\Pages\Page;
 
-class EditHomeHeroSlide extends EditRecord
+class EditHomeHeroSlide extends Page
 {
     protected static string $resource = HomeHeroSlideResource::class;
 
-    protected function getHeaderActions(): array
+    protected string $view = 'filament.resources.home-hero-slide-resource.pages.edit-home-hero-slide';
+
+    public HomeHeroSlide $record;
+
+    public function mount(HomeHeroSlide $record): void
     {
-        return [
-            DeleteAction::make(),
-        ];
+        $this->record = $record;
+    }
+
+    public function getTitle(): string
+    {
+        return 'Edit Hero Campus';
     }
 }
