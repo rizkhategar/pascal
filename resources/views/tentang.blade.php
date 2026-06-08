@@ -24,13 +24,36 @@
         
         .container { width: min(1120px, 92%); margin: 0 auto; }
 
+        /* ==========================================
+           0. HERO SECTION (BANNER GAMBAR & OVERLAY)
+           ========================================== */
         .page-hero {
-            background-color: var(--primary);
-            padding: 70px 0 55px;
+            position: relative;
+            background-color: var(--primary); /* Warna dasar jika gambar tidak ada */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 90px 0 75px; 
             color: white;
             text-align: center;
+            z-index: 1;
         }
-        .page-hero h1 { font-size: 2.6rem; font-weight: 800; margin-bottom: 10px; }
+
+        /* Overlay gelap transparan di atas gambar */
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(5, 32, 68, 0.75); 
+            z-index: -1;
+        }
+
+        .page-hero h1 { 
+            font-size: 2.6rem; 
+            font-weight: 800; 
+            margin-bottom: 10px; 
+            letter-spacing: 0.5px;
+        }
 
         /* ==========================================
            1. BAGIAN TENTANG KAMI UTAMA (ATAS)
@@ -40,7 +63,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             max-width: 1100px;
-            margin: 70px auto 60px; /* Margin bottom diubah agar ada jarak dengan sambutan */
+            margin: 70px auto 60px;
             padding: 0 20px;
             align-items: start;
         }
@@ -117,6 +140,28 @@
         /* ==========================================
            2. BAGIAN SAMBUTAN DIREKTUR (BAWAH)
            ========================================== */
+        .sambutan-header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            padding: 0 20px; 
+        }
+        .sambutan-header h3 { 
+            color: var(--yellow); 
+            text-transform: uppercase; 
+            font-size: 1.1rem; 
+            letter-spacing: 2px; 
+            margin-bottom: 10px; 
+            font-weight: 700; 
+        }
+        .sambutan-header h2 { 
+            color: var(--primary); 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            line-height: 1.35; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
         .sambutan-wrapper { 
             max-width: 1100px; 
             margin: 0 auto 90px; 
@@ -147,7 +192,7 @@
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
-            background: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Efek tekstur tipis elegan */
+            background: url('https://www.transparenttextures.com/patterns/cubes.png'); 
         }
         .quote-icon { 
             color: var(--yellow); 
@@ -191,8 +236,10 @@
         @media (max-width: 992px) {
             .about-wrapper { grid-template-columns: 1fr; gap: 40px; margin: 50px auto; }
             .about-left h2 { font-size: 2rem; }
+            .page-hero { padding: 70px 0 55px; }
+            .page-hero h1 { font-size: 2rem; }
             
-            /* Penyesuaian Sambutan untuk HP */
+            .sambutan-header h2 { font-size: 1.8rem; }
             .sambutan-card { flex-direction: column; }
             .sambutan-img { flex: none; height: 450px; }
             .sambutan-content { padding: 40px 30px; }
@@ -204,7 +251,11 @@
 
     @include('component.header')
 
-    <section class="page-hero">
+    <section class="page-hero"
+        @if(!empty($tentang) && !empty($tentang->hero_image)) 
+            style="background-image: url('{{ asset('storage/' . $tentang->hero_image) }}');" 
+        @endif
+    >
         <div class="container">
             <h1>Tentang Pascasarjana</h1>
         </div>
@@ -251,6 +302,12 @@
 
     @if($tentang && (!empty($tentang->direktur_name) || !empty($tentang->direktur_message)))
     <div class="sambutan-wrapper">
+        
+        <div class="sambutan-header">
+            <h3>{{ $tentang->direktur_heading ?? 'Sambutan Direktur' }}</h3>
+            <h2>{{ $tentang->direktur_greeting ?? 'Selamat Datang di Pascasarjana Universitas Ngudi Waluyo' }}</h2>
+        </div>
+
         <div class="sambutan-card">
             
             <div class="sambutan-img">
