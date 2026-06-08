@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\StrukturOrganisasiController;
@@ -18,6 +19,13 @@ Route::get('/', function () {
 
     return view('home', compact('heroSlides'));
 })->name('home');
+
+Route::get('/hero-campus/{homeHeroSlide}/image', function (HomeHeroSlide $homeHeroSlide) {
+    abort_unless($homeHeroSlide->image_path, 404);
+    abort_unless(Storage::disk('public')->exists($homeHeroSlide->image_path), 404);
+
+    return response()->file(Storage::disk('public')->path($homeHeroSlide->image_path));
+})->name('hero-campus.image');
 
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
 
