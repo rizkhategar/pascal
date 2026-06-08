@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visi, Misi, Tujuan & Sasaran | Pascasarjana Universitas Ngudi Waluyo</title>
+
     <link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
@@ -15,7 +17,7 @@
             --primary-dark: #052044;
             --yellow: #f7b500;
             --white: #ffffff;
-            --light: #f1f6f7;
+            --light: #f8fafc;
             --text: #111827;
             --gold: #d9a935;
             --green: #78927a;
@@ -31,6 +33,18 @@
             scroll-behavior: smooth;
         }
 
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(
+                180deg,
+                #f8fafc 0%,
+                #ffffff 40%,
+                #ffffff 100%
+            );
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
         a {
             text-decoration: none;
             color: inherit;
@@ -40,113 +54,128 @@
             list-style: none;
         }
 
-        button {
-            font-family: inherit;
-        }
-
         .container {
             width: min(1120px, 92%);
             margin: 0 auto;
         }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--light);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        /* --- PERUBAHAN CSS UNTUK BANNER GAMBAR & OVERLAY --- */
+        /* ====================================
+           HERO SECTION
+        ==================================== */
         .page-hero {
             position: relative;
-            background-color: var(--primary); /* Warna dasar jika gambar tidak ada */
+            background-color: var(--primary);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding: 90px 0 75px; /* Ditambah sedikit padding agar gambar lebih terlihat */
+            padding: 100px 0 80px;
             color: white;
             text-align: center;
             z-index: 1;
         }
 
-        /* Overlay gelap transparant di atas gambar latar belakang */
         .page-hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(5, 32, 68, 0.75); /* Warna biru gelap transparan */
+            inset: 0;
+            background: rgba(5, 32, 68, 0.75);
             z-index: -1;
         }
 
         .page-hero h1 {
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+            margin-bottom: 12px;
         }
 
         .page-hero p {
             font-size: 1.15rem;
-            opacity: 0.95;
+            opacity: .95;
             max-width: 800px;
             margin: 0 auto;
         }
-        /* -------------------------------------------------- */
+
+        /* ====================================
+           CONTENT
+        ==================================== */
 
         .content-wrapper {
             max-width: 1100px;
-            margin: 50px auto;
+            margin: 80px auto;
             padding: 0 20px;
         }
 
         .visi-misi-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            padding: 2.2rem 2.5rem;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding-bottom: 55px;
+            margin-bottom: 55px;
+            border-bottom: 1px solid rgba(7, 43, 87, 0.12);
         }
 
-        .visi-misi-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        .visi-misi-card:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .card-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 1.4rem;
+            margin-bottom: 30px;
         }
 
         .card-header h2 {
-            font-size: 1.85rem;
+            position: relative;
+            display: inline-block;
+            font-size: 2.2rem;
             font-weight: 800;
             color: var(--primary);
-            margin: 0;
+            padding-bottom: 12px;
+        }
+
+        .card-header h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 70px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 10px;
         }
 
         .card-content {
-            font-size: 1.05rem;
-            line-height: 1.85;
+            font-size: 1.08rem;
+            line-height: 2;
             color: #374151;
         }
 
         .card-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-content ul,
+        .card-content ol {
+            padding-left: 1.5rem;
+            margin-top: 1rem;
             margin-bottom: 1rem;
         }
 
         .card-content ul {
-            padding-left: 1.3rem;
+            list-style: disc;
+        }
+
+        .card-content ol {
+            list-style: decimal;
         }
 
         .card-content li {
-            margin-bottom: 0.55rem;
+            margin-bottom: 0.9rem;
         }
+
+        .card-content strong {
+            color: var(--primary);
+        }
+
+        /* ====================================
+           RESPONSIVE
+        ==================================== */
 
         @media (max-width: 1200px) {
             .container {
@@ -154,15 +183,40 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 60px auto;
+            }
+
+            .card-header h2 {
+                font-size: 1.9rem;
+            }
+
+            .card-content {
+                font-size: 1rem;
+                line-height: 1.9;
+            }
+        }
+
         @media (max-width: 640px) {
             .container {
                 width: min(100% - 28px, 1120px);
             }
+
             .page-hero {
-                padding: 70px 0 55px;
+                padding: 75px 0 60px;
             }
+
             .page-hero h1 {
                 font-size: 2rem;
+            }
+
+            .page-hero p {
+                font-size: 1rem;
+            }
+
+            .card-header h2 {
+                font-size: 1.7rem;
             }
         }
     </style>
@@ -172,61 +226,70 @@
 
     @include('component.header')
 
-    <section class="page-hero" style="background-image: url('{{ !empty($visiMisi->hero_image) ? asset('storage/' . $visiMisi->hero_image) : '' }}');">
+    <section
+        class="page-hero"
+        style="background-image: url('{{ !empty($visiMisi->hero_image) ? asset('storage/' . $visiMisi->hero_image) : '' }}');">
+
         <div class="container">
             <h1>{{ $visiMisi->hero_title ?? 'Visi & Misi' }}</h1>
             <p>{{ $visiMisi->hero_subtitle ?? 'Pascasarjana Universitas Ngudi Waluyo' }}</p>
         </div>
+
     </section>
 
-    <div class="content-wrapper">
+    <main class="content-wrapper">
 
-        <div class="visi-misi-card">
+        <section class="visi-misi-card">
             <div class="card-header">
                 <h2>{{ $visiMisi->judul_visi ?? 'Visi' }}</h2>
             </div>
+
             <div class="card-content">
                 {!! $visiMisi->visi ?? '<p><em>Belum ada konten visi. Silakan isi melalui Admin Panel.</em></p>' !!}
             </div>
-        </div>
+        </section>
 
-        <div class="visi-misi-card">
+        <section class="visi-misi-card">
             <div class="card-header">
                 <h2>{{ $visiMisi->judul_misi ?? 'Misi' }}</h2>
             </div>
+
             <div class="card-content">
                 {!! $visiMisi->misi ?? '<p><em>Belum ada konten misi. Silakan isi melalui Admin Panel.</em></p>' !!}
             </div>
-        </div>
+        </section>
 
-        <div class="visi-misi-card">
+        <section class="visi-misi-card">
             <div class="card-header">
                 <h2>{{ $visiMisi->judul_tujuan ?? 'Tujuan' }}</h2>
             </div>
+
             <div class="card-content">
                 {!! $visiMisi->tujuan ?? '<p><em>Belum ada konten tujuan. Silakan isi melalui Admin Panel.</em></p>' !!}
             </div>
-        </div>
+        </section>
 
-        <div class="visi-misi-card">
+        <section class="visi-misi-card">
             <div class="card-header">
                 <h2>{{ $visiMisi->judul_tujuan_bidang ?? 'Tujuan UNW Dalam Bidang' }}</h2>
             </div>
+
             <div class="card-content">
                 {!! $visiMisi->tujuan_bidang ?? '<p><em>Belum ada konten tujuan dalam bidang. Silakan isi melalui Admin Panel.</em></p>' !!}
             </div>
-        </div>
+        </section>
 
-        <div class="visi-misi-card">
+        <section class="visi-misi-card">
             <div class="card-header">
                 <h2>{{ $visiMisi->judul_sasaran_target ?? 'Sasaran dan Target' }}</h2>
             </div>
+
             <div class="card-content">
                 {!! $visiMisi->sasaran_target ?? '<p><em>Belum ada konten sasaran dan target. Silakan isi melalui Admin Panel.</em></p>' !!}
             </div>
-        </div>
+        </section>
 
-    </div>
+    </main>
 
     @include('component.footer')
 
