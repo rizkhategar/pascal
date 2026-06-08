@@ -46,7 +46,7 @@
                 <div class="field">
                     <label>Gambar Saat Ini</label>
                     @if ($homeHeroSlide->image_path)
-                        <img src="{{ asset('storage/' . $homeHeroSlide->image_path) }}" alt="{{ $homeHeroSlide->title }}" class="current-image">
+                        <img src="{{ route('hero-campus.image', $homeHeroSlide) }}" alt="{{ $homeHeroSlide->title }}" class="current-image">
                     @else
                         <div class="help">Belum ada gambar.</div>
                     @endif
@@ -61,6 +61,12 @@
                 <div class="field">
                     <label for="sort_order">Urutan Slide</label>
                     <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', $homeHeroSlide->sort_order) }}" min="0">
+                </div>
+
+                <div class="field">
+                    <label for="duration_ms">Durasi Ganti Gambar (milidetik)</label>
+                    <input type="number" id="duration_ms" name="duration_ms" value="{{ old('duration_ms', $homeHeroSlide->duration_ms ?? 3000) }}" min="1000" max="30000" step="100">
+                    <div class="help">Contoh: 3000 berarti gambar berganti setiap 3 detik. Minimal 1000, maksimal 30000.</div>
                 </div>
 
                 <div class="checkbox-row">
