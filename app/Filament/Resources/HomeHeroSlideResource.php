@@ -65,6 +65,11 @@ class HomeHeroSlideResource extends Resource
                     ->disabled()
                     ->dehydrated(false),
 
+                TextInput::make('duration_ms')
+                    ->label('Durasi')
+                    ->disabled()
+                    ->dehydrated(false),
+
                 Toggle::make('is_active')
                     ->label('Aktif')
                     ->disabled()
@@ -95,14 +100,19 @@ class HomeHeroSlideResource extends Resource
                     ->searchable()
                     ->limit(42),
 
+                TextColumn::make('sort_order')
+                    ->label('Urutan')
+                    ->sortable(),
+
+                TextColumn::make('duration_ms')
+                    ->label('Durasi')
+                    ->formatStateUsing(fn (?int $state): string => (($state ?? 3000) / 1000) . ' detik')
+                    ->sortable(),
+
                 TextColumn::make('image_path')
                     ->label('Path')
                     ->copyable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('sort_order')
-                    ->label('Urutan')
-                    ->sortable(),
 
                 IconColumn::make('is_active')
                     ->label('Aktif')
