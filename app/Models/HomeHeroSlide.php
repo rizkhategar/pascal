@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class HomeHeroSlide extends Model
 {
@@ -22,5 +23,14 @@ class HomeHeroSlide extends Model
             'duration_ms' => 'integer',
             'is_active' => 'boolean',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (HomeHeroSlide $slide): void {
+            if ($slide->image_path && Storage::disk('public')->exists($slide->image_path)) {
+                Storage::disk('public')->delete($slide->image_path);
+            }
+        });
     }
 }
