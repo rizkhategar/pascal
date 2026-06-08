@@ -10,7 +10,9 @@ class StrukturOrganisasiController extends Controller
     {
         $strukturOrganisasi = StrukturOrganisasi::query()
             ->where('is_active', true)
-            ->latest()
+            ->whereNotNull('image_path')
+            ->latest('updated_at')
+            ->latest('id')
             ->first();
 
         return view('profil.struktur-organisasi', compact('strukturOrganisasi'));
