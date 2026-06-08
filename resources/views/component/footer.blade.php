@@ -276,13 +276,19 @@
 </footer>
 
 @if (isset($heroSlides) && $heroSlides->count() > 0)
-    <script>
-        (function () {
-            const heroSlidesData = @json($heroSlides->map(fn ($slide) => [
+    @php
+        $heroSlidesData = $heroSlides->map(function ($slide) {
+            return [
                 'title' => $slide->title,
                 'subtitle' => $slide->subtitle,
                 'image' => asset('storage/' . $slide->image_path),
-            ])->values());
+            ];
+        })->values();
+    @endphp
+
+    <script>
+        (function () {
+            const heroSlidesData = @json($heroSlidesData);
 
             if (!heroSlidesData.length) return;
 
