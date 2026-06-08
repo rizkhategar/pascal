@@ -5,9 +5,17 @@ use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\Admin\StrukturOrganisasiUploadController;
+use App\Http\Controllers\Admin\HomeHeroSlideUploadController;
+use App\Models\HomeHeroSlide;
 
 Route::get('/', function () {
-    return view('home');
+    $heroSlides = HomeHeroSlide::query()
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->oldest('id')
+        ->get();
+
+    return view('home', compact('heroSlides'));
 })->name('home');
 
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
@@ -24,4 +32,9 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/struktur-organisasis/{strukturOrganisasi}/custom-edit', [StrukturOrganisasiUploadController::class, 'edit'])->name('admin.struktur-organisasi-upload.edit');
     Route::post('/admin/struktur-organisasis/upload', [StrukturOrganisasiUploadController::class, 'store'])->name('admin.struktur-organisasi-upload.store');
     Route::put('/admin/struktur-organisasis/{strukturOrganisasi}/upload', [StrukturOrganisasiUploadController::class, 'update'])->name('admin.struktur-organisasi-upload.update');
+
+    Route::get('/admin/home-hero-slides/custom-create', [HomeHeroSlideUploadController::class, 'create'])->name('admin.home-hero-slides.create-custom');
+    Route::get('/admin/home-hero-slides/{homeHeroSlide}/custom-edit', [HomeHeroSlideUploadController::class, 'edit'])->name('admin.home-hero-slides.edit-custom');
+    Route::post('/admin/home-hero-slides/upload', [HomeHeroSlideUploadController::class, 'store'])->name('admin.home-hero-slides.store-custom');
+    Route::put('/admin/home-hero-slides/{homeHeroSlide}/upload', [HomeHeroSlideUploadController::class, 'update'])->name('admin.home-hero-slides.update-custom');
 });
