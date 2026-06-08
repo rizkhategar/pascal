@@ -47,7 +47,7 @@
                 <div class="custom-field">
                     <label>Gambar Saat Ini</label>
                     @if ($this->record->image_path)
-                        <img src="{{ route('struktur-organisasi.image', $this->record) }}" alt="{{ $this->record->title }}" class="custom-preview">
+                        <img src="{{ route('struktur-organisasi.image', $this->record) }}?v={{ optional($this->record->updated_at)->timestamp }}" alt="{{ $this->record->title }}" class="custom-preview">
                     @else
                         <p class="custom-help">Belum ada gambar.</p>
                     @endif

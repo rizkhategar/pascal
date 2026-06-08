@@ -263,7 +263,7 @@
             return [
                 'title' => $slide->title,
                 'subtitle' => $slide->subtitle,
-                'image' => route('hero-campus.image', $slide),
+                'image' => route('hero-campus.image', $slide) . '?v=' . optional($slide->updated_at)->timestamp,
                 'duration' => (int) ($slide->duration_ms ?? 3000),
             ];
         })->values();
@@ -414,7 +414,6 @@
             });
 
             updateText(0);
-            setActiveDot(0);
             scheduleNext();
         })();
     </script>

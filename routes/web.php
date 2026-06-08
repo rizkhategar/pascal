@@ -25,14 +25,24 @@ Route::get('/hero-campus/{homeHeroSlide}/image', function (HomeHeroSlide $homeHe
     abort_unless($homeHeroSlide->image_path, 404);
     abort_unless(Storage::disk('public')->exists($homeHeroSlide->image_path), 404);
 
-    return response()->file(Storage::disk('public')->path($homeHeroSlide->image_path));
+    return response()
+        ->file(Storage::disk('public')->path($homeHeroSlide->image_path), [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+        ]);
 })->name('hero-campus.image');
 
 Route::get('/struktur-organisasi-image/{strukturOrganisasi}', function (StrukturOrganisasi $strukturOrganisasi) {
     abort_unless($strukturOrganisasi->image_path, 404);
     abort_unless(Storage::disk('public')->exists($strukturOrganisasi->image_path), 404);
 
-    return response()->file(Storage::disk('public')->path($strukturOrganisasi->image_path));
+    return response()
+        ->file(Storage::disk('public')->path($strukturOrganisasi->image_path), [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+        ]);
 })->name('struktur-organisasi.image');
 
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
