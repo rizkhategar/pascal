@@ -275,6 +275,53 @@
     </div>
 </footer>
 
+@if (isset($heroSlides) && $heroSlides->count() > 0)
+    <script>
+        (function () {
+            const heroSlidesData = @json($heroSlides->map(fn ($slide) => [
+                'title' => $slide->title,
+                'subtitle' => $slide->subtitle,
+                'image' => asset('storage/' . $slide->image_path),
+            ])->values());
+
+            if (!heroSlidesData.length) return;
+
+            const hero = document.querySelector('.hero');
+            const dotsWrapper = document.getElementById('heroDots');
+            const titleEl = document.querySelector('.hero-title');
+            const subtitleEl = document.querySelector('.hero-subtitle');
+
+            if (!hero || !dotsWrapper) return;
+
+            document.querySelectorAll('.hero-slide').forEach((slide) => slide.remove());
+            dotsWrapper.innerHTML = '';
+
+            heroSlidesData.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = index === 0 ? 'hero-slide active' : 'hero-slide';
+                slide.style.backgroundImage = `url('${item.image}')`;
+                hero.insertBefore(slide, hero.firstElementChild);
+
+                const dot = document.createElement('button');
+                dot.className = index === 0 ? 'hero-dot active' : 'hero-dot';
+                dot.type = 'button';
+                dot.setAttribute('aria-label', `Slide ${index + 1}`);
+                dotsWrapper.appendChild(dot);
+            });
+
+            if (titleEl) {
+                titleEl.innerHTML = heroSlidesData[0].title.replace(/\n/g, '<br>');
+            }
+
+            if (subtitleEl) {
+                subtitleEl.textContent = heroSlidesData[0].subtitle;
+            }
+
+            window.__homeHeroSlidesData = heroSlidesData;
+        })();
+    </script>
+@endif
+
 <script>
     (function () {
         function bindProgramDetailLinks() {
