@@ -53,6 +53,12 @@
                     <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">
                 </div>
 
+                <div class="field">
+                    <label for="duration_ms">Durasi Ganti Gambar (milidetik)</label>
+                    <input type="number" id="duration_ms" name="duration_ms" value="{{ old('duration_ms', 3000) }}" min="1000" max="30000" step="100">
+                    <div class="help">Contoh: 3000 berarti gambar berganti setiap 3 detik. Minimal 1000, maksimal 30000.</div>
+                </div>
+
                 <div class="checkbox-row">
                     <input type="checkbox" id="is_active" name="is_active" value="1" checked>
                     <label for="is_active">Aktif</label>
