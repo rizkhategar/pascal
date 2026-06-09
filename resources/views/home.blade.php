@@ -483,7 +483,8 @@
 
         .info-layout {
             display: grid;
-            grid-template-columns: 1.8fr 1fr; /* Kolom berita lebih mendominasi lebar */
+            grid-template-columns: 1.8fr 1fr;
+            /* Kolom berita lebih mendominasi lebar */
             gap: 48px;
             align-items: start;
         }
@@ -537,7 +538,7 @@
             transition: all 0.25s ease;
         }
 
-        .page-number:hover, 
+        .page-number:hover,
         .page-btn:hover {
             border-color: var(--primary);
             color: var(--primary);
@@ -613,16 +614,18 @@
         }
 
         .news-thumb {
-            width: 220px; /* Ukuran lebar gambar yang fix */
+            width: 220px;
+            /* Ukuran lebar gambar yang fix */
             height: 140px;
-            flex-shrink: 0; /* Mencegah gambar mengecil */
+            flex-shrink: 0;
+            /* Mencegah gambar mengecil */
             border-radius: 10px;
             background: #f1f6f7;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
         }
 
         .news-thumb img {
@@ -632,8 +635,10 @@
         }
 
         .news-content {
-            flex: 1; /* Membuat teks mengambil SISA RUANG seluruhnya */
-            min-width: 0; /* Sangat krusial agar flex item tidak overflow keluar container */
+            flex: 1;
+            /* Membuat teks mengambil SISA RUANG seluruhnya */
+            min-width: 0;
+            /* Sangat krusial agar flex item tidak overflow keluar container */
             display: flex;
             flex-direction: column;
         }
@@ -685,7 +690,8 @@
             color: #9ca3af;
             font-size: 13px;
             font-weight: 600;
-            margin-top: auto; /* Mendorong tanggal ke paling bawah (jika judul pendek) */
+            margin-top: auto;
+            /* Mendorong tanggal ke paling bawah (jika judul pendek) */
         }
 
         .news-date svg {
@@ -884,6 +890,7 @@
                 grid-template-columns: 1.6fr 1fr;
                 gap: 32px;
             }
+
             .news-area {
                 padding-right: 28px;
             }
@@ -1138,6 +1145,7 @@
                 flex-direction: column;
                 gap: 16px;
             }
+
             .news-thumb {
                 width: 100%;
                 height: 200px;
@@ -1343,6 +1351,98 @@
                 right: 8px;
             }
         }
+
+        /* ==========================================================================
+   PERBAIKAN MOBILE: CARD MAGISTER (SCROLL KE SAMPING)
+   ========================================================================== */
+        @media (max-width: 768px) {
+            .program-grid {
+                display: flex !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                gap: 16px !important;
+                padding: 10px 4px 20px 4px !important;
+                /* Ruang bawah agar scrollbar tidak menempel */
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Sembunyikan scrollbar bawaan browser agar tetap minimalis */
+            .program-grid::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .program-card {
+                flex: 0 0 245px !important;
+                /* Lebar card pas saat digeser ke samping */
+                scroll-snap-align: start !important;
+            }
+        }
+
+        /* ==========================================================================
+   PERBAIKAN MOBILE: PAGINATION BERITA TETAP SATU BARIS
+   ========================================================================== */
+        @media (max-width: 640px) {
+            .pagination#apiNewsPagination {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                /* Memaksa tetap satu baris */
+                overflow-x: auto !important;
+                /* Bisa di-scroll halus jika terlalu panjang */
+                justify-content: flex-start !important;
+                white-space: nowrap !important;
+                -webkit-overflow-scrolling: touch;
+                padding: 10px 12px !important;
+            }
+
+            .pagination#apiNewsPagination .page-btn,
+            .pagination#apiNewsPagination .page-number {
+                flex-shrink: 0 !important;
+                /* Mencegah tombol mengkerut */
+            }
+
+            .page-jump {
+                border-top: none !important;
+                padding-top: 0 !important;
+                margin-left: 8px !important;
+                border-left: 1px solid rgba(7, 43, 87, 0.15) !important;
+                padding-left: 10px !important;
+                display: flex !important;
+            }
+        }
+
+        /* ==========================================================================
+   PERBAIKAN MOBILE: FOOTER TIDAK CENTER (RATA KIRI RAPI)
+   ========================================================================== */
+        @media (max-width: 768px) {
+            .footer {
+                text-align: left !important;
+                /* Mengubah default dari center ke kiri */
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr !important;
+                gap: 32px !important;
+            }
+
+            .footer-item {
+                justify-content: flex-start !important;
+                /* Icon dan teks sejajar di kiri */
+            }
+
+            .social-icons {
+                justify-content: flex-start !important;
+            }
+
+            .map-container {
+                margin: 0 !important;
+                /* Reset margin auto bawaan center */
+                max-width: 100% !important;
+            }
+
+            .footer-map {
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 
@@ -1444,11 +1544,11 @@
 
                 <!-- BAGIAN BERITA KIRI -->
                 <div class="news-area">
-                    
+
                     <!-- Header dengan Pagination di Bawahnya -->
                     <div class="section-header">
                         <h2 class="section-title">Berita Terkini & Agenda</h2>
-                        
+
                         <div class="pagination">
                             <button class="page-btn" type="button">‹</button>
                             <button class="page-number active" type="button">1</button>
@@ -1461,7 +1561,7 @@
                             <button class="page-btn dark" type="button">›</button>
                         </div>
                     </div>
-                
+
                     <!-- Tombol Kategori -->
                     <div class="category-filters">
                         <button class="cat-pill active">Semua</button>
@@ -1479,7 +1579,7 @@
                         <button class="cat-pill">Teknologi</button>
                         <button class="cat-pill">PKKS/PPKPT</button>
                     </div>
-                
+
                     <!-- List Berita -->
                     <div class="news-list">
                         @for ($i = 0; $i < 4; $i++)
@@ -1487,31 +1587,36 @@
                                 <!-- Thumbnail -->
                                 <div class="news-thumb">
                                     <svg viewBox="0 0 24 24" style="width: 50px; fill: #111;">
-                                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z" />
+                                        <path
+                                            d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z" />
                                     </svg>
                                 </div>
-                
+
                                 <!-- Konten Teks -->
                                 <div class="news-content">
                                     <div class="news-category">
                                         <svg viewBox="0 0 24 24">
-                                            <path d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12.17l-1.41 1.24ZM7.5 8A1.5 1.5 0 1 0 7.5 5 1.5 1.5 0 0 0 7.5 8Z" />
+                                            <path
+                                                d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12.17l-1.41 1.24ZM7.5 8A1.5 1.5 0 1 0 7.5 5 1.5 1.5 0 0 0 7.5 8Z" />
                                         </svg>
                                         Umum
                                     </div>
-                
+
                                     <h3 class="news-title">
-                                        Perkuat Jejaring Global dan Transformasi Pendidikan, Pascasarjana UNW Gelar Seminar Internasional serta Teken Kerja Sama dengan Mitra Thailand
+                                        Perkuat Jejaring Global dan Transformasi Pendidikan, Pascasarjana UNW Gelar
+                                        Seminar Internasional serta Teken Kerja Sama dengan Mitra Thailand
                                     </h3>
 
                                     <!-- Deskripsi singkat seperti di gambar Anda -->
                                     <p class="news-excerpt">
-                                        Seminar internasional menghadirkan Executive director for internasional affair Thai global business administration technological college Thailand
+                                        Seminar internasional menghadirkan Executive director for internasional affair
+                                        Thai global business administration technological college Thailand
                                     </p>
-                
+
                                     <div class="news-date">
                                         <svg viewBox="0 0 24 24">
-                                            <path d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2Zm12 8H5v10h14V10ZM5 8h14V6H5v2Zm2 4h3v3H7v-3Zm5 0h3v3h-3v-3Z" />
+                                            <path
+                                                d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2Zm12 8H5v10h14V10ZM5 8h14V6H5v2Zm2 4h3v3H7v-3Zm5 0h3v3h-3v-3Z" />
                                         </svg>
                                         03 Juni 2026
                                     </div>
@@ -1528,7 +1633,8 @@
                     <div class="service-grid">
                         <button class="service-card" type="button">
                             <svg viewBox="0 0 24 24">
-                                <path d="M10 17v-3H3v-4h7V7l5 5-5 5ZM12 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3Z" />
+                                <path
+                                    d="M10 17v-3H3v-4h7V7l5 5-5 5ZM12 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3Z" />
                             </svg>
                             <span>Login<br>Mahasiswa</span>
                         </button>
@@ -1536,7 +1642,8 @@
                         <div class="edom-card-wrapper" id="edomCardWrapper">
                             <button class="service-card" type="button" id="edomService">
                                 <svg viewBox="0 0 24 24">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z" />
+                                    <path
+                                        d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z" />
                                 </svg>
                                 <span>EDOM</span>
                             </button>
@@ -1672,11 +1779,11 @@
         const edomCardWrapper = document.getElementById('edomCardWrapper');
         const edomService = document.getElementById('edomService');
 
-        if(edomNav) {
+        if (edomNav) {
             edomNav.addEventListener('click', function() {
                 navLinks.forEach((link) => link.classList.remove('nav-click-active'));
                 edomNav.classList.add('nav-click-active');
-                if(homeNavItem) homeNavItem.classList.add('hide-indicator');
+                if (homeNavItem) homeNavItem.classList.add('hide-indicator');
 
                 if (window.innerWidth <= 992) {
                     navMenu.classList.remove('show');
@@ -1687,7 +1794,7 @@
             });
         }
 
-        if(edomService) {
+        if (edomService) {
             edomService.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992) {
                     event.preventDefault();
@@ -1704,13 +1811,13 @@
 
         window.addEventListener('resize', function() {
             if (window.innerWidth > 992) {
-                if(navMenu) navMenu.classList.remove('show');
+                if (navMenu) navMenu.classList.remove('show');
 
                 document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
                     item.classList.remove('open');
                 });
 
-                if(edomCardWrapper) edomCardWrapper.classList.remove('show-popover');
+                if (edomCardWrapper) edomCardWrapper.classList.remove('show-popover');
             }
         });
     </script>
