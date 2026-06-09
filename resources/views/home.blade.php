@@ -286,20 +286,6 @@
             transition: opacity 0.7s ease;
             background-size: cover;
             background-position: center;
-            z-index: 1;
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-        }
-
-        .hero-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.7s ease;
-            background-size: cover;
-            background-position: center;
             filter: brightness(1.15);
             z-index: 1;
         }
@@ -487,6 +473,9 @@
             font-weight: 500;
         }
 
+        /* ----------------------------------------------------
+           BAGIAN BERITA DAN LAYANAN MAHASISWA (UPDATED)
+           ---------------------------------------------------- */
         .info-section {
             background: #ffffff;
             padding: 18px 0 52px;
@@ -494,118 +483,171 @@
 
         .info-layout {
             display: grid;
-            grid-template-columns: 1.35fr 0.95fr;
-            gap: 42px;
+            grid-template-columns: 1.8fr 1fr; /* Kolom berita lebih mendominasi lebar */
+            gap: 48px;
             align-items: start;
         }
 
         .news-area {
-            padding-right: 36px;
-            border-right: 1px solid #d1d1d1;
+            width: 100%;
+            padding-right: 40px;
+            border-right: 1px solid #d1d5db;
         }
 
         .section-header {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            margin-bottom: 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid var(--primary);
         }
 
         .section-title {
-            font-size: 25px;
-            line-height: 1.2;
+            font-size: 24px;
+            line-height: 1.3;
             font-weight: 800;
-            color: #050505;
+            color: var(--primary);
             text-transform: uppercase;
+            margin: 0;
         }
 
+        /* Styling Pagination Baru (Modern & Rapi) */
         .pagination {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            font-size: 13px;
-            color: #222;
+            gap: 6px;
         }
 
         .page-btn,
         .page-number {
-            width: 24px;
-            height: 24px;
-            border-radius: 5px;
-            border: 1px solid #9ca3af;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
             background: #ffffff;
-            color: #111827;
+            color: #374151;
             font-size: 13px;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: 0.2s ease;
+            transition: all 0.25s ease;
         }
 
-        .page-btn {
-            border-color: transparent;
+        .page-number:hover, 
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #f3f4f6;
+        }
+
+        .page-number.active {
             background: var(--yellow);
+            border-color: var(--yellow);
             color: #ffffff;
-            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(247, 181, 0, 0.3);
         }
 
         .page-btn.dark {
             background: var(--primary);
-        }
-
-        .page-number.active,
-        .page-number:hover,
-        .page-btn:hover {
-            background: var(--yellow);
-            border-color: var(--yellow);
-            color: #111827;
+            border-color: var(--primary);
+            color: #ffffff;
         }
 
         .page-btn.dark:hover {
-            background: #021b3b;
+            background: #052044;
             color: #ffffff;
+        }
+
+        .page-dots {
+            color: #6b7280;
+            font-weight: 600;
+            letter-spacing: 2px;
+            padding: 0 4px;
+        }
+
+        /* Filter Kategori */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .cat-pill {
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid #d1d5db;
+            background: transparent;
+            color: #4b5563;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cat-pill:hover,
+        .cat-pill.active {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            color: var(--white);
         }
 
         .news-list {
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
+        /* Flexbox News Item (Mencegah teks terhimpit) */
         .news-item {
-            display: grid;
-            grid-template-columns: 160px 1fr;
-            gap: 22px;
-            padding: 14px 2px 16px;
-            border-bottom: 1px solid #d1d1d1;
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid #e5e7eb;
+            width: 100%;
         }
 
         .news-thumb {
-            height: 94px;
-            border-radius: 8px;
-            background: #d9d9d9;
+            width: 220px; /* Ukuran lebar gambar yang fix */
+            height: 140px;
+            flex-shrink: 0; /* Mencegah gambar mengecil */
+            border-radius: 10px;
+            background: #f1f6f7;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
-        .news-thumb svg {
-            width: 54px;
-            height: 54px;
-            fill: #050505;
+        .news-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-content {
+            flex: 1; /* Membuat teks mengambil SISA RUANG seluruhnya */
+            min-width: 0; /* Sangat krusial agar flex item tidak overflow keluar container */
+            display: flex;
+            flex-direction: column;
         }
 
         .news-category {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.2;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--green);
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .news-category svg {
@@ -616,19 +658,34 @@
 
         .news-title {
             font-size: 18px;
-            line-height: 1.18;
+            line-height: 1.45;
             font-weight: 800;
-            color: #050505;
-            margin-bottom: 8px;
+            color: #111827;
+            margin-bottom: 10px;
+            /* Memastikan teks bisa melebar sempurna */
+            width: 100%;
+        }
+
+        /* Class tambahan jika Anda ingin menampilkan deksripsi singkat berita */
+        .news-excerpt {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #6b7280;
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .news-date {
             display: flex;
             align-items: center;
             gap: 7px;
-            color: #686868;
-            font-size: 15px;
-            font-weight: 700;
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: auto; /* Mendorong tanggal ke paling bawah (jika judul pendek) */
         }
 
         .news-date svg {
@@ -637,12 +694,18 @@
             fill: currentColor;
         }
 
+        /* --- Sisi Layanan Mahasiswa --- */
         .service-area {
             position: relative;
+            width: 100%;
         }
 
         .service-title {
-            margin-bottom: 36px;
+            margin-bottom: 24px;
+            font-size: 22px;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 800;
         }
 
         .service-grid {
@@ -654,32 +717,34 @@
 
         .service-card {
             width: 100%;
-            min-height: 116px;
-            border: none;
-            border-radius: 7px;
+            min-height: 120px;
+            border: 1px solid #f3f4f6;
+            border-radius: 8px;
             background: #ffffff;
             color: #050505;
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.24);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 9px;
+            gap: 12px;
             text-align: center;
             cursor: pointer;
-            transition: 0.25s ease;
-            padding: 15px;
+            transition: all 0.25s ease;
+            padding: 16px;
         }
 
         .service-card:hover {
             background: var(--yellow);
             color: #ffffff;
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(247, 181, 0, 0.25);
+            border-color: var(--yellow);
         }
 
         .service-card svg {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             fill: var(--yellow);
             transition: 0.25s ease;
         }
@@ -689,8 +754,8 @@
         }
 
         .service-card span {
-            font-size: 15px;
-            line-height: 1.15;
+            font-size: 14px;
+            line-height: 1.25;
             font-weight: 800;
             text-transform: uppercase;
         }
@@ -698,14 +763,14 @@
         .edom-card-wrapper {
             position: relative;
             width: 100%;
-            min-height: 116px;
+            min-height: 120px;
             display: flex;
         }
 
         .edom-card-wrapper .service-card {
             width: 100%;
             height: 100%;
-            min-height: 116px;
+            min-height: 120px;
             flex: 1;
         }
 
@@ -721,7 +786,9 @@
         .edom-card-wrapper.show-popover .service-card {
             background: var(--yellow);
             color: #ffffff;
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(247, 181, 0, 0.25);
+            border-color: var(--yellow);
         }
 
         .edom-card-wrapper:hover .service-card svg,
@@ -814,8 +881,11 @@
             }
 
             .info-layout {
-                grid-template-columns: 1.25fr 0.9fr;
+                grid-template-columns: 1.6fr 1fr;
                 gap: 32px;
+            }
+            .news-area {
+                padding-right: 28px;
             }
         }
 
@@ -966,7 +1036,7 @@
 
             .info-layout {
                 grid-template-columns: 1fr;
-                gap: 42px;
+                gap: 52px;
             }
 
             .news-area {
@@ -1061,29 +1131,20 @@
             }
 
             .info-section {
-                padding: 26px 0 44px;
-            }
-
-            .section-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .pagination {
-                flex-wrap: wrap;
+                padding: 36px 0 52px;
             }
 
             .news-item {
-                grid-template-columns: 140px 1fr;
+                flex-direction: column;
                 gap: 16px;
+            }
+            .news-thumb {
+                width: 100%;
+                height: 200px;
             }
 
             .news-title {
-                font-size: 16px;
-            }
-
-            .news-date {
-                font-size: 13px;
+                font-size: 17px;
             }
         }
 
@@ -1204,42 +1265,30 @@
 
             .section-title {
                 font-size: 21px;
-                line-height: 1.25;
             }
 
             .pagination {
-                gap: 6px;
+                gap: 4px;
+                flex-wrap: wrap;
             }
 
             .page-btn,
             .page-number {
-                width: 23px;
-                height: 23px;
+                width: 30px;
+                height: 30px;
                 font-size: 12px;
             }
 
             .news-item {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                padding: 14px 0 18px;
+                padding: 20px 0;
             }
 
             .news-thumb {
-                width: 100%;
-                height: 155px;
+                height: 180px;
             }
 
             .news-title {
-                font-size: 15px;
-                line-height: 1.35;
-            }
-
-            .news-category {
-                font-size: 13px;
-            }
-
-            .news-date {
-                font-size: 13px;
+                font-size: 16px;
             }
 
             .service-grid {
@@ -1247,30 +1296,9 @@
                 gap: 18px;
             }
 
-            .service-card {
-                min-height: 112px;
-            }
-
-            .edom-card-wrapper,
-            .edom-card-wrapper .service-card {
-                width: 100%;
-                min-height: 112px;
-            }
-
             .edom-popover {
                 width: min(260px, calc(100vw - 48px));
                 padding: 16px 14px;
-            }
-
-            .edom-score {
-                gap: 7px;
-                flex-wrap: wrap;
-            }
-
-            .edom-score span {
-                width: 26px;
-                height: 26px;
-                font-size: 13px;
             }
         }
 
@@ -1414,48 +1442,76 @@
         <div class="container">
             <div class="info-layout">
 
+                <!-- BAGIAN BERITA KIRI -->
                 <div class="news-area">
+                    
+                    <!-- Header dengan Pagination di Bawahnya -->
                     <div class="section-header">
                         <h2 class="section-title">Berita Terkini & Agenda</h2>
-
+                        
                         <div class="pagination">
                             <button class="page-btn" type="button">‹</button>
                             <button class="page-number active" type="button">1</button>
                             <button class="page-number" type="button">2</button>
                             <button class="page-number" type="button">3</button>
-                            <span>......</span>
-                            <button class="page-number" type="button">10</button>
+                            <button class="page-number" type="button">4</button>
+                            <button class="page-number" type="button">5</button>
+                            <span class="page-dots">...</span>
+                            <button class="page-number" type="button">264</button>
                             <button class="page-btn dark" type="button">›</button>
                         </div>
                     </div>
-
+                
+                    <!-- Tombol Kategori -->
+                    <div class="category-filters">
+                        <button class="cat-pill active">Semua</button>
+                        <button class="cat-pill">Umum</button>
+                        <button class="cat-pill">Kemahasiswaan</button>
+                        <button class="cat-pill">Akademik</button>
+                        <button class="cat-pill">LPPM</button>
+                        <button class="cat-pill">Kehumasan</button>
+                        <button class="cat-pill">Pengembangan & Perencanaan</button>
+                        <button class="cat-pill">Alumni</button>
+                        <button class="cat-pill">Panduan Akademik</button>
+                        <button class="cat-pill">Dosen</button>
+                        <button class="cat-pill">PMB</button>
+                        <button class="cat-pill">Beasiswa</button>
+                        <button class="cat-pill">Teknologi</button>
+                        <button class="cat-pill">PKKS/PPKPT</button>
+                    </div>
+                
+                    <!-- List Berita -->
                     <div class="news-list">
                         @for ($i = 0; $i < 4; $i++)
                             <article class="news-item">
+                                <!-- Thumbnail -->
                                 <div class="news-thumb">
-                                    <svg viewBox="0 0 24 24">
-                                        <path
-                                            d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z" />
+                                    <svg viewBox="0 0 24 24" style="width: 50px; fill: #111;">
+                                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z" />
                                     </svg>
                                 </div>
-
+                
+                                <!-- Konten Teks -->
                                 <div class="news-content">
                                     <div class="news-category">
                                         <svg viewBox="0 0 24 24">
-                                            <path
-                                                d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12.17l-1.41 1.24ZM7.5 8A1.5 1.5 0 1 0 7.5 5 1.5 1.5 0 0 0 7.5 8Z" />
+                                            <path d="M20.59 13.41 12 22l-8.59-8.59A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.41.59L22 12.17l-1.41 1.24ZM7.5 8A1.5 1.5 0 1 0 7.5 5 1.5 1.5 0 0 0 7.5 8Z" />
                                         </svg>
-                                        Lorem, Ipsum
+                                        Umum
                                     </div>
-
+                
                                     <h3 class="news-title">
-                                        Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor
+                                        Perkuat Jejaring Global dan Transformasi Pendidikan, Pascasarjana UNW Gelar Seminar Internasional serta Teken Kerja Sama dengan Mitra Thailand
                                     </h3>
 
+                                    <!-- Deskripsi singkat seperti di gambar Anda -->
+                                    <p class="news-excerpt">
+                                        Seminar internasional menghadirkan Executive director for internasional affair Thai global business administration technological college Thailand
+                                    </p>
+                
                                     <div class="news-date">
                                         <svg viewBox="0 0 24 24">
-                                            <path
-                                                d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2Zm12 8H5v10h14V10ZM5 8h14V6H5v2Zm2 4h3v3H7v-3Zm5 0h3v3h-3v-3Z" />
+                                            <path d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2Zm12 8H5v10h14V10ZM5 8h14V6H5v2Zm2 4h3v3H7v-3Zm5 0h3v3h-3v-3Z" />
                                         </svg>
                                         03 Juni 2026
                                     </div>
@@ -1465,14 +1521,14 @@
                     </div>
                 </div>
 
+                <!-- BAGIAN MENU LAYANAN KANAN -->
                 <div class="service-area">
-                    <h2 class="section-title service-title">Menu Layanan Mahasiswa</h2>
+                    <h2 class="service-title">Menu Layanan Mahasiswa</h2>
 
                     <div class="service-grid">
                         <button class="service-card" type="button">
                             <svg viewBox="0 0 24 24">
-                                <path
-                                    d="M10 17v-3H3v-4h7V7l5 5-5 5ZM12 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3Z" />
+                                <path d="M10 17v-3H3v-4h7V7l5 5-5 5ZM12 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8v-2h7V5h-7V3Z" />
                             </svg>
                             <span>Login<br>Mahasiswa</span>
                         </button>
@@ -1480,8 +1536,7 @@
                         <div class="edom-card-wrapper" id="edomCardWrapper">
                             <button class="service-card" type="button" id="edomService">
                                 <svg viewBox="0 0 24 24">
-                                    <path
-                                        d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z" />
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 7V3.5L18.5 9H13ZM8 13h8v2H8v-2Zm0 4h8v2H8v-2Zm0-8h3v2H8V9Z" />
                                 </svg>
                                 <span>EDOM</span>
                             </button>
@@ -1617,41 +1672,45 @@
         const edomCardWrapper = document.getElementById('edomCardWrapper');
         const edomService = document.getElementById('edomService');
 
-        edomNav.addEventListener('click', function() {
-            navLinks.forEach((link) => link.classList.remove('nav-click-active'));
-            edomNav.classList.add('nav-click-active');
-            homeNavItem.classList.add('hide-indicator');
+        if(edomNav) {
+            edomNav.addEventListener('click', function() {
+                navLinks.forEach((link) => link.classList.remove('nav-click-active'));
+                edomNav.classList.add('nav-click-active');
+                if(homeNavItem) homeNavItem.classList.add('hide-indicator');
 
-            if (window.innerWidth <= 992) {
-                navMenu.classList.remove('show');
-                document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
-                    item.classList.remove('open');
-                });
-            }
-        });
+                if (window.innerWidth <= 992) {
+                    navMenu.classList.remove('show');
+                    document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
+                        item.classList.remove('open');
+                    });
+                }
+            });
+        }
 
-        edomService.addEventListener('click', function(event) {
-            if (window.innerWidth <= 992) {
-                event.preventDefault();
-                edomCardWrapper.classList.toggle('show-popover');
-            }
-        });
+        if(edomService) {
+            edomService.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    event.preventDefault();
+                    edomCardWrapper.classList.toggle('show-popover');
+                }
+            });
+        }
 
         document.addEventListener('click', function(event) {
-            if (window.innerWidth <= 992 && !edomCardWrapper.contains(event.target)) {
+            if (window.innerWidth <= 992 && edomCardWrapper && !edomCardWrapper.contains(event.target)) {
                 edomCardWrapper.classList.remove('show-popover');
             }
         });
 
         window.addEventListener('resize', function() {
             if (window.innerWidth > 992) {
-                navMenu.classList.remove('show');
+                if(navMenu) navMenu.classList.remove('show');
 
                 document.querySelectorAll('.nav-item.has-dropdown').forEach((item) => {
                     item.classList.remove('open');
                 });
 
-                edomCardWrapper.classList.remove('show-popover');
+                if(edomCardWrapper) edomCardWrapper.classList.remove('show-popover');
             }
         });
     </script>
