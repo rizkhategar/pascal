@@ -8,6 +8,7 @@ use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\Admin\StrukturOrganisasiUploadController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Admin\HomeHeroSlideUploadController;
+use App\Http\Controllers\ScrapController;
 use App\Models\HomeHeroSlide;
 use App\Models\StrukturOrganisasi;
 
@@ -55,6 +56,15 @@ Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi'
 Route::get('/profil/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('profil.struktur-organisasi');
 
 Route::get('/tentang-pascasarjana', [TentangController::class, 'index'])->name('tentang');
+
+// Route untuk menampilkan halaman utama panel scrap
+Route::get('/scrap/ambildatadosen', [ScrapController::class, 'index'])->name('scrap.index');
+
+// Route SSE Stream untuk menjalankan dosen.py
+Route::get('/scrap/perbarui-dosen', [ScrapController::class, 'perbaruiDosen'])->name('scrap.perbaruiDosen');
+
+// Route SSE Stream untuk menjalankan 6 script detail + merge
+Route::get('/scrap/ambil-detail/{sinta_id}', [ScrapController::class, 'ambilDetail'])->name('scrap.ambilDetail');
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/struktur-organisasis/custom-create', [StrukturOrganisasiUploadController::class, 'create'])->name('admin.struktur-organisasi-upload.create');
