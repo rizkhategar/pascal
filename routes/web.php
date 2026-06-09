@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\StrukturOrganisasiController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\StrukturOrganisasiUploadController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Admin\HomeHeroSlideUploadController;
@@ -44,6 +45,8 @@ Route::get('/struktur-organisasi-image/{strukturOrganisasi}', function (Struktur
             'Expires' => '0',
         ]);
 })->name('struktur-organisasi.image');
+
+Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
 
