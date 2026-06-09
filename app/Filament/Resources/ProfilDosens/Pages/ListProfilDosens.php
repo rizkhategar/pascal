@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ProfilDosenResource\Pages;
+namespace App\Filament\Resources\ProfilDosens\Pages;
 
 use App\Filament\Resources\ProfilDosens\ProfilDosenResource;
 use App\Models\Dosen; // Pastikan import Model Dosen (Tabel Master)
