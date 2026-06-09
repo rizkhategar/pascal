@@ -3,14 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Research extends Model
 {
-    protected $guarded = [];
+    // TAMBAHKAN BARIS INI: Pastikan namanya persis dengan yang ada di database/file migrasi Anda
+    protected $table = 'researches'; 
 
-    public function detailDosen(): BelongsTo
-    {
-        return $this->belongsTo(DetailDosen::class, 'sinta_id', 'sinta_id');
-    }
+    protected $guarded = []; // (Atau $fillable sesuai yang Anda gunakan)
 }

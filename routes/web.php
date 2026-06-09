@@ -68,6 +68,8 @@ Route::get('/scrap/perbarui-dosen', [ScrapController::class, 'perbaruiDosen'])->
 
 // Route SSE Stream untuk menjalankan 6 script detail + merge
 Route::get('/scrap/ambil-detail/{sinta_id}', [ScrapController::class, 'ambilDetail'])->name('scrap.ambilDetail');
+// Pastikan ini Route::get, BUKAN Route::post
+Route::get('/scrap/import/{sinta_id}', [App\Http\Controllers\ScrapController::class, 'importData'])->name('scrap.importData');
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/struktur-organisasis/custom-create', [StrukturOrganisasiUploadController::class, 'create'])->name('admin.struktur-organisasi-upload.create');
