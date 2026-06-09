@@ -130,7 +130,7 @@
             </button>
         </div>
         <div id="terminal-container" class="p-4 overflow-y-auto flex-grow font-mono text-sm leading-relaxed">
-            <pre id="output-box" class="text-success-400 m-0 whitespace-pre-wrap word-wrap break-word">Menunggu perintah...</pre>
+            <pre id="output-box" class="text-green-400 m-0 whitespace-pre-wrap word-wrap break-word">Menunggu perintah...</pre>
         </div>
     </div>
 </div>
