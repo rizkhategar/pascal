@@ -51,6 +51,7 @@ data = {
     "program_studi": None,
     "sinta_id": SINTA_ID,
     "bidang_minat": None,
+    "profile_photo": None,
     "sinta_score_overall": None,
     "sinta_score_3yr": None,
     "affil_score": None,
@@ -107,6 +108,13 @@ for script in soup.find_all("script"):
         })
 
     break
+
+# =====================================================
+# FOTO PROFIL
+# =====================================================
+img_tag = soup.select_one("img.img-thumbnail.round-corner")
+if img_tag and img_tag.has_attr("src"):
+    data["profile_photo"] = img_tag["src"]
 
 # =====================================================
 # NAMA DOSEN
@@ -362,6 +370,7 @@ print("Nama               :", data["nama"])
 print("Institusi          :", data["institusi"])
 print("Program Studi      :", data["program_studi"])
 print("SINTA ID           :", data["sinta_id"])
+print("Profile Photo      :", data["profile_photo"])
 print("Bidang Minat       :", data["bidang_minat"])
 
 print("\n=== SCORE ===")
@@ -397,6 +406,7 @@ profil_dosen = [{
     "Institusi": data["institusi"],
     "Program Studi": data["program_studi"],
     "SINTA ID": data["sinta_id"],
+    "Profile Photo": data["profile_photo"],
     "Bidang Minat": data["bidang_minat"],
     "SINTA Score Overall": data["sinta_score_overall"],
     "SINTA Score 3Yr": data["sinta_score_3yr"],
