@@ -58,5 +58,15 @@ try:
     print(f"\n[+] PROSES MERGE SELESAI!")
     print(f"[+] Berhasil menggabungkan seluruh sheet ke: {output_filename}")
     
+    # --- PROSES CLEANUP / PENGHAPUSAN FILE SISA ---
+    print("\n[+] Membersihkan file Excel sisa...")
+    for file_path in expected_files.keys():
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                print(f"    -> Berhasil dihapus: {os.path.basename(file_path)}")
+            except Exception as e:
+                print(f"    -> Gagal menghapus {os.path.basename(file_path)}: {e}")
+                
 except Exception as e:
     print(f"\n[-] Terjadi kesalahan fatal saat proses penggabungan: {e}")

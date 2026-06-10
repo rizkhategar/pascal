@@ -4,10 +4,12 @@ import pandas as pd
 import re
 import sys
 import os
+import io
 # =====================================================
 # CONFIG
 # =====================================================
-
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+ 
 if len(sys.argv) > 1:
     SINTA_ID = sys.argv[1]
 else:
