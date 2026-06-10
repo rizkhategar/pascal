@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10" style="border-radius: 0.75rem; display: flex; flex-direction: column; overflow: hidden;">
+           <div class="bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10" style="border-radius: 0.75rem; display: flex; flex-direction: column; overflow: hidden;">
                 <div style="padding: 1.5rem; flex-grow: 1;">
                     <h3 class="text-gray-950 dark:text-white" style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
                         <svg style="width: 1.25rem; height: 1.25rem; color: #10b981;" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -111,9 +111,20 @@
                         </svg>
                         Langkah 3: Database
                     </h3>
-                    <p class="text-gray-500 dark:text-gray-400" style="font-size: 0.875rem;">
+                    <p class="text-gray-500 dark:text-gray-400" style="font-size: 0.875rem; margin-bottom: 1rem;">
                         Migrasikan seluruh data kualifikasi dan publikasi dosen dari dokumen Excel ke dalam MySQL.
                     </p>
+
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;" class="text-gray-950 dark:text-white">Pilih Jurusan</label>
+                        <select id="jurusan" class="custom-select-dosen" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid rgba(156, 163, 175, 0.4); font-size: 0.875rem; outline: none;">
+                            <option value="">-- Silakan Pilih Jurusan --</option>
+                            <option value="Magister Keperawatan">Magister Keperawatan</option>
+                            <option value="Magister Kesehatan Masyarakat">Magister Kesehatan Masyarakat</option>
+                            <option value="Magister Manajemen Pendidikan">Magister Manajemen Pendidikan</option>
+                            <option value="Magister Hukum">Magister Hukum</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="bg-gray-50 dark:bg-white/5 border-t border-gray-200 dark:border-white/10" style="padding: 1rem 1.5rem;">
                     <button type="button" id="btn-import" style="width: 100%; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: #10b981; color: #fff; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer; opacity: 0.5;" disabled>
@@ -233,15 +244,21 @@
 
         btnImport.addEventListener('click', function() {
             const sintaId = selectSinta.value;
-            if (!sintaId) return alert('SINTA ID tidak ditemukan.');
+            const jurusan = document.getElementById('jurusan').value; // Ambil nilai dropdown jurusan
 
-            appendTerminal(`\n>>> Memulai migrasi streaming data Excel ke MySQL untuk SINTA ID: ${sintaId}...\n`);
+            if (!sintaId) return alert('SINTA ID tidak ditemukan.');
+            if (!jurusan) return alert('Silakan pilih Jurusan terlebih dahulu!'); // Peringatan jika jurusan kosong
+
+            appendTerminal(`\n>>> Memulai migrasi streaming data Excel ke MySQL untuk SINTA ID: ${sintaId} (Jurusan: ${jurusan})...\n`);
             toggleLoading(btnImport, true, 'Import ke Database');
             btnAmbilDetail.disabled = true;
             btnAmbilDetail.style.opacity = '0.5';
 
             let targetUrl = "{{ route('scrap.importData', ':id') }}";
             targetUrl = targetUrl.replace(':id', sintaId);
+            
+            // Tambahkan parameter jurusan di akhir URL (untuk ditangkap oleh Controller)
+            targetUrl += "?jurusan=" + encodeURIComponent(jurusan);
 
             const eventSource = new EventSource(targetUrl);
 

@@ -137,14 +137,15 @@ class ScrapController extends Controller
         ]);
     }
 
-   /**
+    /**
      * Import Excel ke Database dengan SSE (Real-time Stream per Sheet)
      */
-    public function importData($sinta_id)
+   public function importData(\Illuminate\Http\Request $request, $sinta_id)
     {
+        $jurusan = $request->query('jurusan');
         $sintaId = preg_replace('/[^0-9]/', '', $sinta_id);
 
-        return new \Symfony\Component\HttpFoundation\StreamedResponse(function () use ($sintaId) {
+        return new \Symfony\Component\HttpFoundation\StreamedResponse(function () use ($sintaId, $jurusan) {
             set_time_limit(0);
             ignore_user_abort(true);
 
@@ -163,7 +164,6 @@ class ScrapController extends Controller
 
                 $sheets = (new \Rap2hpoutre\FastExcel\FastExcel)->importSheets($filePath);
 
-                // PERBAIKAN UTAMA: Peta Urutan Sheet dari skrip Python merge_excel.py
                 $expectedSheets = [
                     0 => 'DATA_DOSEN',
                     1 => 'SCOPUS_PUBLICATIONS',
@@ -180,7 +180,6 @@ class ScrapController extends Controller
                 ];
 
                 foreach ($sheets as $sheetIndex => $rows) {
-                    // Menerjemahkan angka urut menjadi nama tabel aslinya
                     $actualSheetName = $expectedSheets[$sheetIndex] ?? "SHEET_{$sheetIndex}";
                     $sheetNameUpper = strtoupper($actualSheetName);
                     
@@ -201,7 +200,6 @@ class ScrapController extends Controller
                         continue;
                     }
 
-                    // FITUR IGNORE "NONE"
                     $values = array_map('strtolower', array_map('trim', array_values((array)$firstRow)));
                     if (in_array('none', $values)) {
                         echo "data: " . json_encode(['output' => "<span class='text-gray-400'>--> Sheet berisi 'none', dilewati.</span>\n"]) . "\n\n";
@@ -216,8 +214,61 @@ class ScrapController extends Controller
                         $r = array_change_key_case((array)$row, CASE_LOWER);
 
                         if ($sheetNameUpper === 'DATA_DOSEN') {
+                            $photoValue = $r['profile photo'] ?? null;
+
+                            // FITUR UNDUH FOTO PROFIL DENGAN LOG TERMINAL DETAIL
+                            if (!empty($photoValue) && filter_var($photoValue, FILTER_VALIDATE_URL)) {
+                                try {
+                                    // 1. Log Menemukan URL
+                                    echo "data: " . json_encode(['output' => "<span style='color: #0ea5e9;'>[FOTO]</span> URL foto ditemukan: {$photoValue}\n"]) . "\n\n";
+                                    echo "data: " . json_encode(['output' => "<span style='color: #0ea5e9;'>[FOTO]</span> Memulai proses unduh (download)...\n"]) . "\n\n";
+                                    ob_flush(); flush();
+
+                                    $response = \Illuminate\Support\Facades\Http::withoutVerifying()->timeout(15)->get($photoValue);
+
+                                    if ($response->successful()) {
+                                        // 2. Log Unduhan Berhasil
+                                        echo "data: " . json_encode(['output' => "<span class='text-success-400'>[FOTO]</span> ✔ File foto berhasil diunduh dari server SINTA.\n"]) . "\n\n";
+                                        ob_flush(); flush();
+
+                                        $photoName = $sintaId . '.jpg';
+                                        $destinationFolder = public_path('assets/images');
+
+                                        if (!file_exists($destinationFolder)) {
+                                            mkdir($destinationFolder, 0755, true);
+                                        }
+
+                                        // 3. Log Rename
+                                        echo "data: " . json_encode(['output' => "<span style='color: #0ea5e9;'>[FOTO]</span> Melakukan rename file menjadi: <b>{$photoName}</b>\n"]) . "\n\n";
+                                        ob_flush(); flush();
+
+                                        // Simpan Gambar
+                                        file_put_contents($destinationFolder . '/' . $photoName, $response->body());
+                                        $photoValue = $photoName;
+
+                                        // 4. Log Sukses Tersimpan
+                                        echo "data: " . json_encode(['output' => "<span class='text-success-400'>[FOTO]</span> ✔ Foto profil berhasil disimpan ke direktori: public/assets/images/{$photoName}\n"]) . "\n\n";
+                                    } else {
+                                        echo "data: " . json_encode(['output' => "<span class='text-warning-500'>[FOTO - WARN] Gagal mengunduh foto (Status HTTP: " . $response->status() . "). Tetap menggunakan URL asli.</span>\n"]) . "\n\n";
+                                    }
+                                    ob_flush(); flush();
+                                } catch (\Throwable $photoError) {
+                                    echo "data: " . json_encode(['output' => "<span class='text-warning-500'>[FOTO - ERROR] Request Timeout / Gagal: " . addslashes($photoError->getMessage()) . "</span>\n"]) . "\n\n";
+                                    ob_flush(); flush();
+                                }
+                            }
+
                             \App\Models\DetailDosen::updateOrCreate(['sinta_id' => $sintaId], [
-                                'nama' => $r['nama'] ?? null, 'institusi' => $r['institusi'] ?? $r['afiliasi'] ?? null, 'program_studi' => $r['program studi'] ?? null, 'profile_photo' => $r['profile photo'] ?? null, 'bidang_minat' => $r['bidang minat'] ?? null, 'sinta_score_overall' => isset($r['sinta score overall']) ? (int)$r['sinta score overall'] : 0, 'sinta_score_3yr' => isset($r['sinta score 3yr']) ? (int)$r['sinta score 3yr'] : 0, 'affil_score' => isset($r['affil score']) ? (int)$r['affil score'] : 0, 'affil_score_3yr' => isset($r['affil score 3yr']) ? (int)$r['affil score 3yr'] : 0,
+                                'nama' => $r['nama'] ?? null, 
+                                'institusi' => $r['institusi'] ?? $r['afiliasi'] ?? null, 
+                                'program_studi' => $r['program studi'] ?? null, 
+                                'profile_photo' => $photoValue, // Simpan hasil rename
+                                'bidang_minat' => $r['bidang minat'] ?? null, 
+                                'sinta_score_overall' => isset($r['sinta score overall']) ? (int)$r['sinta score overall'] : 0, 
+                                'sinta_score_3yr' => isset($r['sinta score 3yr']) ? (int)$r['sinta score 3yr'] : 0, 
+                                'affil_score' => isset($r['affil score']) ? (int)$r['affil score'] : 0, 
+                                'affil_score_3yr' => isset($r['affil score 3yr']) ? (int)$r['affil score 3yr'] : 0,
+                                'jurusan' => $jurusan,
                             ]);
                             $insertedCount++;
                         }
