@@ -627,11 +627,13 @@
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
-                            @foreach ($academicProgramsNav as $navProgram)
-                                <a href="{{ route('akademik.show', $navProgram->slug) }}">
-                                    {{ $navProgram->name }}
+                            @forelse($academicProgramsNav as $program)
+                                <a href="{{ route('akademik.show', $program['slug']) }}">
+                                    {{ $program['display_name'] }}
                                 </a>
-                            @endforeach
+                            @empty
+                                <a href="#">Data tidak tersedia</a>
+                            @endforelse
                         </div>
                     </li>
 
