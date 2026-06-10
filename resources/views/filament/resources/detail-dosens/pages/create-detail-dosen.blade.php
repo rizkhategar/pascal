@@ -250,7 +250,7 @@
             if (!jurusan) return alert('Silakan pilih Jurusan terlebih dahulu!'); // Peringatan jika jurusan kosong
 
             appendTerminal(`\n>>> Memulai migrasi streaming data Excel ke MySQL untuk SINTA ID: ${sintaId} (Jurusan: ${jurusan})...\n`);
-            toggleLoading(btnImport, true, 'Import ke Database');
+            toggleLoading(btnImport, true, 'Tambah ke Database');
             btnAmbilDetail.disabled = true;
             btnAmbilDetail.style.opacity = '0.5';
 
