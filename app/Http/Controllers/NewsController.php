@@ -6,6 +6,11 @@ use Illuminate\View\View;
 
 class NewsController extends Controller
 {
+    public function index(): View
+    {
+        return view('news.index');
+    }
+
     public function show(string $slug): View
     {
         return view('news.show', [
