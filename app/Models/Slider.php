@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class HomeHeroSlide extends Model
+class Slider extends Model
 {
+    protected $table = 'home_hero_slides';
+
     protected $fillable = [
         'title',
         'subtitle',
@@ -27,9 +29,9 @@ class HomeHeroSlide extends Model
 
     protected static function booted(): void
     {
-        static::deleting(function (HomeHeroSlide $slide): void {
-            if ($slide->image_path && Storage::disk('public')->exists($slide->image_path)) {
-                Storage::disk('public')->delete($slide->image_path);
+        static::deleting(function (Slider $slider): void {
+            if ($slider->image_path && Storage::disk('public')->exists($slider->image_path)) {
+                Storage::disk('public')->delete($slider->image_path);
             }
         });
     }

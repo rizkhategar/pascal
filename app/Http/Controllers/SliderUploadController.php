@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\HomeHeroSlide;
+use App\Models\Slider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class HomeHeroSlideUploadController extends Controller
+class SliderUploadController extends Controller
 {
     public function create(): View
     {
-        return view('admin.home-hero-slides.create');
+        return view('admin.sliders.create');
     }
 
-    public function edit(HomeHeroSlide $homeHeroSlide): View
+    public function edit(Slider $slider): View
     {
-        return view('admin.home-hero-slides.edit', compact('homeHeroSlide'));
+        return view('admin.sliders.edit', compact('slider'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -34,12 +33,12 @@ class HomeHeroSlideUploadController extends Controller
         ]);
 
         $path = $request->file('image')->storeAs(
-            'home-hero-slides',
+            'sliders',
             $this->makeFileName($request->file('image')->getClientOriginalExtension()),
             'public'
         );
 
-        HomeHeroSlide::create([
+        Slider::create([
             'title' => $validated['title'],
             'subtitle' => $validated['subtitle'],
             'image_path' => $path,
@@ -49,11 +48,11 @@ class HomeHeroSlideUploadController extends Controller
         ]);
 
         return redirect()
-            ->to('/admin/home-hero-slides')
-            ->with('success', 'Hero Campus berhasil ditambahkan.');
+            ->to('/admin/sliders')
+            ->with('success', 'Slider has been created.');
     }
 
-    public function update(Request $request, HomeHeroSlide $homeHeroSlide): RedirectResponse
+    public function update(Request $request, Slider $slider): RedirectResponse
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -73,26 +72,26 @@ class HomeHeroSlideUploadController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            if ($homeHeroSlide->image_path && Storage::disk('public')->exists($homeHeroSlide->image_path)) {
-                Storage::disk('public')->delete($homeHeroSlide->image_path);
+            if ($slider->image_path && Storage::disk('public')->exists($slider->image_path)) {
+                Storage::disk('public')->delete($slider->image_path);
             }
 
             $data['image_path'] = $request->file('image')->storeAs(
-                'home-hero-slides',
+                'sliders',
                 $this->makeFileName($request->file('image')->getClientOriginalExtension()),
                 'public'
             );
         }
 
-        $homeHeroSlide->update($data);
+        $slider->update($data);
 
         return redirect()
-            ->to('/admin/home-hero-slides')
-            ->with('success', 'Hero Campus berhasil diperbarui.');
+            ->to('/admin/sliders')
+            ->with('success', 'Slider has been updated.');
     }
 
     private function makeFileName(string $extension): string
     {
-        return 'hero-campus-' . now()->format('YmdHis') . '-' . Str::random(8) . '.' . strtolower($extension);
+        return 'slider-' . now()->format('YmdHis') . '-' . Str::random(8) . '.' . strtolower($extension);
     }
 }
