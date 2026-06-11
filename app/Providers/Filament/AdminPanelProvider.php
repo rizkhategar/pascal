@@ -36,15 +36,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Beranda')
+                    ->label('Home')
                     ->collapsed(false),
 
                 NavigationGroup::make()
-                    ->label('Profil')
+                    ->label('Profile')
                     ->collapsed(false),
 
                 NavigationGroup::make()
-                    ->label('Akademik')
+                    ->label('Academic')
                     ->collapsed(false),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
