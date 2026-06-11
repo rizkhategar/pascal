@@ -2,45 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\DetailDosen;
-use App\Models\HomeHeroSlide;
+use Illuminate\Http\Request;
 
 class RisetController extends Controller
 {
     public function listDosen(Request $request)
     {
-        // Ambil data Hero Slide untuk Banner Atas
-        $heroSlides = HomeHeroSlide::where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
+        // Ambil data navigasi untuk filter jurusan
+        $academicProgramsNav = \App\Http\Controllers\AcademicController::getNavigationData();
 
-        // Query Detail Dosen
+        // Query data dosen
         $query = DetailDosen::query();
 
-        // Filter pencarian berdasarkan Nama atau SINTA ID
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%")
-                    ->orWhere('sinta_id', 'like', "%{$search}%");
+        // Logika Pencarian Nama / SINTA ID
+        if ($request->has('search') && $request->search != '') {
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%')
+                    ->orWhere('sinta_id', 'like', '%' . $request->search . '%');
             });
         }
 
-        // Filter berdasarkan nama Jurusan
-        if ($request->filled('jurusan')) {
+        // Logika Filter Jurusan/Program Studi
+        if ($request->has('jurusan') && $request->jurusan != '') {
             $query->where('jurusan', $request->jurusan);
         }
 
-        // Paginasi menampilkan 10 data dosen per halaman
+        // Pagination data dosen
         $dosens = $query->paginate(10);
 
-        // Memanggil file dari folder riset&pdm/listrisetdosen.blade.php
-        return view('riset&pdm.listrisetdosen', compact('heroSlides', 'dosens'));
+        // Kembalikan ke view TANPA membawa variabel heroSlides
+        return view('riset&pdm.listrisetdosen', compact('dosens', 'academicProgramsNav'));
     }
 
     public function detailDosen($sinta_id)
     {
+        // Mengambil data dosen beserta relasi publikasi & buku saja (mengoptimalkan performa)
         $dosen = DetailDosen::with([
             'scopusPublications',
             'scopusYearlyStats',
@@ -51,6 +48,7 @@ class RisetController extends Controller
             'books'
         ])->findOrFail($sinta_id);
 
-        return view('detailriset', compact('dosen'));
+        // Memperbaiki path view agar mengarah ke folder resources/views/riset&pdm/detailriset.blade.php
+        return view('riset&pdm.detailriset', compact('dosen'));
     }
 }

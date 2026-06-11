@@ -37,7 +37,7 @@
             padding: 40px 0;
         }
 
-        .container {
+        .akademik-container {
             width: 100%;
             max-width: 1000px; /* Disesuaikan untuk kenyamanan membaca konten */
             margin: 0 auto;
@@ -73,7 +73,7 @@
     @include('component.header')
 
     <main>
-        <div class="container">
+        <div class="akademik-container">
             <div class="api-content">
                 {!! $program['body'] !!}
             </div>
