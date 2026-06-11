@@ -654,15 +654,9 @@
                     </li>
 
                     <li class="nav-item has-dropdown">
-                        <a href="#" class="nav-link dropdown-trigger">
-                            <span>Riset & PDM</span>
-                            <span class="chevron" aria-hidden="true"></span>
+                        <a href="{{ route('riset.dosen') }}" class="nav-link dropdown-trigger">
+                            <span>Riset Dosen</span>
                         </a>
-                        <div class="dropdown">
-                            <a href="{{ route('riset.dosen') }}">Riset Dosen</a>
-                            <a href="#">Publikasi</a>
-                            <a href="#">Pengabdian Masyarakat</a>
-                        </div>
                     </li>
 
                     <li class="nav-item">

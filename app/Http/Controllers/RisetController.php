@@ -45,7 +45,11 @@ class RisetController extends Controller
             'scholarYearlyStats',
             'garudaPublications',
             'garudaYearlyStats',
-            'books'
+            'books',
+            'researches',
+            'researchYearlies',
+            'services',
+            'serviceYearlies'
         ])->findOrFail($sinta_id);
 
         // Memperbaiki path view agar mengarah ke folder resources/views/riset&pdm/detailriset.blade.php
