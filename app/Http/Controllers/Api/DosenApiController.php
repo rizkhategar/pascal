@@ -12,7 +12,6 @@ class DosenApiController extends Controller
 {
     /**
      * Get Daftar Data Dosen Tersedia
-     * * Mengambil semua daftar dosen esensial di tabel detail_dosen.
      */
     public function index(): AnonymousResourceCollection
     {
@@ -23,8 +22,6 @@ class DosenApiController extends Controller
 
     /**
      * Get Detail SINTA Dosen Spesifik (Komplit)
-     * * Mengambil ringkasan skor matriks SINTA lengkap, statistik grafik tahunan,
-     * serta seluruh isi data publikasi (Scopus, Scholar, Garuda), penelitian, pengabdian, dan buku.
      */
     public function show(string $sinta_id): DosenSintaResource
     {
