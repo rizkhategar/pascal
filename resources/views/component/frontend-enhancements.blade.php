@@ -7,12 +7,10 @@
     .hero .btn-primary { position: relative !important; z-index: 60 !important; }
     .hero .btn-primary { pointer-events: auto; }
     .hero { background: #031a38 !important; overflow: hidden !important; }
-    .hero .hero-slide { position:absolute!important; inset:0!important; opacity:1!important; visibility:visible!important; transform:translateX(100%)!important; transition:transform .78s cubic-bezier(.76,0,.24,1)!important; background-size:cover!important; background-position:center!important; background-repeat:no-repeat!important; filter:brightness(.86)!important; z-index:1!important; will-change:transform; }
-    .hero .hero-slide.slide-current { transform:translateX(0)!important; z-index:4!important; }
-    .hero .hero-slide.slide-prev { transform:translateX(-100%)!important; z-index:3!important; }
-    .hero .hero-slide.slide-next { transform:translateX(100%)!important; z-index:3!important; }
-    .hero .hero-slide.no-transition { transition:none!important; }
-    .hero .hero-slide::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(3,20,46,.82),rgba(7,43,87,.62),rgba(3,20,46,.86))!important; pointer-events:none; }
+    .hero .hero-slider-track { position: absolute !important; inset: 0 !important; display: flex !important; width: 100%; height: 100%; z-index: 1 !important; transform: translateX(-100%); transition: transform .78s cubic-bezier(.76, 0, .24, 1) !important; will-change: transform; }
+    .hero .hero-slider-track.no-transition { transition: none !important; }
+    .hero .hero-slider-track .hero-slide { position: relative !important; inset: auto !important; flex: 0 0 100% !important; width: 100% !important; height: 100% !important; opacity: 1 !important; visibility: visible !important; transform: none !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; filter: brightness(.86) !important; }
+    .hero .hero-slider-track .hero-slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,20,46,.82), rgba(7,43,87,.62), rgba(3,20,46,.86)) !important; pointer-events: none; }
     .program-section .program-card,.program-section .program-detail{cursor:pointer}.program-grid{display:grid}.program-grid .program-card:nth-child(4){order:1}.program-grid .program-card:nth-child(3){order:2}.program-grid .program-card:nth-child(2){order:3}.program-grid .program-card:nth-child(1){order:4}
     .news-area{min-width:0}.section-header:has(#apiNewsPagination){align-items:flex-start;gap:18px}.section-title i,.news-filter-btn i,.news-category i,.news-date i{color:var(--yellow)}.section-title i{margin-right:9px}.news-more-wrap{display:flex;justify-content:flex-end;margin-top:18px}.news-more-link{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:9px;background:var(--primary);color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 22px rgba(7,43,87,.16)}.news-more-link:hover{background:var(--yellow)}.news-filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 18px;padding:12px;background:#fff;border:1px solid rgba(7,43,87,.1);border-radius:14px;box-shadow:0 10px 28px rgba(15,23,42,.05)}.news-filter-btn{border:1px solid rgba(7,43,87,.16);background:#f8fafc;color:var(--primary);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:800;cursor:pointer;transition:.2s ease;white-space:nowrap;display:inline-flex;align-items:center;gap:7px}.news-filter-btn:hover,.news-filter-btn.active{background:var(--yellow);border-color:var(--yellow);color:#fff;box-shadow:0 8px 18px rgba(247,181,0,.25)}.news-filter-btn:hover i,.news-filter-btn.active i{color:#fff}.news-state{padding:22px;border-radius:14px;background:#fff;border:1px solid rgba(7,43,87,.12);font-size:14px;line-height:1.6;color:#64748b}.news-loading{min-height:180px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid rgba(7,43,87,.1);border-radius:18px}.news-loader{width:42px;height:42px;border:4px solid #e5e7eb;border-top-color:var(--yellow);border-radius:50%;animation:newsSpin .8s linear infinite}@keyframes newsSpin{to{transform:rotate(360deg)}}.news-list{display:grid;gap:14px}.news-item{border:0!important;padding:0!important;width:100%;overflow:hidden}.news-item-link{display:grid!important;grid-template-columns:150px minmax(0,1fr)!important;align-items:stretch;gap:16px;width:100%;max-width:100%;color:inherit;text-decoration:none;padding:14px;background:#fff;border:1px solid rgba(7,43,87,.1);border-radius:16px;box-shadow:0 12px 32px rgba(15,23,42,.06);transition:.24s ease;overflow:hidden}.news-item-link:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(15,23,42,.1);border-color:rgba(247,181,0,.5)}.news-item-link:hover .news-title{color:var(--yellow)}.news-thumb{width:150px!important;min-width:150px!important;max-width:150px!important;height:122px!important;overflow:hidden;background:#eef2f7;border-radius:12px;display:flex;align-items:center;justify-content:center;grid-column:1}.news-thumb img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;transition:.35s ease}.news-item-link:hover .news-thumb img{transform:scale(1.05)}.news-content{grid-column:2;min-width:0!important;max-width:100%;overflow:hidden;display:flex;flex-direction:column;justify-content:center}.news-category{min-width:0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-flex;align-items:center;gap:6px}.news-title{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:anywhere;margin:7px 0 0;line-height:1.35;max-width:100%}.news-excerpt{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:8px;font-size:13px;line-height:1.55;color:#64748b;word-break:normal;overflow-wrap:anywhere;max-width:100%}.news-date{margin-top:10px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-flex;align-items:center;gap:7px}.pagination#apiNewsPagination{display:none!important}
     @media(max-width:992px){.news-item-link{grid-template-columns:145px minmax(0,1fr)!important}.news-thumb{width:145px!important;min-width:145px!important;max-width:145px!important;height:118px!important}}
@@ -46,30 +44,43 @@
             const next = oldNext.cloneNode(true);
             oldPrev.replaceWith(prev);
             oldNext.replaceWith(next);
-            hero.querySelectorAll('.hero-slide').forEach(slide => slide.remove());
+            hero.querySelectorAll('.hero-slide, .hero-slider-track').forEach(element => element.remove());
             dotsWrapper.innerHTML = '';
 
-            const slides = items.map((item, index) => {
-                const slide = document.createElement('div');
-                slide.className = index === 0 ? 'hero-slide slide-current no-transition' : 'hero-slide slide-next no-transition';
-                slide.style.backgroundImage = `url("${item.image}")`;
-                hero.insertBefore(slide, prev);
+            const track = document.createElement('div');
+            track.className = 'hero-slider-track no-transition';
 
+            function createSlide(item) {
+                const slide = document.createElement('div');
+                slide.className = 'hero-slide';
+                slide.style.backgroundImage = `url("${item.image}")`;
+                return slide;
+            }
+
+            track.appendChild(createSlide(items[items.length - 1]));
+            items.forEach((item, index) => {
+                track.appendChild(createSlide(item));
                 const dot = document.createElement('button');
                 dot.className = index === 0 ? 'hero-dot active' : 'hero-dot';
                 dot.type = 'button';
                 dot.setAttribute('aria-label', `Slider ${index + 1}`);
                 dotsWrapper.appendChild(dot);
-                return slide;
             });
+            track.appendChild(createSlide(items[0]));
+            hero.insertBefore(track, prev);
 
             const dots = Array.from(dotsWrapper.querySelectorAll('.hero-dot'));
-            let current = 0;
-            let locked = false;
+            let trackIndex = 1;
+            let realIndex = 0;
+            let isMoving = false;
             let timer = null;
 
-            function forceReflow() {
-                hero.offsetHeight;
+            function applyTransform() {
+                track.style.transform = `translateX(-${trackIndex * 100}%)`;
+            }
+
+            function setDots(index) {
+                dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
             }
 
             function setText(index) {
@@ -82,73 +93,75 @@
                 return Math.min(30000, Math.max(1400, Number(items[index]?.duration || 3000)));
             }
 
-            function prepareSlides(from, target, direction) {
-                slides.forEach((slide, index) => {
-                    slide.className = 'hero-slide no-transition ' + (index === from ? 'slide-current' : 'slide-next');
-                });
+            function normalizePositionAfterClone() {
+                if (trackIndex === 0) {
+                    track.classList.add('no-transition');
+                    trackIndex = items.length;
+                    applyTransform();
+                    track.offsetHeight;
+                    track.classList.remove('no-transition');
+                }
 
-                slides[target].className = 'hero-slide no-transition ' + (direction > 0 ? 'slide-next' : 'slide-prev');
-                forceReflow();
-
-                slides.forEach(slide => slide.classList.remove('no-transition'));
-            }
-
-            function go(target, direction = 1) {
-                if (locked || target === current || !slides[target]) return;
-                locked = true;
-                clearTimeout(timer);
-
-                const from = current;
-                const outgoing = slides[from];
-                const incoming = slides[target];
-
-                prepareSlides(from, target, direction);
-
-                requestAnimationFrame(() => {
-                    outgoing.className = 'hero-slide ' + (direction > 0 ? 'slide-prev' : 'slide-next');
-                    incoming.className = 'hero-slide slide-current';
-
-                    current = target;
-                    setText(current);
-                    dots.forEach((dot, index) => dot.classList.toggle('active', index === current));
-                });
-
-                setTimeout(() => {
-                    slides.forEach((slide, index) => {
-                        slide.className = 'hero-slide no-transition ' + (index === current ? 'slide-current' : 'slide-next');
-                    });
-                    forceReflow();
-                    slides.forEach(slide => slide.classList.remove('no-transition'));
-                    locked = false;
-                    scheduleNext();
-                }, 820);
+                if (trackIndex === items.length + 1) {
+                    track.classList.add('no-transition');
+                    trackIndex = 1;
+                    applyTransform();
+                    track.offsetHeight;
+                    track.classList.remove('no-transition');
+                }
             }
 
             function scheduleNext() {
                 clearTimeout(timer);
-                if (slides.length <= 1) return;
-                timer = setTimeout(() => {
-                    go((current + 1) % slides.length, 1);
-                }, safeDuration(current));
+                if (items.length <= 1) return;
+                timer = setTimeout(() => move(1), safeDuration(realIndex));
             }
 
-            prev.addEventListener('click', (event) => {
-                event.preventDefault();
-                go((current - 1 + slides.length) % slides.length, -1);
+            function move(direction) {
+                if (isMoving || items.length <= 1) return;
+                isMoving = true;
+                clearTimeout(timer);
+
+                realIndex = (realIndex + direction + items.length) % items.length;
+                trackIndex += direction;
+                setText(realIndex);
+                setDots(realIndex);
+                applyTransform();
+            }
+
+            track.addEventListener('transitionend', function(event) {
+                if (event.propertyName !== 'transform') return;
+                normalizePositionAfterClone();
+                isMoving = false;
+                scheduleNext();
             });
 
-            next.addEventListener('click', (event) => {
+            prev.addEventListener('click', function(event) {
                 event.preventDefault();
-                go((current + 1) % slides.length, 1);
+                move(-1);
             });
 
-            dots.forEach((dot, index) => dot.addEventListener('click', () => {
-                if (index === current) return;
-                go(index, index > current ? 1 : -1);
+            next.addEventListener('click', function(event) {
+                event.preventDefault();
+                move(1);
+            });
+
+            dots.forEach((dot, index) => dot.addEventListener('click', function() {
+                if (isMoving || index === realIndex) return;
+                const direction = index > realIndex ? 1 : -1;
+                realIndex = index;
+                trackIndex = index + 1;
+                isMoving = true;
+                clearTimeout(timer);
+                setText(realIndex);
+                setDots(realIndex);
+                applyTransform();
             }));
 
             setText(0);
-            requestAnimationFrame(() => slides.forEach(slide => slide.classList.remove('no-transition')));
+            setDots(0);
+            applyTransform();
+            requestAnimationFrame(() => track.classList.remove('no-transition'));
             scheduleNext();
         })();
     </script>
