@@ -35,6 +35,18 @@ Route::get('/sliders/{slider}/image', function (Slider $slider) {
         ]);
 })->name('sliders.image');
 
+Route::get('/slider-images/{slider}', function (Slider $slider) {
+    abort_unless($slider->image_path, 404);
+    abort_unless(Storage::disk('public')->exists($slider->image_path), 404);
+
+    return response()
+        ->file(Storage::disk('public')->path($slider->image_path), [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+        ]);
+})->name('hero-campus.image');
+
 Route::get('/organization-structures/{organizationStructure}/image', function (OrganizationStructure $organizationStructure) {
     abort_unless($organizationStructure->image_path, 404);
     abort_unless(Storage::disk('public')->exists($organizationStructure->image_path), 404);
