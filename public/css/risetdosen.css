@@ -1,0 +1,408 @@
+/* public/css/risetdosen.css */
+
+:root {
+    --rd-primary: #072b57;
+    --rd-primary-dark: #052044;
+    --rd-yellow: #f7b500;
+    --rd-gray-50: #f9fafb;
+    --rd-gray-100: #f3f4f6;
+    --rd-gray-200: #e5e7eb;
+    --rd-gray-400: #9ca3af;
+    --rd-gray-500: #6b7280;
+    --rd-gray-600: #4b5563;
+    --rd-gray-800: #1f2937;
+    --rd-bg: #fdfdfd;
+    --rd-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --rd-card-shadow-hover: 0 10px 15px -3px rgba(7, 43, 87, 0.08), 0 4px 6px -2px rgba(7, 43, 87, 0.04);
+}
+
+/* Reset Layout Global Halaman (Aman & Tidak Merusak Elemen Header/Footer) */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mengubah Komponen Utama Pembungkus Menjadi Flex Item */
+.rd-wrapper {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--rd-gray-50);
+    color: var(--rd-gray-800);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto; /* Mendorong footer ke bawah jika konten halaman sedikit */
+    width: 100%;
+}
+
+/* Mencegah box-sizing internal merusak elemen global header/footer */
+.rd-wrapper *, 
+.rd-wrapper *::before, 
+.rd-wrapper *::after {
+    box-sizing: border-box;
+}
+
+/* Hero Section */
+.rd-wrapper .rd-hero {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    background-color: var(--rd-primary);
+    overflow: hidden;
+}
+
+.rd-wrapper .rd-hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rd-wrapper .rd-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+}
+
+.rd-wrapper .rd-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, rgba(7, 43, 87, 0.2), rgba(5, 32, 68, 0.6));
+}
+
+.rd-wrapper .rd-hero-title {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 0 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Container khusus konten riset agar tidak menimpa .container milik header */
+.rd-wrapper .rd-container {
+    width: min(100% - 32px, 1120px);
+    margin: 0 auto;
+    padding: 40px 0;
+    flex: 1 0 auto; /* Memberikan fleksibilitas tinggi internal */
+}
+
+/* Filter Section */
+.rd-wrapper .rd-filter-box {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: var(--rd-card-shadow);
+    border: 1px solid var(--rd-gray-100);
+    margin-bottom: 32px;
+}
+
+.rd-wrapper .rd-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.rd-wrapper .rd-form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 260px;
+}
+
+.rd-wrapper .rd-form-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--rd-gray-600);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rd-wrapper .rd-input {
+    width: 100%;
+    padding: 11px 16px;
+    border: 1px solid var(--rd-gray-200);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+    background: white;
+    font-family: inherit;
+    color: var(--rd-gray-800);
+}
+
+.rd-wrapper .rd-input:focus {
+    border-color: var(--rd-primary);
+    box-shadow: 0 0 0 3px rgba(7, 43, 87, 0.15);
+}
+
+.rd-wrapper .rd-btn-group {
+    display: flex;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.rd-wrapper .rd-btn {
+    padding: 11px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.rd-wrapper .rd-btn-primary {
+    background-color: var(--rd-primary);
+    color: white;
+}
+
+.rd-wrapper .rd-btn-primary:hover {
+    background-color: var(--rd-primary-dark);
+    transform: translateY(-1px);
+}
+
+.rd-wrapper .rd-btn-reset {
+    background-color: var(--rd-gray-100);
+    color: var(--rd-gray-600);
+    border: 1px solid var(--rd-gray-200);
+}
+
+.rd-wrapper .rd-btn-reset:hover {
+    background-color: var(--rd-gray-200);
+    color: var(--rd-gray-800);
+}
+
+/* Grid & Cards Dosen */
+.rd-wrapper .rd-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.rd-wrapper .rd-list-item {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid var(--rd-gray-100);
+    box-shadow: var(--rd-card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rd-wrapper .rd-list-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--rd-card-shadow-hover);
+    border-color: rgba(7, 43, 87, 0.2);
+}
+
+/* Photo Wrapper */
+.rd-wrapper .rd-list-photo {
+    width: 120px;
+    height: 150px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.rd-wrapper .rd-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid var(--rd-gray-200);
+    transition: transform 0.3s ease;
+}
+
+.rd-wrapper .rd-list-item:hover .rd-photo {
+    transform: scale(1.04);
+}
+
+/* Card Content */
+.rd-wrapper .rd-list-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.rd-wrapper .rd-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--rd-primary);
+    line-height: 1.3;
+}
+
+.rd-wrapper .rd-department {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--rd-gray-600);
+    font-weight: 600;
+}
+
+.rd-wrapper .rd-sinta-id {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: var(--rd-gray-600);
+    background: var(--rd-gray-100);
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+    font-weight: 700;
+}
+
+/* Stats Section */
+.rd-wrapper .rd-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+    background: var(--rd-gray-50);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--rd-gray-100);
+}
+
+.rd-wrapper .rd-stat {
+    text-align: center;
+}
+
+.rd-wrapper .rd-stat-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--rd-primary);
+}
+
+.rd-wrapper .rd-stat-label {
+    font-size: 0.65rem;
+    color: var(--rd-gray-500);
+    margin-top: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+/* Detail Link */
+.rd-wrapper .rd-detail-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 14px;
+    color: var(--rd-primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    width: fit-content;
+}
+
+.rd-wrapper .rd-detail-link:hover {
+    color: var(--rd-yellow);
+}
+
+/* Empty State */
+.rd-wrapper .rd-empty {
+    text-align: center;
+    padding: 64px 20px;
+    background: white;
+    border: 1px solid var(--rd-gray-200);
+    border-radius: 12px;
+    box-shadow: var(--rd-card-shadow);
+}
+
+.rd-wrapper .rd-empty svg {
+    width: 56px;
+    height: 56px;
+    color: var(--rd-gray-400);
+    margin: 0 auto 16px auto;
+}
+
+.rd-wrapper .rd-empty h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--rd-gray-800);
+    margin: 0 0 6px 0;
+}
+
+.rd-wrapper .rd-empty p {
+    font-size: 0.95rem;
+    color: var(--rd-gray-500);
+    margin: 0;
+}
+
+/* Pagination Wrapper */
+.rd-wrapper .rd-pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 993px) {
+    .rd-wrapper .rd-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .rd-wrapper .rd-hero {
+        height: 300px;
+    }
+    .rd-wrapper .rd-hero-title {
+        font-size: 2.75rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .rd-wrapper .rd-container {
+        padding: 30px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .rd-wrapper .rd-list-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 24px;
+        gap: 16px;
+    }
+
+    .rd-wrapper .rd-list-photo {
+        width: 110px;
+        height: 140px;
+    }
+
+    .rd-wrapper .rd-list-content {
+        align-items: center;
+        width: 100%;
+    }
+
+    .rd-wrapper .rd-stats {
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        gap: 16px;
+    }
+
+    .rd-wrapper .rd-detail-link {
+        margin-top: 16px;
+        padding-top: 0;
+    }
+}

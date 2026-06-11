@@ -89,9 +89,9 @@
             line-height: 1.7;
         }
 
-        .struktur-image-wrapper { padding: 0 28px 28px; }
+        .structure-image-wrapper { padding: 0 28px 28px; }
 
-        .struktur-image {
+        .structure-image {
             width: 100%;
             height: auto;
             display: block;
@@ -108,7 +108,7 @@
 
             .image-card-header,
             .empty-card,
-            .struktur-image-wrapper {
+            .structure-image-wrapper {
                 padding-left: 18px;
                 padding-right: 18px;
             }
@@ -117,6 +117,8 @@
 </head>
 <body>
     @include('component.header')
+
+    @php($currentOrganizationStructure = $organizationStructure ?? $strukturOrganisasi ?? null)
 
     <main>
         <section class="page-hero">
@@ -131,18 +133,18 @@
 
         <section class="content-section">
             <div class="container">
-                @if ($strukturOrganisasi && $strukturOrganisasi->image_path)
+                @if ($currentOrganizationStructure && $currentOrganizationStructure->image_path)
                     <article class="image-card">
                         <div class="image-card-header">
-                            <h2>{{ $strukturOrganisasi->title }}</h2>
+                            <h2>{{ $currentOrganizationStructure->title }}</h2>
                             <p>Gambar struktur organisasi terbaru yang aktif ditampilkan pada halaman ini.</p>
                         </div>
 
-                        <div class="struktur-image-wrapper">
+                        <div class="structure-image-wrapper">
                             <img
-                                src="{{ route('struktur-organisasi.image', $strukturOrganisasi) }}?v={{ optional($strukturOrganisasi->updated_at)->timestamp }}"
-                                alt="{{ $strukturOrganisasi->title }}"
-                                class="struktur-image"
+                                src="{{ route('organization-structures.image', $currentOrganizationStructure) }}?v={{ optional($currentOrganizationStructure->updated_at)->timestamp }}"
+                                alt="{{ $currentOrganizationStructure->title }}"
+                                class="structure-image"
                             >
                         </div>
                     </article>

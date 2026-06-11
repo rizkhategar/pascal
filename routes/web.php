@@ -12,6 +12,7 @@ use App\Models\OrganizationStructure;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\RisetController;
 
 Route::get('/', function () {
     $sliders = Slider::query()
@@ -62,6 +63,9 @@ Route::get('/scrap/ambildatadosen', [ScrapController::class, 'index'])->name('sc
 Route::get('/scrap/perbarui-dosen', [ScrapController::class, 'perbaruiDosen'])->name('scrap.perbaruiDosen');
 Route::get('/scrap/ambil-detail/{sinta_id}', [ScrapController::class, 'ambilDetail'])->name('scrap.ambilDetail');
 Route::get('/scrap/import/{sinta_id}', [ScrapController::class, 'importData'])->name('scrap.importData');
+
+Route::get('/riset-dosen', [RisetController::class, 'listDosen'])->name('riset.dosen');
+Route::get('/riset-dosen/detail/{sinta_id}', [RisetController::class, 'detailDosen'])->name('riset.detail');
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/organization-structures/custom-create', [OrganizationStructureUploadController::class, 'create'])->name('admin.organization-structures.create-custom');
