@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GarudaYearlyStat extends Model
 {
+    protected $table = 'sinta_garuda_yearly_stats';
     protected $guarded = [];
 
     public function detailDosen(): BelongsTo

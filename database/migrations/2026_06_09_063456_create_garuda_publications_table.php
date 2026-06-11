@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('garuda_publications', function (Blueprint $table) {
+        Schema::create('sinta_garuda_publications', function (Blueprint $table) {
             $table->id();
             $table->string('sinta_id');
-            $table->foreign('sinta_id')->references('sinta_id')->on('detail_dosens')->onDelete('cascade');
+            $table->foreign('sinta_id')->references('sinta_id')->on('sinta_detail_dosens')->onDelete('cascade');
             $table->text('judul')->nullable();
             $table->text('url_artikel')->nullable();
             $table->string('publisher')->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('garuda_publications');
+        Schema::dropIfExists('sinta_garuda_publications');
     }
 };

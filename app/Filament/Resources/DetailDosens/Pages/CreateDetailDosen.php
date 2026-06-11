@@ -4,6 +4,8 @@ namespace App\Filament\Resources\DetailDosens\Pages;
 
 use App\Filament\Resources\DetailDosens\DetailDosenResource;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class CreateDetailDosen extends CreateRecord
 {
@@ -32,7 +34,34 @@ class CreateDetailDosen extends CreateRecord
 
         $excelExists = file_exists(base_path('scripts/output/dosen_universitas_ngudi_waluyo.xlsx'));
 
+        $jurusans = Cache::remember('academic_programs_nav', now()->addHours(12), function () {
+            $response = Http::withoutVerifying()->get('https://panel-web.unw.ac.id/api/unw-program-studi');
+
+            if (!$response->successful()) {
+                return [];
+            }
+
+            return collect($response->json('data', []))
+                ->filter(function ($item) {
+                    return isset(
+                        $item['slug'],
+                        $item['nama'],
+                        $item['unwFakultas']['nama']
+                    ) && trim($item['unwFakultas']['nama']) === 'Pascasarjana';
+                })
+                ->map(function ($item) {
+                    return [
+                        'slug' => $item['slug'],
+                        'display_name' => trim(($item['jenjang'] ?? '') . ' ' . ($item['nama'] ?? '')),
+                    ];
+                })
+                ->sortBy('display_name')
+                ->values()
+                ->toArray();
+        });
+
         return [
+            'jurusans' => $jurusans,
             'dosenList' => $dosenList,
             'excelExists' => $excelExists,
         ];

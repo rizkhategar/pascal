@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GarudaPublication extends Model
 {
+    protected $table = 'sinta_garuda_publications';
     protected $guarded = [];
 
     public function detailDosen(): BelongsTo

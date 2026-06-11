@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\StrukturOrganisasiResource\Pages;
+namespace App\Filament\Resources\StrukturOrganisasis\Pages;
 
-use App\Filament\Resources\StrukturOrganisasiResource;
+use App\Filament\Resources\StrukturOrganisasis\StrukturOrganisasiResource;
 use App\Models\StrukturOrganisasi;
 use Filament\Resources\Pages\Page;
 
@@ -10,7 +10,7 @@ class EditStrukturOrganisasi extends Page
 {
     protected static string $resource = StrukturOrganisasiResource::class;
 
-    protected string $view = 'filament.resources.struktur-organisasi-resource.pages.edit-struktur-organisasi';
+    protected string $view = 'filament.resources.struktur-organisasis.pages.edit-struktur-organisasi';
 
     public StrukturOrganisasi $record;
 

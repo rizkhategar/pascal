@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('detail_dosens', function (Blueprint $table) {
+        Schema::table('sinta_detail_dosens', function (Blueprint $table) {
             // Menambahkan kolom jurusan setelah program_studi
             $table->string('jurusan')->nullable()->after('program_studi');
         });
@@ -16,7 +16,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('detail_dosens', function (Blueprint $table) {
+        Schema::table('sinta_detail_dosens', function (Blueprint $table) {
             $table->dropColumn('jurusan');
         });
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class DetailDosen extends Model
 {
     // Mengatur nama tabel jika tidak mengikuti aturan jamak Laravel (opsional)
-    protected $table = 'detail_dosens';
+    protected $table = 'sinta_detail_dosens';
 
     // Mengonfigurasi sinta_id sebagai Primary Key non-incrementing string
     protected $primaryKey = 'sinta_id';

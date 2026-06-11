@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ResearchYearly extends Model
 {
+    protected $table = 'sinta_research_yearlies';
     protected $guarded = [];
 
     public function detailDosen(): BelongsTo

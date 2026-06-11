@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ScopusYearlyStat extends Model
 {
+
+    protected $table = 'sinta_scopus_yearly_stats';
     protected $guarded = [];
 
     public function detailDosen(): BelongsTo

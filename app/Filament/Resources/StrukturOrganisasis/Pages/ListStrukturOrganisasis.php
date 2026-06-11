@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\StrukturOrganisasiResource\Pages;
+namespace App\Filament\Resources\StrukturOrganisasis\Pages;
 
-use App\Filament\Resources\StrukturOrganisasiResource;
+use App\Filament\Resources\StrukturOrganisasis\StrukturOrganisasiResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
