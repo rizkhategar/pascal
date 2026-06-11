@@ -35,58 +35,24 @@
             background: #f1f6f7;
         }
 
-        /* Hero Section diselaraskan dengan banner Home */
-        .rd-hero {
-            position: relative;
-            min-height: 280px;
-            overflow: hidden;
-            background: #052044; 
-            display: flex;
-            align-items: center;
-        }
-
-        .rd-hero-slide {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .rd-hero-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(1.15);
-        }
-
-        .rd-hero-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            background: linear-gradient(90deg, rgba(7, 43, 87, 0.50), rgba(7, 43, 87, 0.35), rgba(7, 43, 87, 0.55));
-            z-index: 2;
-        }
-
-        .rd-hero-title {
-            color: #ffffff;
-            font-size: 36px;
-            line-height: 1.25;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
-            width: min(1120px, 92%);
-            margin: 0 auto;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
         /* Konten Container utama */
         .rd-container {
             width: min(1120px, 92%);
             margin: 0 auto;
             padding: 45px 0 52px;
+        }
+
+        /* Judul Halaman Pengganti Hero */
+        .rd-page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #072b57;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            border-bottom: 3px solid #f7b500;
+            padding-bottom: 10px;
+            display: inline-block;
         }
 
         /* Filter Box */
@@ -182,7 +148,6 @@
             gap: 24px;
         }
 
-        /* Mengubah komponen pembungkus menjadi tautan blok aktif */
         .rd-list-item {
             display: flex;
             align-items: flex-start;
@@ -193,8 +158,8 @@
             border: 1px solid #e5e7eb;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.25s ease;
-            text-decoration: none; /* Menghilangkan underline default link */
-            color: inherit; /* Menjaga warna teks agar tidak berubah biru */
+            text-decoration: none; 
+            color: inherit; 
             cursor: pointer;
         }
 
@@ -335,22 +300,9 @@
             .rd-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .rd-hero {
-                min-height: 320px;
-            }
-            .rd-hero-title {
-                font-size: 42px;
-            }
         }
 
         @media (max-width: 768px) {
-            .rd-hero {
-                min-height: 240px;
-            }
-            .rd-hero-title {
-                font-size: 26px;
-                text-align: center;
-            }
             .rd-list-item {
                 flex-direction: column;
                 align-items: center;
@@ -382,26 +334,9 @@
 
     <div class="rd-wrapper">
 
-        <section class="rd-hero">
-            @if (isset($heroSlides) && count($heroSlides) > 0)
-                <div>
-                    @foreach ($heroSlides as $slide)
-                        <div class="rd-hero-slide">
-                            <img src="{{ asset('storage/' . $slide->image_path) }}" class="rd-hero-img" alt="Hero">
-                            <div class="rd-hero-overlay">
-                                <h1 class="rd-hero-title">{{ $slide->title ?? 'Data Dosen & Riset' }}</h1>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="rd-hero-overlay">
-                    <h1 class="rd-hero-title">Daftar Riset Dosen</h1>
-                </div>
-            @endif
-        </section>
-
         <main class="rd-container">
+            
+            <h1 class="rd-page-title">Daftar Riset Dosen</h1>
 
             <section class="rd-filter-box">
                 <form method="GET" action="{{ url()->current() }}" class="rd-form" id="filterForm">
@@ -511,12 +446,12 @@
             const searchInput = document.getElementById('searchInput');
             const jurusanSelect = document.getElementById('jurusanSelect');
 
-            // 1. Filter Otomatis untuk Dropdown Jurusan ketika dipilih (langsung submit)
+            // Filter Otomatis untuk Dropdown Jurusan ketika dipilih (langsung submit)
             jurusanSelect.addEventListener('change', function () {
                 form.submit();
             });
 
-            // 2. Filter Otomatis untuk Input Pencarian menggunakan Debounce
+            // Filter Otomatis untuk Input Pencarian menggunakan Debounce
             let debounceTimer;
             searchInput.addEventListener('input', function () {
                 clearTimeout(debounceTimer);
