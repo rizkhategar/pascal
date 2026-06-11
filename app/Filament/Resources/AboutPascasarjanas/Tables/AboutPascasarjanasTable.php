@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\TentangPascasarjanas\Tables;
+namespace App\Filament\Resources\AboutPascasarjanas\Tables;
 
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -9,7 +9,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 
-class TentangPascasarjanasTable
+class AboutPascasarjanasTable
 {
     public static function configure(Table $table): Table
     {

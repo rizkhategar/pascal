@@ -1,7 +1,7 @@
 @php
     $academicProgramsNav = \App\Http\Controllers\AcademicController::getNavigationData();
     $isHome = request()->routeIs('home');
-    $isProfile = request()->routeIs('tentang') || request()->routeIs('visi-misi') || request()->routeIs('profil.*');
+    $isProfile = request()->routeIs('about') || request()->routeIs('visi-misi') || request()->routeIs('profil.*');
     $isAcademic = request()->routeIs('akademik.*');
     $isNews = request()->routeIs('news.*');
     $isResearch = request()->routeIs('riset.*');
@@ -391,7 +391,7 @@
                     <li class="nav-item has-dropdown {{ $isProfile ? 'route-active' : '' }}">
                         <a href="#" class="nav-link dropdown-trigger {{ $isProfile ? 'nav-route-active' : '' }}"><span>Profil</span><span class="chevron" aria-hidden="true"></span></a>
                         <div class="dropdown">
-                            <a href="{{ route('tentang') }}" class="{{ request()->routeIs('tentang') ? 'dropdown-route-active' : '' }}">Tentang Pascasarjana</a>
+                            <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'dropdown-route-active' : '' }}">Tentang Pascasarjana</a>
                             <a href="{{ route('visi-misi') }}" class="{{ request()->routeIs('visi-misi') ? 'dropdown-route-active' : '' }}">Visi dan Misi</a>
                             <a href="{{ route('profil.struktur-organisasi') }}" class="{{ request()->routeIs('profil.struktur-organisasi') ? 'dropdown-route-active' : '' }}">Struktur Organisasi</a>
                         </div>
