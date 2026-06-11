@@ -50,6 +50,7 @@ Route::get('/organization-structures/{organizationStructure}/image', function (O
 })->name('organization-structures.image');
 
 Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
+Route::get('/berita/search', [NewsController::class, 'search'])->name('news.search');
 Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
