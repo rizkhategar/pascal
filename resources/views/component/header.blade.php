@@ -659,7 +659,7 @@
                             <span class="chevron" aria-hidden="true"></span>
                         </a>
                         <div class="dropdown">
-                            <a href="#">Riset Dosen</a>
+                            <a href="{{ route('riset.dosen') }}">Riset Dosen</a>
                             <a href="#">Publikasi</a>
                             <a href="#">Pengabdian Masyarakat</a>
                         </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\HomeHeroSlideUploadController;
 use App\Http\Controllers\ScrapController;
 use App\Models\HomeHeroSlide;
 use App\Models\StrukturOrganisasi;
+use App\Http\Controllers\RisetController;
 
 Route::get('/', function () {
     $heroSlides = HomeHeroSlide::query()
@@ -70,6 +71,9 @@ Route::get('/scrap/perbarui-dosen', [ScrapController::class, 'perbaruiDosen'])->
 Route::get('/scrap/ambil-detail/{sinta_id}', [ScrapController::class, 'ambilDetail'])->name('scrap.ambilDetail');
 // Pastikan ini Route::get, BUKAN Route::post
 Route::get('/scrap/import/{sinta_id}', [App\Http\Controllers\ScrapController::class, 'importData'])->name('scrap.importData');
+
+Route::get('/riset-dosen', [RisetController::class, 'listDosen'])->name('riset.dosen');
+Route::get('/riset-dosen/detail/{sinta_id}', [RisetController::class, 'detailDosen'])->name('riset.detail');
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/struktur-organisasis/custom-create', [StrukturOrganisasiUploadController::class, 'create'])->name('admin.struktur-organisasi-upload.create');
