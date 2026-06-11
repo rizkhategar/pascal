@@ -8,12 +8,26 @@ use Illuminate\Support\Facades\Cache; // Wajib ditambahkan untuk fungsi Cache
 
 class AcademicController extends Controller
 {
+    public static function getNavigationData()
+    {
+        return Cache::remember('academic_programs_nav', now()->addHours(12), function () {
+            $responseNav = Http::withoutVerifying()->get('https://panel-web.unw.ac.id/api/unw-program-studi');
+            if (!$responseNav->successful()) return [];
+            return collect($responseNav->json('data', []))->filter(function ($item) {
+                return isset($item['slug'], $item['unwFakultas']['nama']) && trim($item['unwFakultas']['nama']) === 'Pascasarjana';
+            })->map(function ($item) {
+                return [
+                    'slug' => $item['slug'],
+                    'display_name' => trim(($item['jenjang'] ?? '') . ' ' . ($item['nama'] ?? ''))
+                ];
+            })->sortBy('display_name')->values()->toArray();
+        });
+    }
+    
     public function show($slug)
     {
-        // 1. Fetch data konten halaman (dari kode sebelumnya)
         $response = Http::withoutVerifying()->get("https://panel-web.unw.ac.id/api/unw-program-studi-page/{$slug}");
 
-        // 2. Fetch data untuk navigasi (yang dipindah dari AppServiceProvider)
         $academicProgramsNav = Cache::remember(
             'academic_programs_nav',
             now()->addHours(12),

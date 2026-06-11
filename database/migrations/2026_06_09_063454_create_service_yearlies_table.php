@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_yearlies', function (Blueprint $table) {
+        Schema::create('sinta_service_yearlies', function (Blueprint $table) {
             $table->id();
             $table->string('sinta_id');
-            $table->foreign('sinta_id')->references('sinta_id')->on('detail_dosens')->onDelete('cascade');
+            $table->foreign('sinta_id')->references('sinta_id')->on('sinta_detail_dosens')->onDelete('cascade');
             $table->string('tahun');
             $table->integer('jumlah')->default(0);
             $table->timestamps();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_yearlies');
+        Schema::dropIfExists('sinta_service_yearlies');
     }
 };

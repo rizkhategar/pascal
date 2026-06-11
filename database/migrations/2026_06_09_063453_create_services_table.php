@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('sinta_services', function (Blueprint $table) {
             $table->id();
             $table->string('sinta_id');
-            $table->foreign('sinta_id')->references('sinta_id')->on('detail_dosens')->onDelete('cascade');
+            $table->foreign('sinta_id')->references('sinta_id')->on('sinta_detail_dosens')->onDelete('cascade');
             $table->text('judul')->nullable();
             $table->string('leader')->nullable();
             $table->string('skema')->nullable();
+            $table->text('personils')->nullable(); // Tambahkan kolom ini
             $table->string('tahun')->nullable();
             $table->string('dana')->nullable();
+            $table->string('status')->nullable();  // Tambahkan kolom ini
+            $table->string('source')->nullable();  // Tambahkan kolom ini
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('sinta_services');
     }
 };

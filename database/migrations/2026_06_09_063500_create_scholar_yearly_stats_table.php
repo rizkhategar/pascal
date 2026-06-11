@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scholar_yearly_stats', function (Blueprint $table) {
+        Schema::create('sinta_scholar_yearly_stats', function (Blueprint $table) {
             $table->id();
             $table->string('sinta_id');
-            $table->foreign('sinta_id')->references('sinta_id')->on('detail_dosens')->onDelete('cascade');
+            $table->foreign('sinta_id')->references('sinta_id')->on('sinta_detail_dosens')->onDelete('cascade');
             $table->string('tahun');
             $table->integer('publications')->default(0);
             $table->integer('citations')->default(0);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('scholar_yearly_stats');
+        Schema::dropIfExists('sinta_scholar_yearly_stats');
     }
 };

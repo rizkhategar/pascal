@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('detail_dosens', function (Blueprint $table) {
+        Schema::create('sinta_detail_dosens', function (Blueprint $table) {
             $table->string('sinta_id')->primary(); // Menjadikan sinta_id sebagai primary key
             $table->string('nama')->nullable();
             $table->string('institusi')->nullable();
@@ -25,6 +25,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('detail_dosens');
+        Schema::dropIfExists('sinta_detail_dosens');
     }
 };

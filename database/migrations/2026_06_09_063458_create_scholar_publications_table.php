@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scholar_publications', function (Blueprint $table) {
+        Schema::create('sinta_scholar_publications', function (Blueprint $table) {
             $table->id();
             $table->string('sinta_id');
-            $table->foreign('sinta_id')->references('sinta_id')->on('detail_dosens')->onDelete('cascade');
+            $table->foreign('sinta_id')->references('sinta_id')->on('sinta_detail_dosens')->onDelete('cascade');
             $table->text('judul')->nullable();
             $table->text('url_scholar')->nullable();
             $table->text('authors')->nullable();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('scholar_publications');
+        Schema::dropIfExists('sinta_scholar_publications');
     }
 };

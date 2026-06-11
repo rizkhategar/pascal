@@ -1,3 +1,7 @@
+@php
+    $academicProgramsNav = \App\Http\Controllers\AcademicController::getNavigationData();
+@endphp
+
 <link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
 <link rel="shortcut icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
 
