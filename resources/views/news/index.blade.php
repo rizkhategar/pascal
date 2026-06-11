@@ -30,7 +30,7 @@
                 <div class="filter-bar" id="newsFilters"><button class="filter-btn active"><i class="fas fa-tag"></i>Semua</button></div>
                 <div class="news-search-wrap">
                     <input class="search-box" id="newsSearch" type="search" placeholder="Cari berita...">
-                    <button class="search-icon-btn" id="newsSearchButton" type="button" aria-label="Cari berita"><i class="fas fa-bars"></i></button>
+                    <button class="search-icon-btn" id="newsSearchButton" type="button" aria-label="Cari berita"><i class="fas fa-magnifying-glass"></i></button>
                 </div>
             </div>
             <div class="news-page-grid" id="newsGrid"><div class="loading"><div class="loader"></div></div></div>
