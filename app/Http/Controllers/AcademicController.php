@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Http;
 class AcademicController extends Controller
 {
     private static array $programOrder = [
+        's2-keperawatan',
         'magister-keperawatan',
+        's2-kesehatan-masyarakat',
         'magister-kesehatan-masyarakat',
+        's2-manajemen-pendidikan',
         'magister-manajemen-pendidikan',
+        's2-hukum',
         'magister-hukum',
     ];
 
@@ -34,9 +38,11 @@ class AcademicController extends Controller
                         'display_name' => trim(($item['jenjang'] ?? '') . ' ' . ($item['nama'] ?? '')),
                     ];
                 })
-                ->sortBy(fn ($item) => array_search($item['slug'], self::$programOrder, true) !== false
-                    ? array_search($item['slug'], self::$programOrder, true)
-                    : 99)
+                ->sortBy(function ($item) {
+                    $order = array_search($item['slug'], self::$programOrder, true);
+
+                    return $order !== false ? $order : 99;
+                })
                 ->values()
                 ->toArray();
         });
