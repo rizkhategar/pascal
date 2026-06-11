@@ -412,13 +412,10 @@
                         <a href="{{ route('news.index') }}" class="nav-link {{ $isNews ? 'nav-route-active' : '' }}">Berita</a>
                     </li>
 
-                    <li class="nav-item has-dropdown {{ $isResearch ? 'route-active' : '' }}">
-                        <a href="#" class="nav-link dropdown-trigger {{ $isResearch ? 'nav-route-active' : '' }}"><span>Riset & PDM</span><span class="chevron" aria-hidden="true"></span></a>
-                        <div class="dropdown">
-                            <a href="{{ route('riset.dosen') }}" class="{{ request()->routeIs('riset.*') ? 'dropdown-route-active' : '' }}">Riset Dosen</a>
-                            <a href="#">Publikasi</a>
-                            <a href="#">Pengabdian Masyarakat</a>
-                        </div>
+                    <li class="nav-item has-dropdown">
+                        <a href="{{ route('riset.dosen') }}" class="nav-link dropdown-trigger">
+                            <span>Riset Dosen</span>
+                        </a>
                     </li>
 
                     <li class="nav-item"><a href="{{ route('home') }}#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a></li>
