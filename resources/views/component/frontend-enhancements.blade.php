@@ -1,612 +1,130 @@
 <style>
     .hero .container,
     .hero-content,
-    .hero-text {
-        position: relative !important;
-        z-index: 50 !important;
-    }
-
+    .hero-text { position: relative !important; z-index: 50 !important; }
     .hero-title,
     .hero-subtitle,
-    .hero .btn-primary {
-        position: relative !important;
-        z-index: 60 !important;
-    }
-
-    .hero .btn-primary {
-        pointer-events: auto;
-    }
-
-    .hero {
-        background: #031a38 !important;
-        overflow: hidden !important;
-    }
-
-    .hero .hero-slide {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateX(100%) !important;
-        transition: transform .75s ease-in-out !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        filter: brightness(.88) !important;
-        z-index: 1 !important;
-        will-change: transform;
-    }
-
-    .hero .hero-slide.active {
-        transform: translateX(0) !important;
-        z-index: 3 !important;
-    }
-
-    .hero .hero-slide.slide-out-left {
-        transform: translateX(-100%) !important;
-        z-index: 2 !important;
-    }
-
-    .hero .hero-slide::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, rgba(3, 20, 46, .78), rgba(7, 43, 87, .58), rgba(3, 20, 46, .82)) !important;
-        pointer-events: none;
-    }
-
-    .program-section .program-card,
-    .program-section .program-detail {
-        cursor: pointer;
-    }
-
-    .nav-item.home-active:not(.route-active) > .nav-link:not(:hover):not(.nav-click-active):not(.nav-route-active) {
-        color: var(--white) !important;
-        background: transparent !important;
-    }
-
-    .nav-item.home-active:not(.route-active)::after,
-    .nav-item.home-active.route-active::after {
-        display: none !important;
-    }
-
-    .nav-link.nav-route-active,
-    .nav-item.route-active > .nav-link {
-        background: transparent !important;
-        color: var(--yellow) !important;
-        position: relative !important;
-    }
-
-    .nav-link.nav-route-active::after,
-    .nav-item.route-active > .nav-link::after {
-        content: "" !important;
-        position: absolute !important;
-        left: 16px !important;
-        right: 16px !important;
-        bottom: 5px !important;
-        height: 2px !important;
-        background: var(--yellow) !important;
-        border-radius: 999px !important;
-        display: block !important;
-    }
-
-    .nav-menu .nav-item > .nav-link:hover,
-    .nav-menu .nav-item.route-active > .nav-link:hover,
-    .nav-menu .nav-link.nav-route-active:hover {
-        background: var(--yellow) !important;
-        color: var(--white) !important;
-    }
-
-    .nav-menu .nav-item > .nav-link:hover::after,
-    .nav-menu .nav-item.route-active > .nav-link:hover::after,
-    .nav-menu .nav-link.nav-route-active:hover::after {
-        background: var(--white) !important;
-    }
-
-    .dropdown a.dropdown-route-active {
-        background: transparent !important;
-        color: var(--yellow) !important;
-        font-weight: 800 !important;
-        text-decoration: underline !important;
-        text-underline-offset: 5px !important;
-        text-decoration-thickness: 2px !important;
-        padding-left: 18px !important;
-    }
-
-    .dropdown a:hover {
-        background: var(--yellow) !important;
-        color: var(--white) !important;
-        text-decoration: none !important;
-    }
-
-    .news-area {
-        min-width: 0;
-    }
-
-    .section-header:has(#apiNewsPagination) {
-        align-items: flex-start;
-        gap: 18px;
-    }
-
-    .section-title i,
-    .news-filter-btn i,
-    .news-category i,
-    .news-date i {
-        color: var(--yellow);
-    }
-
-    .section-title i {
-        margin-right: 9px;
-    }
-
-    .news-filter-bar {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin: 0 0 18px;
-        padding: 12px;
-        background: #fff;
-        border: 1px solid rgba(7, 43, 87, .1);
-        border-radius: 14px;
-        box-shadow: 0 10px 28px rgba(15, 23, 42, .05);
-    }
-
-    .news-filter-btn {
-        border: 1px solid rgba(7, 43, 87, .16);
-        background: #f8fafc;
-        color: var(--primary);
-        border-radius: 8px;
-        padding: 8px 13px;
-        font-size: 12px;
-        font-weight: 800;
-        cursor: pointer;
-        transition: .2s ease;
-        white-space: nowrap;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-    }
-
-    .news-filter-btn:hover,
-    .news-filter-btn.active {
-        background: var(--yellow);
-        border-color: var(--yellow);
-        color: #fff;
-        box-shadow: 0 8px 18px rgba(247, 181, 0, .25);
-    }
-
-    .news-filter-btn:hover i,
-    .news-filter-btn.active i {
-        color: #fff;
-    }
-
-    .news-state {
-        padding: 22px;
-        border-radius: 14px;
-        background: #fff;
-        border: 1px solid rgba(7, 43, 87, .12);
-        font-size: 14px;
-        line-height: 1.6;
-        color: #64748b;
-    }
-
-    .news-loading {
-        min-height: 180px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-        border: 1px solid rgba(7, 43, 87, .1);
-        border-radius: 18px;
-    }
-
-    .news-loader {
-        width: 42px;
-        height: 42px;
-        border: 4px solid #e5e7eb;
-        border-top-color: var(--yellow);
-        border-radius: 50%;
-        animation: newsSpin .8s linear infinite;
-    }
-
-    @keyframes newsSpin {
-        to { transform: rotate(360deg); }
-    }
-
-    .news-list {
-        display: grid;
-        gap: 14px;
-    }
-
-    .news-item {
-        border: 0 !important;
-        padding: 0 !important;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .news-item-link {
-        display: grid !important;
-        grid-template-columns: 150px minmax(0, 1fr) !important;
-        align-items: stretch;
-        gap: 16px;
-        width: 100%;
-        max-width: 100%;
-        color: inherit;
-        text-decoration: none;
-        padding: 14px;
-        background: #fff;
-        border: 1px solid rgba(7, 43, 87, .1);
-        border-radius: 16px;
-        box-shadow: 0 12px 32px rgba(15, 23, 42, .06);
-        transition: .24s ease;
-        overflow: hidden;
-    }
-
-    .news-item-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 18px 40px rgba(15, 23, 42, .1);
-        border-color: rgba(247, 181, 0, .5);
-    }
-
-    .news-item-link:hover .news-title {
-        color: var(--yellow);
-    }
-
-    .news-thumb {
-        width: 150px !important;
-        min-width: 150px !important;
-        max-width: 150px !important;
-        height: 122px !important;
-        overflow: hidden;
-        background: #eef2f7;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        grid-column: 1;
-    }
-
-    .news-thumb svg {
-        width: 44px;
-        height: 44px;
-        color: #94a3b8;
-    }
-
-    .news-thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        border-radius: inherit;
-        transition: .35s ease;
-    }
-
-    .news-item-link:hover .news-thumb img {
-        transform: scale(1.05);
-    }
-
-    .news-content {
-        grid-column: 2;
-        min-width: 0 !important;
-        max-width: 100%;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .news-category {
-        min-width: 0;
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .news-title {
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        word-break: normal;
-        overflow-wrap: anywhere;
-        margin: 7px 0 0;
-        line-height: 1.35;
-        max-width: 100%;
-    }
-
-    .news-excerpt {
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-top: 8px;
-        font-size: 13px;
-        line-height: 1.55;
-        color: #64748b;
-        word-break: normal;
-        overflow-wrap: anywhere;
-        max-width: 100%;
-    }
-
-    .news-date {
-        margin-top: 10px;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-    }
-
-    .pagination#apiNewsPagination {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 8px;
-        flex-wrap: wrap;
-        background: #fff;
-        border: 1px solid rgba(7, 43, 87, .1);
-        border-radius: 12px;
-        padding: 9px 10px;
-        box-shadow: 0 10px 26px rgba(15, 23, 42, .05);
-        max-width: 100%;
-    }
-
-    .pagination#apiNewsPagination .page-btn,
-    .pagination#apiNewsPagination .page-number {
-        min-width: 34px;
-        height: 34px;
-        border-radius: 7px;
-        border: 1px solid rgba(7, 43, 87, .16);
-        background: #f8fafc;
-        color: var(--primary);
-        font-weight: 900;
-        cursor: pointer;
-        transition: .2s ease;
-        padding: 0 10px;
-        flex: 0 0 auto;
-    }
-
-    .pagination#apiNewsPagination .page-number.active,
-    .pagination#apiNewsPagination .page-btn.dark,
-    .pagination#apiNewsPagination .page-btn:hover,
-    .pagination#apiNewsPagination .page-number:hover {
-        background: var(--yellow);
-        border-color: var(--yellow);
-        color: #fff;
-    }
-
-    .pagination#apiNewsPagination .page-number[disabled],
-    .pagination#apiNewsPagination .page-btn[disabled] {
-        opacity: .45;
-        cursor: not-allowed;
-        background: #f1f5f9;
-        color: #94a3b8;
-        border-color: #e2e8f0;
-    }
-
-    .pagination#apiNewsPagination span {
-        color: #94a3b8;
-        font-weight: 800;
-        padding: 0 2px;
-        flex: 0 0 auto;
-    }
-
-    .page-jump {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin-left: 4px;
-        border-left: 1px solid rgba(7, 43, 87, .12);
-        padding-left: 10px;
-        flex: 0 0 auto;
-    }
-
-    .page-jump input {
-        width: 64px;
-        height: 34px;
-        border: 1px solid rgba(7, 43, 87, .16);
-        border-radius: 7px;
-        padding: 0 8px;
-        font-size: 12px;
-        font-weight: 800;
-        color: var(--primary);
-        outline: none;
-    }
-
-    .page-jump button {
-        height: 34px;
-        border: 0;
-        border-radius: 7px;
-        background: var(--primary);
-        color: #fff;
-        font-size: 12px;
-        font-weight: 900;
-        padding: 0 11px;
-        cursor: pointer;
-    }
-
-    .page-jump button:hover {
-        background: var(--yellow);
-    }
-
-    @media(max-width: 992px) {
-        .section-header:has(#apiNewsPagination) { flex-direction: column; }
-        .pagination#apiNewsPagination { justify-content: flex-start; }
-        .news-item-link { grid-template-columns: 145px minmax(0, 1fr) !important; }
-        .news-thumb { width: 145px !important; min-width: 145px !important; max-width: 145px !important; height: 118px !important; }
-    }
-
-    @media(max-width: 768px) {
-        .program-section { padding: 24px 0 !important; }
-        .program-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; overflow: visible !important; }
-        .program-card { min-width: 0 !important; min-height: 118px !important; padding: 14px 8px !important; }
-        .program-title { font-size: 12px !important; line-height: 1.18 !important; }
-        .program-detail { font-size: 11px !important; }
-        .program-icon { height: 34px !important; margin-bottom: 9px !important; }
-        .program-icon svg { width: 38px !important; height: 38px !important; }
-        .info-section { padding: 22px 0 42px !important; }
-        .info-layout { grid-template-columns: 1fr !important; gap: 28px !important; }
-        .news-area { padding-right: 0 !important; border-right: 0 !important; width: 100% !important; max-width: 100% !important; overflow: hidden !important; }
-        .section-header:has(#apiNewsPagination) { display: block !important; padding-bottom: 14px !important; }
-        .section-header:has(#apiNewsPagination) .section-title { margin-bottom: 12px !important; }
-        .pagination#apiNewsPagination { width: 100% !important; max-width: 100% !important; display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important; justify-content: flex-start !important; white-space: nowrap !important; padding: 8px !important; gap: 6px !important; scrollbar-width: none !important; }
-        .pagination#apiNewsPagination::-webkit-scrollbar { display: none !important; }
-        .pagination#apiNewsPagination .page-btn,
-        .pagination#apiNewsPagination .page-number { min-width: 31px !important; width: 31px !important; height: 31px !important; padding: 0 !important; font-size: 11px !important; }
-        .page-jump { width: auto !important; border-left: 1px solid rgba(7,43,87,.12) !important; border-top: 0 !important; padding-left: 8px !important; padding-top: 0 !important; margin-left: 2px !important; justify-content: flex-start !important; }
-        .page-jump input { width: 52px !important; height: 31px !important; font-size: 11px !important; }
-        .page-jump button { height: 31px !important; padding: 0 9px !important; font-size: 11px !important; }
-        .news-item-link { grid-template-columns: 112px minmax(0, 1fr) !important; gap: 10px !important; padding: 10px !important; }
-        .news-thumb { width: 112px !important; min-width: 112px !important; max-width: 112px !important; height: 92px !important; }
-        .news-title { font-size: 13px !important; -webkit-line-clamp: 2 !important; }
-        .news-excerpt { display: none !important; }
-        .news-category,
-        .news-date { font-size: 10px !important; }
-    }
-
-    @media(max-width: 420px) {
-        .pagination#apiNewsPagination { gap: 5px !important; padding: 7px !important; }
-        .pagination#apiNewsPagination .page-btn,
-        .pagination#apiNewsPagination .page-number { min-width: 28px !important; width: 28px !important; height: 28px !important; }
-        .page-jump input { width: 46px !important; height: 28px !important; }
-        .page-jump button { height: 28px !important; padding: 0 7px !important; }
-        .program-grid { gap: 10px !important; }
-        .program-card { min-height: 112px !important; }
-    }
+    .hero .btn-primary { position: relative !important; z-index: 60 !important; }
+    .hero .btn-primary { pointer-events: auto; }
+    .hero { background: #031a38 !important; overflow: hidden !important; }
+    .hero .hero-slide { opacity: 1 !important; visibility: visible !important; transform: translateX(100%) !important; transition: transform .75s ease-in-out !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; filter: brightness(.86) !important; z-index: 1 !important; will-change: transform; }
+    .hero .hero-slide.active { transform: translateX(0) !important; z-index: 3 !important; }
+    .hero .hero-slide.slide-out-left { transform: translateX(-100%) !important; z-index: 2 !important; }
+    .hero .hero-slide.slide-out-right { transform: translateX(100%) !important; z-index: 2 !important; }
+    .hero .hero-slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,20,46,.82), rgba(7,43,87,.62), rgba(3,20,46,.86)) !important; pointer-events: none; }
+    .program-section .program-card,.program-section .program-detail{cursor:pointer}.program-grid{display:grid}.program-grid .program-card:nth-child(4){order:1}.program-grid .program-card:nth-child(3){order:2}.program-grid .program-card:nth-child(2){order:3}.program-grid .program-card:nth-child(1){order:4}
+    .news-area{min-width:0}.section-header:has(#apiNewsPagination){align-items:flex-start;gap:18px}.section-title i,.news-filter-btn i,.news-category i,.news-date i{color:var(--yellow)}.section-title i{margin-right:9px}.news-more-link{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:9px;background:var(--primary);color:#fff!important;text-decoration:none;font-size:12px;font-weight:900;text-transform:uppercase;white-space:nowrap}.news-more-link:hover{background:var(--yellow)}.news-filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 18px;padding:12px;background:#fff;border:1px solid rgba(7,43,87,.1);border-radius:14px;box-shadow:0 10px 28px rgba(15,23,42,.05)}.news-filter-btn{border:1px solid rgba(7,43,87,.16);background:#f8fafc;color:var(--primary);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:800;cursor:pointer;transition:.2s ease;white-space:nowrap;display:inline-flex;align-items:center;gap:7px}.news-filter-btn:hover,.news-filter-btn.active{background:var(--yellow);border-color:var(--yellow);color:#fff;box-shadow:0 8px 18px rgba(247,181,0,.25)}.news-filter-btn:hover i,.news-filter-btn.active i{color:#fff}.news-state{padding:22px;border-radius:14px;background:#fff;border:1px solid rgba(7,43,87,.12);font-size:14px;line-height:1.6;color:#64748b}.news-loading{min-height:180px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid rgba(7,43,87,.1);border-radius:18px}.news-loader{width:42px;height:42px;border:4px solid #e5e7eb;border-top-color:var(--yellow);border-radius:50%;animation:newsSpin .8s linear infinite}@keyframes newsSpin{to{transform:rotate(360deg)}}.news-list{display:grid;gap:14px}.news-item{border:0!important;padding:0!important;width:100%;overflow:hidden}.news-item-link{display:grid!important;grid-template-columns:150px minmax(0,1fr)!important;align-items:stretch;gap:16px;width:100%;max-width:100%;color:inherit;text-decoration:none;padding:14px;background:#fff;border:1px solid rgba(7,43,87,.1);border-radius:16px;box-shadow:0 12px 32px rgba(15,23,42,.06);transition:.24s ease;overflow:hidden}.news-item-link:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(15,23,42,.1);border-color:rgba(247,181,0,.5)}.news-item-link:hover .news-title{color:var(--yellow)}.news-thumb{width:150px!important;min-width:150px!important;max-width:150px!important;height:122px!important;overflow:hidden;background:#eef2f7;border-radius:12px;display:flex;align-items:center;justify-content:center;grid-column:1}.news-thumb img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;transition:.35s ease}.news-item-link:hover .news-thumb img{transform:scale(1.05)}.news-content{grid-column:2;min-width:0!important;max-width:100%;overflow:hidden;display:flex;flex-direction:column;justify-content:center}.news-category{min-width:0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-flex;align-items:center;gap:6px}.news-title{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:anywhere;margin:7px 0 0;line-height:1.35;max-width:100%}.news-excerpt{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:8px;font-size:13px;line-height:1.55;color:#64748b;word-break:normal;overflow-wrap:anywhere;max-width:100%}.news-date{margin-top:10px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-flex;align-items:center;gap:7px}.pagination#apiNewsPagination{display:none!important}
+    @media(max-width:992px){.news-item-link{grid-template-columns:145px minmax(0,1fr)!important}.news-thumb{width:145px!important;min-width:145px!important;max-width:145px!important;height:118px!important}}
+    @media(max-width:768px){.program-section{padding:24px 0!important}.program-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;overflow:visible!important}.program-card{min-width:0!important;min-height:118px!important;padding:14px 8px!important}.program-title{font-size:12px!important;line-height:1.18!important}.program-detail{font-size:11px!important}.program-icon{height:34px!important;margin-bottom:9px!important}.program-icon svg{width:38px!important;height:38px!important}.info-section{padding:22px 0 42px!important}.info-layout{grid-template-columns:1fr!important;gap:28px!important}.news-area{padding-right:0!important;border-right:0!important;width:100%!important;max-width:100%!important;overflow:hidden!important}.section-header:has(#apiNewsPagination){display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;padding-bottom:14px!important}.section-title{font-size:18px!important}.news-more-link{height:34px;padding:0 11px;font-size:11px}.news-filter-bar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.news-filter-bar::-webkit-scrollbar{display:none}.news-filter-btn{flex:0 0 auto}.news-item-link{grid-template-columns:112px minmax(0,1fr)!important;gap:10px!important;padding:10px!important}.news-thumb{width:112px!important;min-width:112px!important;max-width:112px!important;height:92px!important}.news-title{font-size:13px!important;-webkit-line-clamp:2!important}.news-excerpt{display:none!important}.news-category,.news-date{font-size:10px!important}}
+    @media(max-width:420px){.program-grid{gap:10px!important}.program-card{min-height:112px!important}.section-title{font-size:16px!important}.news-more-link span{display:none}}
 </style>
 
 @if (isset($sliders) && $sliders->count() > 0)
     @php
-        $sliderItems = $sliders
-            ->map(function ($slider) {
-                return [
-                    'title' => $slider->title,
-                    'subtitle' => $slider->subtitle,
-                    'image' => route('sliders.image', $slider) . '?v=' . optional($slider->updated_at)->timestamp,
-                    'duration' => (int) ($slider->duration_ms ?? 3000),
-                ];
-            })
-            ->values();
+        $sliderItems = $sliders->map(fn ($slider) => [
+            'title' => $slider->title,
+            'subtitle' => $slider->subtitle,
+            'image' => route('sliders.image', $slider) . '?v=' . optional($slider->updated_at)->timestamp,
+            'duration' => (int) ($slider->duration_ms ?? 3000),
+        ])->values();
     @endphp
     <script>
         (function() {
-            const sliderItems = @json($sliderItems);
-            if (!sliderItems.length) return;
-
+            const items = @json($sliderItems);
+            if (!items.length) return;
             const hero = document.querySelector('.hero');
+            const oldPrev = document.getElementById('prevSlide');
+            const oldNext = document.getElementById('nextSlide');
             const dotsWrapper = document.getElementById('heroDots');
             const titleEl = document.querySelector('.hero-title');
             const subtitleEl = document.querySelector('.hero-subtitle');
-            const prevButton = document.getElementById('prevSlide');
-            const nextButton = document.getElementById('nextSlide');
+            if (!hero || !dotsWrapper || !oldPrev || !oldNext) return;
 
-            if (!hero || !dotsWrapper) return;
-
-            document.querySelectorAll('.hero-slide').forEach(slide => slide.remove());
+            const prev = oldPrev.cloneNode(true);
+            const next = oldNext.cloneNode(true);
+            oldPrev.replaceWith(prev);
+            oldNext.replaceWith(next);
+            hero.querySelectorAll('.hero-slide').forEach(slide => slide.remove());
             dotsWrapper.innerHTML = '';
 
-            sliderItems.forEach((item, index) => {
+            const slides = items.map((item, index) => {
                 const slide = document.createElement('div');
                 slide.className = index === 0 ? 'hero-slide active' : 'hero-slide';
                 slide.style.backgroundImage = `url("${item.image}")`;
-                hero.insertBefore(slide, prevButton || hero.firstElementChild);
-
+                hero.insertBefore(slide, prev);
                 const dot = document.createElement('button');
                 dot.className = index === 0 ? 'hero-dot active' : 'hero-dot';
                 dot.type = 'button';
                 dot.setAttribute('aria-label', `Slider ${index + 1}`);
                 dotsWrapper.appendChild(dot);
+                return slide;
             });
+            const dots = Array.from(dotsWrapper.querySelectorAll('.hero-dot'));
+            let current = 0;
+            let locked = false;
+            let timer = null;
 
-            const slides = Array.from(document.querySelectorAll('.hero-slide'));
-            const dots = Array.from(document.querySelectorAll('.hero-dot'));
-            let currentIndex = 0;
-            let timerId = null;
-            let isAnimating = false;
-
-            function safeDuration(index) {
-                const duration = Number(sliderItems[index]?.duration || 3000);
-                return Math.min(30000, Math.max(1000, duration));
-            }
-
-            function updateText(index) {
-                const data = sliderItems[index] || sliderItems[0];
+            function setText(index) {
+                const data = items[index] || items[0];
                 if (titleEl) titleEl.innerHTML = String(data.title || '').replace(/\n/g, '<br>');
                 if (subtitleEl) subtitleEl.textContent = data.subtitle || '';
             }
 
-            function setActiveDot(index) {
-                dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
+            function duration(index) {
+                return Math.min(30000, Math.max(1200, Number(items[index]?.duration || 3000)));
             }
 
-            function goToSlide(nextIndex) {
-                if (isAnimating || !slides.length) return;
-
-                const total = slides.length;
-                const targetIndex = (nextIndex + total) % total;
-                if (targetIndex === currentIndex) return;
-
-                isAnimating = true;
-                const currentSlide = slides[currentIndex];
-                const nextSlide = slides[targetIndex];
-
-                nextSlide.classList.remove('slide-out-left');
-                nextSlide.classList.add('active');
-                currentSlide.classList.add('slide-out-left');
-                currentSlide.classList.remove('active');
-
-                currentIndex = targetIndex;
-                updateText(currentIndex);
-                setActiveDot(currentIndex);
-
+            function go(target, direction = 1) {
+                if (locked || target === current || !slides[target]) return;
+                locked = true;
+                const from = current;
+                const outgoing = slides[from];
+                const incoming = slides[target];
+                slides.forEach((slide, idx) => {
+                    if (idx !== from && idx !== target) slide.className = 'hero-slide';
+                });
+                incoming.classList.remove('slide-out-left', 'slide-out-right');
+                incoming.style.transform = direction > 0 ? 'translateX(100%)' : 'translateX(-100%)';
+                incoming.offsetHeight;
+                incoming.classList.add('active');
+                incoming.style.transform = 'translateX(0)';
+                outgoing.classList.remove('active');
+                outgoing.classList.add(direction > 0 ? 'slide-out-left' : 'slide-out-right');
+                current = target;
+                setText(current);
+                dots.forEach((dot, idx) => dot.classList.toggle('active', idx === current));
                 setTimeout(() => {
-                    currentSlide.classList.remove('slide-out-left');
-                    isAnimating = false;
-                }, 800);
+                    outgoing.className = 'hero-slide';
+                    outgoing.style.transform = '';
+                    incoming.style.transform = '';
+                    locked = false;
+                }, 780);
             }
 
-            function scheduleNext() {
-                clearTimeout(timerId);
-                timerId = setTimeout(() => {
-                    goToSlide(currentIndex + 1);
-                    scheduleNext();
-                }, safeDuration(currentIndex));
+            function restart() {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    go((current + 1) % slides.length, 1);
+                    restart();
+                }, duration(current));
             }
 
-            function resetAutoSlide() {
-                clearTimeout(timerId);
-                scheduleNext();
-            }
-
-            prevButton?.addEventListener('click', function(event) {
+            prev.addEventListener('click', (event) => {
                 event.preventDefault();
-                event.stopImmediatePropagation();
-                goToSlide(currentIndex - 1);
-                resetAutoSlide();
-            }, true);
-
-            nextButton?.addEventListener('click', function(event) {
+                go((current - 1 + slides.length) % slides.length, -1);
+                restart();
+            });
+            next.addEventListener('click', (event) => {
                 event.preventDefault();
-                event.stopImmediatePropagation();
-                goToSlide(currentIndex + 1);
-                resetAutoSlide();
-            }, true);
-
-            dots.forEach((dot, index) => dot.addEventListener('click', function(event) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                goToSlide(index);
-                resetAutoSlide();
-            }, true));
-
-            updateText(0);
-            scheduleNext();
+                go((current + 1) % slides.length, 1);
+                restart();
+            });
+            dots.forEach((dot, index) => dot.addEventListener('click', () => {
+                go(index, index > current ? 1 : -1);
+                restart();
+            }));
+            setText(0);
+            restart();
         })();
     </script>
 @endif
@@ -614,354 +132,24 @@
 <script>
     (function() {
         const API_ORIGIN = 'https://panel-web.unw.ac.id';
-        const API = {
-            news: API_ORIGIN + '/api/news',
-            category: API_ORIGIN + '/api/category'
-        };
-
-        function esc(value) {
-            return String(value ?? '').replace(/[&<>'"]/g, function(char) {
-                return {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    "'": '&#039;',
-                    '"': '&quot;'
-                } [char]
-            });
-        }
-
-        function stripHtml(value) {
-            return String(value ?? '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-        }
-
-        function toArray(payload) {
-            if (Array.isArray(payload)) return payload;
-            if (Array.isArray(payload?.data)) return payload.data;
-            if (Array.isArray(payload?.data?.data)) return payload.data.data;
-            return [];
-        }
-
-        function absUrl(url) {
-            if (!url) return '';
-            const value = String(url);
-            if (/^https?:\/\//i.test(value)) return value;
-            if (value.startsWith('//')) return 'https:' + value;
-            if (value.startsWith('/')) return API_ORIGIN + value;
-            return API_ORIGIN + '/' + value.replace(/^\/+/, '');
-        }
-
-        function formatDate(value) {
-            if (!value) return '';
-            const date = new Date(value);
-            if (Number.isNaN(date.getTime())) return String(value);
-            return date.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
-        }
-
-        async function getJson(url) {
-            const response = await fetch(url, { headers: { Accept: 'application/json' } });
-            if (!response.ok) throw new Error('API gagal dimuat');
-            return response.json();
-        }
-
-        function readMeta(payload) {
-            const meta = payload?.meta || payload?.pagination || {};
-            return {
-                current: Number(meta.current_page || 1),
-                last: Number(meta.last_page || 1)
-            };
-        }
-
-        function normalizeCategory(item) {
-            return {
-                id: String(item?.id ?? ''),
-                slug: String(item?.slug ?? ''),
-                name: String(item?.name ?? '').trim()
-            };
-        }
-
-        function normalizeNews(item) {
-            const category = item?.category || {};
-            return {
-                id: String(item?.id ?? item?.slug ?? Math.random()),
-                title: String(item?.title ?? 'Tanpa Judul'),
-                slug: String(item?.slug ?? ''),
-                image: String(item?.image_thumbnail || item?.image || ''),
-                excerpt: String(item?.excerpt ?? ''),
-                date: String(item?.publishedAt || item?.published_at || item?.createdAt || item?.created_at || ''),
-                categoryId: String(category?.id ?? item?.category_id ?? ''),
-                categorySlug: String(category?.slug ?? ''),
-                categoryName: String(category?.name ?? 'Artikel').trim()
-            };
-        }
-
-        function newsDetailUrl(news) {
-            return news.slug ? '/berita/' + encodeURIComponent(news.slug) : '#';
-        }
-
-        function buildNewsApiUrl(page, category) {
-            const params = new URLSearchParams();
-            params.set('paginate', '4');
-            params.set('page', String(page));
-            if (category && category.id !== 'all') {
-                params.set('category_id', category.id);
-                params.set('category', category.slug || category.id);
-            }
-            return API.news + '?' + params.toString();
-        }
-
-        function renderFilters(section, state) {
-            const target = section.querySelector('#apiCategoryFilter');
-            if (!target) return;
-
-            let html = '<button class="news-filter-btn active" type="button" data-id="all" data-slug="all"><i class="fas fa-filter"></i>Semua</button>';
-            html += state.categories.map(category => '<button class="news-filter-btn" type="button" data-id="' + esc(category.id) + '" data-slug="' + esc(category.slug) + '"><i class="fas fa-filter"></i>' + esc(category.name) + '</button>').join('');
-
-            target.innerHTML = html;
-            target.querySelectorAll('.news-filter-btn').forEach(button => button.addEventListener('click', function() {
-                target.querySelectorAll('.news-filter-btn').forEach(item => item.classList.remove('active'));
-                button.classList.add('active');
-                state.category = { id: button.dataset.id, slug: button.dataset.slug };
-                state.page = 1;
-                loadNews(section, state);
-            }));
-        }
-
-        function renderNews(section, items) {
-            const target = section.querySelector('#apiNewsList');
-            if (!target) return;
-
-            if (!items.length) {
-                target.innerHTML = '<div class="news-state">Belum ada berita/artikel pada kategori ini.</div>';
-                return;
-            }
-
-            target.innerHTML = items.map(news => {
-                const image = news.image
-                    ? '<img src="' + esc(absUrl(news.image)) + '" alt="' + esc(news.title) + '" loading="lazy">'
-                    : '<svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z"/></svg>';
-                const excerpt = stripHtml(news.excerpt);
-
-                return '<article class="news-item"><a class="news-item-link" href="' + esc(newsDetailUrl(news)) + '"><div class="news-thumb">' + image + '</div><div class="news-content"><div class="news-category"><i class="fas fa-tag"></i>' + esc(news.categoryName) + '</div><h3 class="news-title">' + esc(news.title) + '</h3>' + (excerpt ? '<p class="news-excerpt">' + esc(excerpt.slice(0, 155)) + '</p>' : '') + '<div class="news-date"><i class="fas fa-calendar-alt"></i>' + esc(formatDate(news.date)) + '</div></div></a></article>';
-            }).join('');
-        }
-
-        function renderPagination(section, state) {
-            const target = section.querySelector('#apiNewsPagination');
-            if (!target) return;
-
-            const last = Math.max(1, Number(state.lastPage || 1));
-            const current = Math.min(Math.max(1, Number(state.page || 1)), last);
-            let start = Math.max(1, current - 1);
-            let end = Math.min(last, start + 3);
-            if (end - start < 3) start = Math.max(1, end - 3);
-
-            let html = '<button class="page-btn" type="button" data-page="' + (current - 1) + '" ' + (current <= 1 ? 'disabled' : '') + '>‹</button>';
-            for (let page = start; page <= end; page++) {
-                html += '<button class="page-number ' + (page === current ? 'active' : '') + '" type="button" data-page="' + page + '">' + page + '</button>';
-            }
-            if (end < last) html += '<span>...</span><button class="page-number" type="button" data-page="' + last + '">' + last + '</button>';
-            html += '<button class="page-btn dark" type="button" data-page="' + (current + 1) + '" ' + (current >= last ? 'disabled' : '') + '>›</button><div class="page-jump"><input type="number" min="1" max="' + last + '" value="' + current + '" aria-label="Pilih halaman"><button type="button">Go</button></div>';
-
-            target.innerHTML = html;
-            target.querySelectorAll('button[data-page]').forEach(button => button.addEventListener('click', function() {
-                const page = Number(button.dataset.page);
-                if (page >= 1 && page <= last && page !== current) {
-                    state.page = page;
-                    loadNews(section, state);
-                }
-            }));
-
-            const jumpInput = target.querySelector('.page-jump input');
-            const jumpButton = target.querySelector('.page-jump button');
-
-            function jump() {
-                const page = Number(jumpInput.value);
-                if (page >= 1 && page <= last && page !== current) {
-                    state.page = page;
-                    loadNews(section, state);
-                }
-            }
-
-            if (jumpButton) jumpButton.addEventListener('click', jump);
-            if (jumpInput) jumpInput.addEventListener('keydown', event => {
-                if (event.key === 'Enter') jump();
-            });
-        }
-
-        async function loadNews(section, state) {
-            const target = section.querySelector('#apiNewsList');
-            if (target) target.innerHTML = '<div class="news-loading"><div class="news-loader"></div></div>';
-
-            try {
-                const category = state.category?.id === 'all' ? null : state.category;
-                const payload = await getJson(buildNewsApiUrl(state.page, category));
-                const items = toArray(payload).map(normalizeNews);
-                const meta = readMeta(payload);
-
-                state.lastPage = meta.last || 1;
-                state.page = meta.current || state.page;
-
-                renderNews(section, items);
-                renderPagination(section, state);
-            } catch (error) {
-                if (target) target.innerHTML = '<div class="news-state">Berita belum dapat dimuat dari API. Periksa koneksi internet atau izin CORS API.</div>';
-            }
-        }
-
-        async function initInfoSectionApi() {
-            const section = document.getElementById('layanan-mahasiswa');
-            if (!section) return;
-
-            const newsArea = section.querySelector('.news-area');
-            if (!newsArea) return;
-
-            newsArea.innerHTML = '<div class="section-header"><h2 class="section-title"><i class="fas fa-calendar-alt"></i>Berita Terkini & Agenda</h2><div class="pagination" id="apiNewsPagination"></div></div><div class="news-filter-bar" id="apiCategoryFilter"></div><div class="news-list" id="apiNewsList"><div class="news-loading"><div class="news-loader"></div></div></div>';
-
-            const state = {
-                page: 1,
-                lastPage: 1,
-                category: { id: 'all', slug: 'all' },
-                categories: []
-            };
-
-            try {
-                const categoryPayload = await getJson(API.category);
-                state.categories = toArray(categoryPayload).map(normalizeCategory).filter(category => category.id && category.name);
-                renderFilters(section, state);
-            } catch (error) {
-                renderFilters(section, state);
-            }
-
-            loadNews(section, state);
-        }
-
-        function isUsableRouteLink(link) {
-            const rawHref = link.getAttribute('href') || '';
-            const trimmedHref = rawHref.trim();
-
-            if (!trimmedHref || trimmedHref === '#' || trimmedHref.startsWith('#') || trimmedHref.toLowerCase().startsWith('javascript:')) return false;
-
-            try {
-                const url = new URL(link.href, window.location.origin);
-                return url.origin === window.location.origin;
-            } catch (error) {
-                return false;
-            }
-        }
-
-        function normalizePath(value) {
-            try {
-                const url = new URL(value, window.location.origin);
-                return url.pathname.replace(/\/+$/, '') || '/';
-            } catch (error) {
-                return String(value || '').replace(/\/+$/, '') || '/';
-            }
-        }
-
-        function activateHeaderByCurrentPage() {
-            const navMenu = document.getElementById('navMenu');
-            if (!navMenu) return;
-
-            const currentPath = normalizePath(window.location.pathname);
-            const navItems = navMenu.querySelectorAll('.nav-item');
-            const navLinks = navMenu.querySelectorAll('.nav-link');
-            const dropdownLinks = navMenu.querySelectorAll('.dropdown a');
-            const homeNavItem = document.getElementById('homeNavItem');
-
-            navItems.forEach(item => item.classList.remove('route-active'));
-            navLinks.forEach(link => link.classList.remove('nav-route-active', 'nav-click-active'));
-            dropdownLinks.forEach(link => link.classList.remove('dropdown-route-active'));
-            homeNavItem?.classList.add('hide-indicator');
-
-            let activeDropdownLink = null;
-            dropdownLinks.forEach(link => {
-                if (!isUsableRouteLink(link)) return;
-                if (normalizePath(link.href) === currentPath) activeDropdownLink = link;
-            });
-
-            if (!activeDropdownLink && currentPath.startsWith('/akademik')) {
-                activeDropdownLink = Array.from(dropdownLinks).find(link => normalizePath(link.href).startsWith('/akademik')) || null;
-            }
-
-            if (!activeDropdownLink && currentPath.startsWith('/riset-dosen')) {
-                activeDropdownLink = Array.from(dropdownLinks).find(link => normalizePath(link.href).startsWith('/riset-dosen')) || null;
-            }
-
-            if (activeDropdownLink) {
-                const parentItem = activeDropdownLink.closest('.nav-item');
-                const parentLink = parentItem?.querySelector(':scope > .nav-link');
-
-                activeDropdownLink.classList.add('dropdown-route-active');
-                parentItem?.classList.add('route-active');
-                parentLink?.classList.add('nav-route-active');
-                return;
-            }
-
-            let activeTopLink = null;
-            navLinks.forEach(link => {
-                if (!isUsableRouteLink(link)) return;
-                if (normalizePath(link.href) === currentPath) activeTopLink = link;
-            });
-
-            if (!activeTopLink && currentPath.startsWith('/berita')) {
-                activeTopLink = homeNavItem?.querySelector('.nav-link') || null;
-            }
-
-            if (activeTopLink) {
-                const parentItem = activeTopLink.closest('.nav-item');
-                parentItem?.classList.add('route-active');
-                activeTopLink.classList.add('nav-route-active');
-
-                if (parentItem?.id === 'homeNavItem') {
-                    homeNavItem?.classList.remove('hide-indicator');
-                }
-                return;
-            }
-
-            if (currentPath === '/') {
-                const homeLink = homeNavItem?.querySelector('.nav-link');
-                homeNavItem?.classList.add('route-active');
-                homeLink?.classList.add('nav-route-active');
-                homeNavItem?.classList.remove('hide-indicator');
-            }
-        }
-
-        function bindProgramDetailLinks() {
-            const programCards = document.querySelectorAll('.program-section .program-card');
-            const programDetailRoutes = [
-                "{{ route('akademik.show', 'magister-hukum') }}",
-                "{{ route('akademik.show', 'magister-manajemen-pendidikan') }}",
-                "{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}",
-                "{{ route('akademik.show', 'magister-keperawatan') }}"
-            ];
-
-            programCards.forEach(function(card, index) {
-                const url = programDetailRoutes[index];
-                if (!url) return;
-
-                card.setAttribute('href', url);
-                card.setAttribute('aria-label', 'Lihat detail program studi');
-
-                const detailText = card.querySelector('.program-detail');
-                if (detailText) {
-                    detailText.setAttribute('role', 'link');
-                    detailText.setAttribute('tabindex', '0');
-                    detailText.dataset.href = url;
-                }
-            });
-        }
-
-        function initFrontendEnhancements() {
-            bindProgramDetailLinks();
-            activateHeaderByCurrentPage();
-            initInfoSectionApi();
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initFrontendEnhancements);
-        } else {
-            initFrontendEnhancements();
-        }
+        const API = { news: API_ORIGIN + '/api/news', category: API_ORIGIN + '/api/category' };
+        const newsIndexUrl = @json(route('news.index'));
+        function esc(value){return String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[char]))}
+        function stripHtml(value){return String(value??'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim()}
+        function toArray(payload){if(Array.isArray(payload))return payload;if(Array.isArray(payload?.data))return payload.data;if(Array.isArray(payload?.data?.data))return payload.data.data;return[]}
+        function absUrl(url){if(!url)return'';const value=String(url);if(/^https?:\/\//i.test(value))return value;if(value.startsWith('//'))return 'https:'+value;if(value.startsWith('/'))return API_ORIGIN+value;return API_ORIGIN+'/'+value.replace(/^\/+/, '')}
+        function formatDate(value){if(!value)return'';const date=new Date(value);if(Number.isNaN(date.getTime()))return String(value);return date.toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'})}
+        async function getJson(url){const response=await fetch(url,{headers:{Accept:'application/json'}});if(!response.ok)throw new Error('API gagal dimuat');return response.json()}
+        function normalizeCategory(item){return{id:String(item?.id??''),slug:String(item?.slug??''),name:String(item?.name??'').trim()}}
+        function normalizeNews(item){const category=item?.category||{};return{title:String(item?.title??'Tanpa Judul'),slug:String(item?.slug??''),image:String(item?.image_thumbnail||item?.image||''),excerpt:String(item?.excerpt??''),date:String(item?.publishedAt||item?.published_at||item?.createdAt||item?.created_at||''),categoryId:String(category?.id??item?.category_id??''),categorySlug:String(category?.slug??''),categoryName:String(category?.name??'Artikel').trim()}}
+        function newsDetailUrl(news){return news.slug?'/berita/'+encodeURIComponent(news.slug):'#'}
+        function buildNewsApiUrl(category){const params=new URLSearchParams();params.set('paginate','3');params.set('page','1');if(category&&category.id!=='all'){params.set('category_id',category.id);params.set('category',category.slug||category.id)}return API.news+'?'+params.toString()}
+        function renderFilters(section,state){const target=section.querySelector('#apiCategoryFilter');if(!target)return;let html='<button class="news-filter-btn active" type="button" data-id="all" data-slug="all"><i class="fas fa-tag"></i>Semua</button>';html+=state.categories.map(category=>'<button class="news-filter-btn" type="button" data-id="'+esc(category.id)+'" data-slug="'+esc(category.slug)+'"><i class="fas fa-tag"></i>'+esc(category.name)+'</button>').join('');target.innerHTML=html;target.querySelectorAll('.news-filter-btn').forEach(button=>button.addEventListener('click',function(){target.querySelectorAll('.news-filter-btn').forEach(item=>item.classList.remove('active'));button.classList.add('active');state.category={id:button.dataset.id,slug:button.dataset.slug};loadNews(section,state)}))}
+        function renderNews(section,items){const target=section.querySelector('#apiNewsList');if(!target)return;if(!items.length){target.innerHTML='<div class="news-state">Belum ada berita/artikel pada kategori ini.</div>';return}target.innerHTML=items.map(news=>{const image=news.image?'<img src="'+esc(absUrl(news.image))+'" alt="'+esc(news.title)+'" loading="lazy">':'<svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2ZM8.5 11.5l2.5 3.01L14.5 10l4.5 6H5l3.5-4.5Z"/></svg>';const excerpt=stripHtml(news.excerpt);return '<article class="news-item"><a class="news-item-link" href="'+esc(newsDetailUrl(news))+'"><div class="news-thumb">'+image+'</div><div class="news-content"><div class="news-category"><i class="fas fa-tag"></i>'+esc(news.categoryName)+'</div><h3 class="news-title">'+esc(news.title)+'</h3>'+(excerpt?'<p class="news-excerpt">'+esc(excerpt.slice(0,155))+'</p>':'')+'<div class="news-date"><i class="fas fa-calendar-alt"></i>'+esc(formatDate(news.date))+'</div></div></a></article>'}).join('')}
+        async function loadNews(section,state){const target=section.querySelector('#apiNewsList');if(target)target.innerHTML='<div class="news-loading"><div class="news-loader"></div></div>';try{const category=state.category?.id==='all'?null:state.category;const payload=await getJson(buildNewsApiUrl(category));renderNews(section,toArray(payload).map(normalizeNews))}catch(error){if(target)target.innerHTML='<div class="news-state">Berita belum dapat dimuat dari API. Periksa koneksi internet atau izin CORS API.</div>'}}
+        async function initInfoSectionApi(){const section=document.getElementById('layanan-mahasiswa');if(!section)return;const newsArea=section.querySelector('.news-area');if(!newsArea)return;newsArea.innerHTML='<div class="section-header"><h2 class="section-title"><i class="fas fa-calendar-alt"></i>Berita Terkini & Agenda</h2><a href="'+newsIndexUrl+'" class="news-more-link"><span>Selengkapnya</span><i class="fas fa-arrow-right"></i></a><div class="pagination" id="apiNewsPagination"></div></div><div class="news-filter-bar" id="apiCategoryFilter"></div><div class="news-list" id="apiNewsList"><div class="news-loading"><div class="news-loader"></div></div></div>';const state={category:{id:'all',slug:'all'},categories:[]};try{const categoryPayload=await getJson(API.category);state.categories=toArray(categoryPayload).map(normalizeCategory).filter(category=>category.id&&category.name);renderFilters(section,state)}catch(error){renderFilters(section,state)}loadNews(section,state)}
+        function bindProgramDetailLinks(){const routes=["{{ route('akademik.show', 'magister-hukum') }}","{{ route('akademik.show', 'magister-manajemen-pendidikan') }}","{{ route('akademik.show', 'magister-kesehatan-masyarakat') }}","{{ route('akademik.show', 'magister-keperawatan') }}"];document.querySelectorAll('.program-section .program-card').forEach((card,index)=>{if(routes[index])card.setAttribute('href',routes[index]);const detailText=card.querySelector('.program-detail');if(detailText&&routes[index]){detailText.dataset.href=routes[index];detailText.setAttribute('role','link');detailText.setAttribute('tabindex','0')}})}
+        function init(){bindProgramDetailLinks();initInfoSectionApi()}
+        if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
     })();
 </script>
