@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AcademicController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrganizationStructureController;
 use App\Http\Controllers\OrganizationStructureUploadController;
+use App\Http\Controllers\RisetController;
 use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\SliderUploadController;
 use App\Http\Controllers\TentangController;
@@ -12,7 +14,6 @@ use App\Models\OrganizationStructure;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\RisetController;
 
 Route::get('/', function () {
     $sliders = Slider::query()
@@ -48,7 +49,9 @@ Route::get('/organization-structures/{organizationStructure}/image', function (O
         ]);
 })->name('organization-structures.image');
 
+Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
 Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/akademik/{slug}', [AcademicController::class, 'show'])->name('akademik.show');
 
 Route::get('/akademik/magister-hukum', function () {
