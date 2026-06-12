@@ -81,4 +81,5 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/sliders/{slider}/custom-edit', [SliderUploadController::class, 'edit'])->name('admin.sliders.edit-custom');
     Route::post('/admin/sliders/upload', [SliderUploadController::class, 'store'])->name('admin.sliders.store');
     Route::put('/admin/sliders/{slider}/upload', [SliderUploadController::class, 'update'])->name('admin.sliders.update');
+    Route::post('/admin/scrap/tambah-dosen-manual', [ScrapController::class, 'tambahDosenManual'])->name('scrap.tambahDosenManual');
 });

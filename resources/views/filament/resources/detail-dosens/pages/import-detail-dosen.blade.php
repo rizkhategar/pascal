@@ -89,9 +89,114 @@
         .dark .select2-results__option--highlighted[aria-selected] {
             background-color: #2563eb !important;
         }
+
+        [x-cloak] { 
+            display: none !important; 
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(3, 7, 18, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .modal-card {
+            background-color: #ffffff;
+            color: #030712;
+            width: 100%;
+            max-width: 460px;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .dark .modal-card {
+            background-color: #111827;
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .dark .modal-header {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            box-sizing: border-box;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            color: #030712;
+            font-size: 0.875rem;
+            outline: none;
+            box-sizing: border-box;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .dark .modal-input {
+            border-color: #374151;
+            background-color: #1f2937;
+            color: #ffffff;
+        }
+
+        .dark .modal-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            background-color: #f9fafb;
+            border-t: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            box-sizing: border-box;
+        }
+
+        .dark .modal-footer {
+            background-color: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
     </style>
 
-    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <div x-data="{ openModal: false }" style="display: flex; flex-direction: column; gap: 1.5rem;">
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
 
@@ -109,17 +214,17 @@
                     </h3>
 
                     <div style="font-size: 0.875rem;">
-                        <?php if($excelExists): ?>
+                        @if($excelExists)
                         <div style="padding: 0.75rem; border-radius: 0.5rem; background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #059669;"
                             class="dark:text-emerald-400">
                             ✅ <b>File tersedia.</b> Silakan lanjut ke Langkah 2.
                         </div>
-                        <?php else: ?>
+                        @else
                         <div style="padding: 0.75rem; border-radius: 0.5rem; background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #dc2626;"
                             class="dark:text-red-400">
                             ⚠️ <b>Belum ada data.</b> Jalankan scraping.
                         </div>
-                        <?php endif; ?>
+                        @endif
                     </div>
                 </div>
                 <div class="bg-gray-50 dark:bg-white/5 border-t border-gray-200 dark:border-white/10"
@@ -145,20 +250,23 @@
                     </h3>
 
                     <div>
-                        <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;"
-                            class="text-gray-950 dark:text-white">Pilih Dosen SINTA</label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <label style="font-size: 0.875rem; font-weight: 500;" class="text-gray-950 dark:text-white">Pilih Dosen SINTA</label>
+                            <button type="button" @click="openModal = true" style="color: #2563eb; font-size: 0.75rem; font-weight: 600; cursor: pointer; background: none; border: none;" class="dark:text-blue-400 hover:underline">
+                                + Tambah Dosen Manual
+                            </button>
+                        </div>
                         <div wire:ignore>
                             <select id="sinta_id" class="custom-select-dosen"
-                                style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid rgba(156, 163, 175, 0.4); font-size: 0.875rem; outline: none;"
-                                <?php echo !$excelExists || empty($dosenList) ? 'disabled' : ''; ?>>
+                                style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid rgba(156, 163, 175, 0.4); font-size: 0.875rem; outline: none;">
                                 <option value="">-- Silakan Pilih Dosen --</option>
-                                <?php if(!empty($dosenList) && !isset($dosenList[0]['error'])): ?>
-                                <?php foreach($dosenList as $dosen): ?>
-                                <?php if(!empty($dosen['SINTA ID'])): ?>
-                                <option value="<?php echo $dosen['SINTA ID']; ?>"><?php echo htmlspecialchars($dosen['Nama']); ?></option>
-                                <?php endif; ?>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
+                                @if(count($dosenList) > 0)
+                                    @foreach($dosenList as $dosen)
+                                        <option value="{{ $dosen->sinta_id }}">
+                                            {{ $dosen->nama }} — {{ $dosen->departemen ?? 'Unknown' }} (ID: {{ $dosen->sinta_id }})
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -166,8 +274,7 @@
                 <div class="bg-gray-50 dark:bg-white/5 border-t border-gray-200 dark:border-white/10"
                     style="padding: 1rem 1.5rem;">
                     <button type="button" id="btn-ambil-detail"
-                        style="width: 100%; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: var(--primary-600, #2563eb); color: #fff; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer; opacity: <?php echo !$excelExists || empty($dosenList) ? '0.5' : '1'; ?>;"
-                        <?php echo !$excelExists || empty($dosenList) ? 'disabled' : ''; ?>>
+                        style="width: 100%; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: var(--primary-600, #2563eb); color: #fff; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer;">
                         Ekstrak Data SINTA
                     </button>
                 </div>
@@ -200,8 +307,6 @@
                                     @foreach ($jurusans as $jurusan_item)
                                         <option value="{{ $jurusan_item['slug'] }}">{{ $jurusan_item['display_name'] }}</option>
                                     @endforeach
-                                @else
-                                    <option value="" disabled>Gagal memuat data jurusan</option>
                                 @endif
                             </select>
                         </div>
@@ -210,8 +315,7 @@
                 <div class="bg-gray-50 dark:bg-white/5 border-t border-gray-200 dark:border-white/10"
                     style="padding: 1rem 1.5rem;">
                     <button type="button" id="btn-import"
-                        style="width: 100%; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: #10b981; color: #fff; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer; opacity: 0.5;"
-                        disabled>
+                        style="width: 100%; padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: #10b981; color: #fff; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer;">
                         Import ke Database
                     </button>
                 </div>
@@ -249,6 +353,35 @@
             </div>
         </div>
 
+        <div class="modal-overlay" x-show="openModal" x-cloak x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <div class="modal-card" @click.away="openModal = false">
+                <div class="modal-header">
+                    <h3 style="font-size: 1.125rem; font-weight: 700;">Form Tambah Data Dosen</h3>
+                    <button type="button" @click="openModal = false" style="background: none; border: none; cursor: pointer;" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <svg style="width: 1.5rem; height: 1.5rem;" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <form id="form-tambah-dosen">
+                    <div class="modal-body">
+                        <div>
+                            <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem;">SINTA ID</label>
+                            <input type="text" id="input_sinta_id" name="sinta_id" required class="modal-input" placeholder="Contoh: 6954305">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem;">Nama Lengkap</label>
+                            <input type="text" id="input_nama" name="nama" required class="modal-input" placeholder="Nama Lengkap Beserta Gelar">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" @click="openModal = false" class="custom-btn-secondary" style="padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; font-size: 0.875rem; cursor: pointer;">Batal</button>
+                        <button type="submit" style="padding: 0.5rem 1rem; border-radius: 0.5rem; background-color: var(--primary-600, #2563eb); color: #fff; font-weight: 600; font-size: 0.875rem; border: none; cursor: pointer;">Simpan Dosen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -266,6 +399,37 @@
                 placeholder: "-- Silakan Pilih Jurusan --",
                 allowClear: true,
                 width: '100%'
+            });
+        });
+
+        document.getElementById('form-tambah-dosen').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sintaId = document.getElementById('input_sinta_id').value;
+            const nama = document.getElementById('input_nama').value;
+
+            const payload = new FormData();
+            payload.append('sinta_id', sintaId);
+            payload.append('nama', nama);
+            payload.append('_token', "{{ csrf_token() }}");
+
+            fetch("/admin/scrap/tambah-dosen-manual", {
+                method: "POST",
+                body: payload
+            })
+            .then(response => {
+                if (response.ok) return response.json();
+                if (response.status === 422) throw new Error('Gagal: SINTA ID ini sudah terdaftar di database.');
+                throw new Error('Terjadi kesalahan server saat menyimpan data.');
+            })
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                alert(error.message);
             });
         });
 

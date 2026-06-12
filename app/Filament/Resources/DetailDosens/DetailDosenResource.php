@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DetailDosens;
 use App\Filament\Resources\DetailDosens\Pages\CreateDetailDosen;
 use App\Filament\Resources\DetailDosens\Pages\EditDetailDosen;
 use App\Filament\Resources\DetailDosens\Pages\ListDetailDosens;
+use App\Filament\Resources\DetailDosens\Pages\ImportDetailDosen;
 use App\Models\DetailDosen;
 use BackedEnum;
 use UnitEnum;
@@ -92,7 +93,8 @@ class DetailDosenResource extends Resource
         return [
             // Kunci penamaan rute indeks di sini agar sesuai dengan pendaftaran otomatis Filament
             'index' => Pages\ListDetailDosens::route('/'),
-            'create' => Pages\CreateDetailDosen::route('/create'),
+            // 'create' => Pages\CreateDetailDosen::route('/create'),
+            'import' => Pages\ImportDetailDosen::route('/import'),
             'edit' => Pages\EditDetailDosen::route('/{record}/edit'),
         ];
     }
