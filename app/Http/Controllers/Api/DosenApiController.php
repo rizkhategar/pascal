@@ -10,37 +10,41 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DosenApiController extends Controller
 {
-    /**
-     * Get Daftar Data Dosen Tersedia
-     */
+        /**
+        * List Dosen Pasca
+        */ 
     public function index(): AnonymousResourceCollection
     {
         $dosens = DetailDosen::select(['sinta_id', 'nama', 'program_studi', 'bidang_minat', 'profile_photo'])->get();
-
         return DosenIndexResource::collection($dosens);
     }
 
     /**
-     * Get Detail SINTA Dosen Spesifik (Komplit)
+     *Detail SINTA Dosen 
      */
-    public function show(string $sinta_id): DosenSintaResource
+    public function show(string $sinta_id, ?string $type = null): DosenSintaResource
     {
-        $dosen = DetailDosen::with([
-            // 1. Relasi untuk data statistik grafik tahunan
-            'scopusYearlyStats',
-            'scholarYearlyStats',
-            'garudaYearlyStats',
-            'researchYearlies',
-            'serviceYearlies',
-            
-            // 2. Relasi untuk detail isi konten publikasi & riwayat kegiatan lengkap
-            'scopusPublications',
-            'scholarPublications',
-            'garudaPublications',
-            'books',
-            'researches',
-            'services'
-        ])->findOrFail($sinta_id);
+        // 1. Relasi default jika tipe tidak diisi (Load Semua Data)
+        $relations = [
+            'scopusYearlyStats', 'scholarYearlyStats', 'garudaYearlyStats', 'researchYearlies', 'serviceYearlies',
+            'scopusPublications', 'scholarPublications', 'garudaPublications', 'books', 'researches', 'services'
+        ];
+
+        // 2. Jika parameter tipe diisi, persempit relasi agar query super cepat
+        if ($type) {
+            $relations = match (strtolower($type)) {
+                'scopus'   => ['scopusPublications', 'scopusYearlyStats'],
+                'scholar'  => ['scholarPublications', 'scholarYearlyStats'],
+                'garuda'   => ['garudaPublications', 'garudaYearlyStats'],
+                'research' => ['researches', 'researchYearlies'],
+                'service'  => ['services', 'serviceYearlies'],
+                'books'    => ['books'],
+                default    => $relations,
+            };
+        }
+
+        // 3. Cari dosen hanya dengan relasi yang dipilih
+        $dosen = DetailDosen::with($relations)->findOrFail($sinta_id);
 
         return new DosenSintaResource($dosen);
     }
