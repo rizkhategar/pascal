@@ -18,6 +18,12 @@ class DetailDosen extends Model
     protected static function booted()
     {
         static::deleting(function ($dosen) {
+
+            $imagePath = public_path("assets/images/{$dosen->sinta_id}.jpg");
+            if (file_exists($imagePath)) {
+                @unlink($imagePath);
+            }
+
             $dosen->researches()->delete();
             $dosen->researchYearlies()->delete();
             $dosen->services()->delete();
@@ -34,47 +40,58 @@ class DetailDosen extends Model
 
     // --- DAFTAR RELASI UTAMA & YEARLY STATS ---
 
-    public function researches(): HasMany {
+    public function researches(): HasMany
+    {
         return $this->hasMany(Research::class, 'sinta_id', 'sinta_id');
     }
 
-    public function researchYearlies(): HasMany {
+    public function researchYearlies(): HasMany
+    {
         return $this->hasMany(ResearchYearly::class, 'sinta_id', 'sinta_id');
     }
 
-    public function services(): HasMany {
+    public function services(): HasMany
+    {
         return $this->hasMany(Service::class, 'sinta_id', 'sinta_id');
     }
 
-    public function serviceYearlies(): HasMany {
+    public function serviceYearlies(): HasMany
+    {
         return $this->hasMany(ServiceYearly::class, 'sinta_id', 'sinta_id');
     }
 
-    public function books(): HasMany {
+    public function books(): HasMany
+    {
         return $this->hasMany(Book::class, 'sinta_id', 'sinta_id');
     }
 
-    public function garudaPublications(): HasMany {
+    public function garudaPublications(): HasMany
+    {
         return $this->hasMany(GarudaPublication::class, 'sinta_id', 'sinta_id');
     }
 
-    public function garudaYearlyStats(): HasMany {
+    public function garudaYearlyStats(): HasMany
+    {
         return $this->hasMany(GarudaYearlyStat::class, 'sinta_id', 'sinta_id');
     }
 
-    public function scholarPublications(): HasMany {
+    public function scholarPublications(): HasMany
+    {
         return $this->hasMany(ScholarPublication::class, 'sinta_id', 'sinta_id');
     }
 
-    public function scholarYearlyStats(): HasMany {
+    public function scholarYearlyStats(): HasMany
+    {
         return $this->hasMany(ScholarYearlyStat::class, 'sinta_id', 'sinta_id');
     }
 
-    public function scopusPublications(): HasMany {
+    public function scopusPublications(): HasMany
+    {
         return $this->hasMany(ScopusPublication::class, 'sinta_id', 'sinta_id');
     }
 
-    public function scopusYearlyStats(): HasMany {
+    public function scopusYearlyStats(): HasMany
+    {
         return $this->hasMany(ScopusYearlyStat::class, 'sinta_id', 'sinta_id');
     }
 }

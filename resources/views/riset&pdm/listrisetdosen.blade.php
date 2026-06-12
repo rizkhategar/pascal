@@ -696,7 +696,7 @@
             font-weight: 600;
         }
 
-        /* ================= PAGINATION ================= */
+        /* ================= NATIVE LARAVEL BLADE PAGINATION ================= */
 
         .rd-pagination {
             margin-top: 34px;
@@ -723,6 +723,7 @@
         .rd-pagination span {
             border-radius: 12px !important;
             font-weight: 800 !important;
+            padding: 10px 16px !important;
         }
 
         .rd-pagination a {
@@ -768,12 +769,7 @@
             }
 
             .rd-hero-dots {
-                left: 14px;
-                top: 12px;
-                width: 90px;
-                height: 70px;
-                background-size: 16px 16px;
-                opacity: .34;
+                display: none;
             }
 
             .rd-hero-line {
@@ -859,47 +855,6 @@
 
             .rd-card-action {
                 justify-content: center;
-            }
-        }
-
-        @media(max-width: 480px) {
-            .rd-hero {
-                min-height: 300px;
-            }
-
-            .rd-title {
-                font-size: 29px;
-            }
-
-            .rd-filter-title {
-                align-items: flex-start;
-            }
-
-            .rd-filter-icon {
-                width: 42px;
-                height: 42px;
-                flex-basis: 42px;
-                border-radius: 14px;
-            }
-
-            .rd-filter-title h2 {
-                font-size: 18px;
-            }
-
-            .rd-filter-title p {
-                font-size: 13px;
-            }
-
-            .rd-content {
-                padding: 16px;
-            }
-
-            .rd-list-item {
-                border-radius: 20px;
-            }
-
-            .rd-stats {
-                gap: 8px;
             }
         }
     </style>
@@ -998,7 +953,6 @@
 
                                 <select name="jurusan" id="jurusanSelect" class="rd-input">
                                     <option value="">Semua Jurusan</option>
-
                                     @foreach ($academicProgramsNav as $jurusan)
                                         <option value="{{ $jurusan['slug'] }}"
                                             {{ request('jurusan') == $jurusan['slug'] ? 'selected' : '' }}>
@@ -1028,24 +982,18 @@
 
                             <div class="rd-result-badge">
                                 <i class="fas fa-database"></i>
-                                <span>{{ $dosens->total() ?? $dosens->count() }} Data</span>
+                                <span>{{ $dosens->total() }} Data</span>
                             </div>
                         </div>
 
-                        <section class="rd-grid">
+                        <section class="rd-grid" id="dosenGrid">
                             @forelse($dosens as $dosen)
                                 <a href="{{ route('riset.detail', $dosen->sinta_id) }}" class="rd-list-item">
                                     <div class="rd-list-photo">
-                                        @if ($dosen->profile_photo)
-                                            <img
-                                                src="{{ asset('assets/images/' . $dosen->profile_photo) }}"
-                                                alt="{{ $dosen->nama }}"
-                                                class="rd-photo">
+                                        @if ($dosen->profile_photo && file_exists(public_path('assets/images/' . $dosen->sinta_id . '.jpg')))
+                                            <img src="{{ asset('assets/images/' . $dosen->sinta_id . '.jpg') }}" alt="{{ $dosen->nama }}" class="rd-photo">
                                         @else
-                                            <img
-                                                src="{{ asset('assets/images/default-user.png') }}"
-                                                alt="{{ $dosen->nama }}"
-                                                class="rd-photo">
+                                            <img src="{{ asset('assets/images/default-user.png') }}" alt="{{ $dosen->nama }}" class="rd-photo">
                                         @endif
                                     </div>
 
@@ -1062,30 +1010,22 @@
 
                                         <div class="rd-stats">
                                             <div class="rd-stat">
-                                                <div class="rd-stat-value">
-                                                    {{ number_format($dosen->sinta_score_overall ?? 0) }}
-                                                </div>
+                                                <div class="rd-stat-value">{{ number_format($dosen->sinta_score_overall ?? 0) }}</div>
                                                 <div class="rd-stat-label">Overall Score</div>
                                             </div>
 
                                             <div class="rd-stat">
-                                                <div class="rd-stat-value">
-                                                    {{ number_format($dosen->sinta_score_3yr ?? 0) }}
-                                                </div>
+                                                <div class="rd-stat-value">{{ number_format($dosen->sinta_score_3yr ?? 0) }}</div>
                                                 <div class="rd-stat-label">3 Year Score</div>
                                             </div>
 
                                             <div class="rd-stat">
-                                                <div class="rd-stat-value">
-                                                    {{ number_format($dosen->affil_score ?? 0) }}
-                                                </div>
+                                                <div class="rd-stat-value">{{ number_format($dosen->affil_score ?? 0) }}</div>
                                                 <div class="rd-stat-label">Affil Score</div>
                                             </div>
 
                                             <div class="rd-stat">
-                                                <div class="rd-stat-value">
-                                                    {{ number_format($dosen->affil_score_3yr ?? 0) }}
-                                                </div>
+                                                <div class="rd-stat-value">{{ number_format($dosen->affil_score_3yr ?? 0) }}</div>
                                                 <div class="rd-stat-label">Affil 3Yr</div>
                                             </div>
                                         </div>
@@ -1101,13 +1041,8 @@
                                     <div class="rd-empty-icon">
                                         <i class="fas fa-folder-open"></i>
                                     </div>
-
                                     <h3>Data Tidak Ditemukan</h3>
-
-                                    <p>
-                                        Tidak ada data dosen yang sesuai dengan kriteria pencarian Anda.
-                                        Silakan ubah kata kunci atau pilih jurusan lain.
-                                    </p>
+                                    <p>Tidak ada data dosen yang sesuai dengan kriteria pencarian Anda.</p>
                                 </div>
                             @endforelse
                         </section>
@@ -1138,27 +1073,15 @@
             }
 
             let debounceTimer;
-
             if (searchInput) {
                 searchInput.addEventListener('input', function () {
                     clearTimeout(debounceTimer);
-
                     debounceTimer = setTimeout(function () {
                         form.submit();
-                    }, 700);
+                    }, 800);
                 });
-
-                if (searchInput.value.length > 0) {
-                    searchInput.focus();
-
-                    const value = searchInput.value;
-                    searchInput.value = '';
-                    searchInput.value = value;
-                }
             }
         });
     </script>
-
 </body>
-
 </html>
