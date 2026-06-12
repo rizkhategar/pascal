@@ -251,11 +251,7 @@
 
     @include('component.header')
 
-    <section class="page-hero"
-        @if(!empty($tentang) && !empty($tentang->hero_image)) 
-            style="background-image: url('{{ asset('storage/' . $tentang->hero_image) }}');" 
-        @endif
-    >
+    <section class="page-hero">
         <div class="container">
             <h1>Tentang Pascasarjana</h1>
         </div>
