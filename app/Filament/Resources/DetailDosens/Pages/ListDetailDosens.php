@@ -13,12 +13,13 @@ class ListDetailDosens extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            // Actions\CreateAction::make(),
             // PERBAIKAN: Mengarahkan URL langsung ke halaman Create kustom milik Resource ini
-            Actions\Action::make('tarik_data_sinta')
-                ->label('Tarik Data SINTA')
-                ->icon('heroicon-o-cloud-arrow-down')
-                ->color('success')
-                ->url(static::getResource()::getUrl('create')), // Menggunakan rute otomatis Filament
+            Actions\Action::make('openImportPage')
+                ->label('Import / Scraping SINTA')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('warning')
+                ->url(DetailDosenResource::getUrl('import')), // Menggunakan rute otomatis Filament
         ];
     }
 }
