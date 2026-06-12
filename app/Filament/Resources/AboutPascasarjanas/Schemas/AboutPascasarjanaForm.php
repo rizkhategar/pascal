@@ -17,25 +17,7 @@ class AboutPascasarjanaForm
     {
         return $schema
             ->columns(1)
-            ->components([
-                
-                // ==========================================
-                // BAGIAN 0: HERO IMAGE (BANNER ATAS)
-                // ==========================================
-                Section::make('Banner Halaman (Hero Section)')
-                    ->description('Pengaturan gambar latar belakang untuk judul atas halaman.')
-                    ->icon('heroicon-o-photo')
-                    ->schema([
-                        FileUpload::make('hero_image')
-                            ->image()
-                            ->imageEditor()
-                            ->directory('hero-images')
-                            ->disk('public')
-                            ->label('Gambar Latar Belakang')
-                            ->helperText('Akan ditampilkan di belakang tulisan "Tentang Pascasarjana" di bagian paling atas website.')
-                            ->columnSpanFull(),
-                    ])->collapsible(),
-
+            ->components([                                 
                 // ==========================================
                 // BAGIAN 1: TEKS UTAMA
                 // ==========================================
@@ -51,13 +33,11 @@ class AboutPascasarjanaForm
                                     ->default('Tentang Kami')
                                     ->label('Sub Judul')
                                     ->placeholder('Cth: Tentang Kami'),
-
                                 TextInput::make('heading')
                                     ->required()
                                     ->label('Judul Utama')
                                     ->placeholder('Cth: Mewujudkan Generasi Unggul'),
                             ]),
-
                         Textarea::make('description')
                             ->required()
                             ->label('Deskripsi Panjang')
@@ -78,7 +58,6 @@ class AboutPascasarjanaForm
                             ->schema([
                                 Grid::make(4)
                                     ->schema([
-
                                         FileUpload::make('icon')
                                             ->image()
                                             ->imageEditor()
@@ -89,14 +68,12 @@ class AboutPascasarjanaForm
                                                 'default' => 4,
                                                 'md' => 1,
                                             ]),
-
                                         Grid::make(1)
                                             ->schema([
                                                 TextInput::make('title')
                                                     ->required()
                                                     ->label('Judul Poin')
                                                     ->placeholder('Cth: Fasilitas Lengkap'),
-
                                                 Textarea::make('description')
                                                     ->required()
                                                     ->label('Deskripsi Singkat')
@@ -109,7 +86,7 @@ class AboutPascasarjanaForm
                                     ]),
                             ])
                             ->defaultItems(3)
-                            ->addActionLabel('➕ Tambah Poin Baru')
+                            ->addActionLabel('  Tambah Poin Baru')
                             ->reorderableWithButtons()
                             ->collapsible()
                             ->cloneable()
@@ -128,23 +105,19 @@ class AboutPascasarjanaForm
                     ->columnSpanFull()
                     ->collapsible()
                     ->schema([
-
                         Grid::make(2)
                             ->schema([
                                 TextInput::make('direktur_heading')
                                     ->label('Label Sambutan (Teks Kecil)')
                                     ->default('Sambutan Direktur')
                                     ->placeholder('Cth: Sambutan Direktur'),
-
                                 TextInput::make('direktur_greeting')
                                     ->label('Kalimat Sapaan (Teks Besar)')
                                     ->default('Selamat Datang di Pascasarjana Universitas Ngudi Waluyo')
                                     ->placeholder('Cth: Selamat Datang di...'),
                             ]),
-
                         Grid::make(4)
                             ->schema([
-
                                 FileUpload::make('direktur_image')
                                     ->image()
                                     ->imageEditor()
@@ -155,17 +128,14 @@ class AboutPascasarjanaForm
                                         'default' => 4,
                                         'md' => 1,
                                     ]),
-
                                 Grid::make(1)
                                     ->schema([
                                         TextInput::make('direktur_name')
                                             ->label('Nama Lengkap (Beserta Gelar)')
                                             ->placeholder('Cth: Dr. H. Fulan, M.Pd.'),
-
                                         TextInput::make('direktur_title')
                                             ->label('Jabatan')
                                             ->default('Direktur Pascasarjana Universitas Ngudi Waluyo'),
-
                                         RichEditor::make('direktur_message')
                                             ->label('Isi Pesan / Sambutan')
                                             ->toolbarButtons([
