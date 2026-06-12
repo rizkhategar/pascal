@@ -32,7 +32,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 17v-5m0-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
             </span>
-            <span>Tentang Pascasarjana</span>
+            <span>About Pascasarjana</span>
         </a>
         <a href="/admin/visi-misis" class="admin-nav-link {{ ($activeMenu ?? '') === 'visi-misi' ? 'active' : '' }}">
             <span class="admin-nav-icon">

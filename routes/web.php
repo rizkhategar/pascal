@@ -8,7 +8,7 @@ use App\Http\Controllers\OrganizationStructureUploadController;
 use App\Http\Controllers\RisetController;
 use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\SliderUploadController;
-use App\Http\Controllers\TentangController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\VisiMisiController;
 use App\Models\OrganizationStructure;
 use App\Models\Slider;
@@ -61,7 +61,7 @@ Route::get('/akademik/magister-hukum', function () {
 
 Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi');
 Route::get('/profil/struktur-organisasi', [OrganizationStructureController::class, 'index'])->name('profil.struktur-organisasi');
-Route::get('/tentang-pascasarjana', [TentangController::class, 'index'])->name('tentang');
+Route::get('/about-pascasarjana', [AboutController::class, 'index'])->name('about');
 
 Route::get('/scrap/ambildatadosen', [ScrapController::class, 'index'])->name('scrap.index');
 Route::get('/scrap/perbarui-dosen', [ScrapController::class, 'perbaruiDosen'])->name('scrap.perbaruiDosen');

@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TentangPascasarjana extends Model
+class AboutPascasarjana extends Model
 {
+    // Sesuaikan secara presisi dengan nama tabel di file migration
+    protected $table = 'tentang_pascasarjanas';
+
     protected $fillable = [
         'hero_image',
         'subheading',

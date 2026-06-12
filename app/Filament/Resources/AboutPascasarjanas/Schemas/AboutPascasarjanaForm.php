@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\TentangPascasarjanas\Schemas;
+namespace App\Filament\Resources\AboutPascasarjanas\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
@@ -11,7 +11,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\FileUpload;
 
-class TentangPascasarjanaForm
+class AboutPascasarjanaForm
 {
     public static function configure(Schema $schema): Schema
     {
