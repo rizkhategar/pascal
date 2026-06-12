@@ -28,7 +28,7 @@ class OrganizationStructureResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Organization Structures';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Profile';
+    protected static string|UnitEnum|null $navigationGroup = 'Profil';
 
     protected static ?int $navigationSort = 3;
 
