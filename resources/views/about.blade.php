@@ -5,57 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Pascasarjana | Universitas Ngudi Waluyo</title>
-    
+
     <link rel="icon" href="{{ asset('logo_unwnobg.png') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --primary: #063b70;
-            --primary-dark: #032f5b;
-            --primary-deep: #021f3f;
+            --primary: #062f5f;
+            --primary-dark: #031f42;
+            --primary-soft: #07457d;
             --blue: #0b5f9f;
             --blue-light: #2d9cdb;
+            --yellow: #f7b500;
+
             --white: #ffffff;
-            --text: #1f2937;
-            --muted: #6b7280;
-            --border: #e5e7eb;
-            --soft-bg: #f8fafc;
-            --shadow: 0 18px 45px rgba(15, 23, 42, .12);
-            --shadow-blue: 0 20px 60px rgba(3, 47, 91, .28);
+            --bg: #f6f9fc;
+            --text: #0f172a;
+            --text-soft: #334155;
+            --muted: #64748b;
+            --border: #e2e8f0;
+
+            --shadow-sm: 0 10px 28px rgba(15, 23, 42, .07);
+            --shadow-md: 0 18px 46px rgba(15, 23, 42, .10);
+            --shadow-lg: 0 28px 70px rgba(15, 23, 42, .15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--soft-bg); 
-            color: var(--text); 
-            overflow-x: hidden; 
-        }
-        
-        a { text-decoration: none; color: inherit; }
-        
-        .container { 
-            width: min(100% - 64px, 1180px); 
-            margin: 0 auto; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ================= HERO STYLE ================= */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+            color: var(--text);
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 8% 12%, rgba(45, 156, 219, .08), transparent 25%),
+                linear-gradient(180deg, #ffffff 0%, #f8fafc 44%, #eef5fb 100%);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .about-container {
+            width: min(100% - 64px, 1180px);
+            margin: 0 auto;
+        }
+
+        /* ================= HERO ================= */
+
         .about-hero {
             position: relative;
-            min-height: 260px;
             overflow: hidden;
             color: #fff;
+            min-height: 330px;
             display: flex;
             align-items: center;
-            padding: 52px 0 72px;
+            padding: 58px 0 110px;
             background:
-                radial-gradient(circle at 12% 18%, rgba(45, 156, 219, .38), transparent 26%),
-                radial-gradient(circle at 78% 20%, rgba(255, 255, 255, .16), transparent 24%),
-                linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 42%, var(--primary) 72%, #0b6aa8 100%);
+                radial-gradient(circle at 13% 18%, rgba(45, 156, 219, .42), transparent 26%),
+                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, .18), transparent 23%),
+                linear-gradient(135deg, #031f42 0%, #062f5f 46%, #07457d 75%, #0b6eae 100%);
         }
 
         .about-hero::before {
@@ -63,266 +81,725 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, .06) 1px, transparent 1px);
-            background-size: 44px 44px;
-            mask-image: linear-gradient(90deg, rgba(0, 0, 0, .9), transparent 78%);
-            opacity: .45;
+                linear-gradient(rgba(255, 255, 255, .055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .055) 1px, transparent 1px);
+            background-size: 46px 46px;
+            opacity: .42;
+            mask-image: linear-gradient(90deg, #000 0%, transparent 84%);
             z-index: 1;
         }
 
         .about-hero::after {
             content: "";
             position: absolute;
-            right: -120px;
-            top: -150px;
-            width: 520px;
-            height: 520px;
+            right: -170px;
+            top: -185px;
+            width: 570px;
+            height: 570px;
             border-radius: 50%;
             background:
-                radial-gradient(circle, rgba(255, 255, 255, .18), rgba(45, 156, 219, .12) 42%, transparent 68%);
+                radial-gradient(circle, rgba(255, 255, 255, .20) 0%, rgba(45, 156, 219, .16) 36%, transparent 68%);
             z-index: 1;
         }
 
-        .hero-shape {
+        .hero-dots {
             position: absolute;
-            right: 0;
-            bottom: -1px;
-            width: 100%;
-            height: 96px;
+            left: 24px;
+            top: 18px;
+            width: 120px;
+            height: 92px;
+            background-image: radial-gradient(rgba(255, 255, 255, .72) 2px, transparent 2.6px);
+            background-size: 18px 18px;
+            opacity: .48;
             z-index: 2;
-            pointer-events: none;
-        }
-
-        .hero-shape svg { width: 100%; height: 100%; display: block; }
-
-        .hero-pattern-dots {
-            position: absolute; left: 24px; top: 18px; width: 118px; height: 88px;
-            background-image: radial-gradient(rgba(255, 255, 255, .7) 2px, transparent 2.5px);
-            background-size: 18px 18px; opacity: .55; z-index: 2;
-        }
-
-        .hero-orb {
-            position: absolute; right: 18%; bottom: 36px; width: 170px; height: 170px;
-            border-radius: 50%; border: 1px solid rgba(255, 255, 255, .18);
-            background: rgba(255, 255, 255, .05); box-shadow: inset 0 0 42px rgba(255, 255, 255, .08);
-            z-index: 1;
         }
 
         .hero-line {
-            position: absolute; right: 90px; top: 0; width: 220px; height: 340px;
-            background: linear-gradient(120deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .18));
-            transform: skewX(-32deg); z-index: 1;
+            position: absolute;
+            right: 110px;
+            top: -36px;
+            width: 230px;
+            height: 440px;
+            background: linear-gradient(120deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .18));
+            transform: skewX(-32deg);
+            z-index: 1;
+        }
+
+        .hero-wave {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 92px;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .hero-wave svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
 
         .hero-inner {
-            position: relative; z-index: 4; display: grid; grid-template-columns: 1fr auto;
-            align-items: center; gap: 38px;
+            position: relative;
+            z-index: 4;
+            max-width: 900px;
         }
 
-        .hero-badge {
-            width: fit-content; display: inline-flex; align-items: center; gap: 10px;
-            padding: 9px 15px; margin-bottom: 18px; border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .10);
-            backdrop-filter: blur(10px); color: rgba(255, 255, 255, .94);
-            font-size: 14px; font-weight: 800; letter-spacing: .2px;
+        .hero-kicker {
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            margin-bottom: 18px;
+            border-radius: 999px;
+            color: #ffe8a1;
+            background: rgba(247, 181, 0, .12);
+            border: 1px solid rgba(247, 181, 0, .34);
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            backdrop-filter: blur(10px);
         }
-
-        .hero-badge i { color: #bfe9ff; }
 
         .about-title {
-            margin: 0 0 16px; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.05;
-            font-weight: 900; letter-spacing: -1px; color: #fff; max-width: 760px;
+            margin: 0 0 18px;
+            color: #fff;
+            font-size: clamp(34px, 5vw, 58px);
+            line-height: 1.05;
+            font-weight: 900;
+            letter-spacing: -1.1px;
         }
 
         .about-subtitle {
-            margin: 0; font-size: clamp(18px, 2.4vw, 21px); line-height: 1.4;
-            font-weight: 500; color: rgba(255, 255, 255, .88); max-width: 680px;
+            max-width: 760px;
+            margin: 0;
+            color: rgba(255, 255, 255, .86);
+            font-size: clamp(15px, 2vw, 18px);
+            line-height: 1.75;
+            font-weight: 600;
         }
 
-        .hero-info-card {
-            width: 270px; min-height: 150px; border-radius: 24px; padding: 24px;
-            border: 1px solid rgba(255, 255, 255, .22);
-            background: linear-gradient(145deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .07));
-            backdrop-filter: blur(16px); box-shadow: var(--shadow-blue);
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
         }
 
-        .hero-info-icon {
-            width: 52px; height: 52px; border-radius: 16px; display: flex;
-            align-items: center; justify-content: center; color: #fff; font-size: 24px;
-            background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .20);
-            margin-bottom: 18px;
+        .hero-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border-radius: 999px;
+            color: rgba(255, 255, 255, .88);
+            background: rgba(255, 255, 255, .11);
+            border: 1px solid rgba(255, 255, 255, .16);
+            font-size: 13px;
+            font-weight: 800;
+            backdrop-filter: blur(10px);
         }
 
-        .hero-info-card h3 {
-            margin: 0 0 8px; font-size: 20px; line-height: 1.2; color: #fff; font-weight: 900;
+        .hero-meta i {
+            color: var(--yellow);
         }
 
-        .hero-info-card p {
-            margin: 0; color: rgba(255, 255, 255, .82); font-size: 15px; line-height: 1.5; font-weight: 500;
-        }
+        /* ================= MAIN ================= */
 
-        /* ================= ABOUT MAIN SECTION ================= */
-        .page-section {
+        .about-section {
             position: relative;
-            padding: 60px 0 96px;
-            background:
-                radial-gradient(circle at 8% 12%, rgba(45, 156, 219, .08), transparent 24%),
-                linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            z-index: 5;
+            margin-top: -58px;
+            padding: 0 0 90px;
         }
 
-        .about-grid {
+        .about-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+            gap: 26px;
             align-items: start;
-            margin-bottom: 80px;
         }
 
-        .section-heading { margin-bottom: 32px; max-width: 720px; }
+        .about-main-card,
+        .about-points-card,
+        .sambutan-card,
+        .empty-card {
+            background: rgba(255, 255, 255, .97);
+            border: 1px solid rgba(226, 232, 240, .95);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-main-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 100%;
+            padding: 34px;
+            border-radius: 30px;
+        }
+
+        .about-main-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 12% 10%, rgba(45, 156, 219, .08), transparent 25%),
+                radial-gradient(circle at 92% 6%, rgba(247, 181, 0, .08), transparent 20%);
+            pointer-events: none;
+        }
 
         .section-kicker {
-            display: inline-flex; align-items: center; gap: 9px; margin-bottom: 12px;
-            color: var(--primary); font-size: 14px; font-weight: 900;
-            letter-spacing: .6px; text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 16px;
+            padding: 9px 13px;
+            border-radius: 999px;
+            color: var(--primary);
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .7px;
         }
 
-        .section-kicker::before {
-            content: ""; width: 34px; height: 3px; border-radius: 99px;
-            background: linear-gradient(90deg, var(--primary), var(--blue-light));
+        .section-kicker i {
+            color: var(--yellow);
         }
 
-        .section-heading h2 {
-            margin: 0 0 20px; font-size: clamp(28px, 3vw, 40px); line-height: 1.25;
-            color: #0f172a; font-weight: 900; letter-spacing: -.5px;
+        .about-main-card h2 {
+            position: relative;
+            z-index: 1;
+            margin: 0 0 18px;
+            color: var(--primary);
+            font-size: clamp(24px, 3vw, 38px);
+            line-height: 1.2;
+            font-weight: 900;
+            letter-spacing: -.7px;
         }
 
-        .section-heading .desc {
-            margin: 0; color: #4b5563; font-size: 16px; line-height: 1.8;
-            font-weight: 500; text-align: justify;
+        .about-desc {
+            position: relative;
+            z-index: 1;
+            color: var(--text-soft);
+            font-size: 16px;
+            line-height: 1.9;
+            font-weight: 500;
+            text-align: justify;
         }
 
-        /* ================= POINT CARDS ================= */
-        .about-right {
-            display: flex; flex-direction: column; gap: 20px;
+        .about-desc p {
+            margin-bottom: 16px;
+        }
+
+        .about-desc p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-desc strong,
+        .about-desc b {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .about-desc ul,
+        .about-desc ol {
+            margin: 18px 0;
+            padding-left: 22px;
+        }
+
+        .about-desc li {
+            margin-bottom: 8px;
+        }
+
+        /* ================= POINTS ================= */
+
+        .about-points-card {
+            overflow: hidden;
+            border-radius: 30px;
+        }
+
+        .points-header {
+            padding: 24px 26px;
+            background:
+                linear-gradient(135deg, rgba(6, 47, 95, .08), rgba(45, 156, 219, .07)),
+                #ffffff;
+            border-bottom: 1px solid rgba(226, 232, 240, .95);
+        }
+
+        .points-header h3 {
+            margin: 0 0 7px;
+            color: var(--primary);
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 900;
+        }
+
+        .points-header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.65;
+            font-weight: 600;
+        }
+
+        .about-points {
+            display: grid;
+            gap: 14px;
+            padding: 22px;
         }
 
         .point-card {
-            position: relative; overflow: hidden; display: grid; grid-template-columns: 64px 1fr;
-            align-items: center; gap: 20px; min-height: 112px; padding: 22px 24px;
-            border-radius: 22px; background: rgba(255, 255, 255, .92);
-            border: 1px solid rgba(226, 232, 240, .9);
-            box-shadow: 0 14px 34px rgba(15, 23, 42, .08); transition: .25s ease;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 54px 1fr;
+            align-items: start;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #eef2f7;
+            box-shadow: var(--shadow-sm);
+            transition: .24s ease;
         }
 
         .point-card::before {
-            content: ""; position: absolute; inset: 0 auto 0 0; width: 5px;
-            background: linear-gradient(180deg, var(--primary), var(--blue-light)); opacity: .95;
-        }
-
-        .point-card::after {
-            content: ""; position: absolute; right: -38px; top: -38px; width: 92px; height: 92px;
-            border-radius: 50%; background: rgba(45, 156, 219, .09); transition: .25s ease;
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary), var(--blue-light));
         }
 
         .point-card:hover {
-            transform: translateY(-5px); box-shadow: 0 22px 48px rgba(15, 23, 42, .12);
+            transform: translateY(-4px);
             border-color: rgba(45, 156, 219, .35);
-        }
-
-        .point-card:hover::after {
-            transform: scale(1.45); background: rgba(45, 156, 219, .14);
+            box-shadow: var(--shadow-md);
         }
 
         .point-icon {
-            position: relative; z-index: 1; width: 58px; height: 58px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center; color: #fff;
-            font-size: 25px; background: linear-gradient(135deg, var(--primary-dark), var(--blue));
-            box-shadow: 0 12px 28px rgba(6, 59, 112, .26);
+            position: relative;
+            z-index: 1;
+            width: 54px;
+            height: 54px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            box-shadow: 0 12px 26px rgba(6, 47, 95, .20);
+            font-size: 22px;
         }
 
         .point-icon img {
-            width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            display: block;
         }
 
-        .point-text { position: relative; z-index: 1; }
-        
+        .point-text {
+            position: relative;
+            z-index: 1;
+            min-width: 0;
+        }
+
         .point-text h3 {
-            margin: 0 0 6px; color: #0f3763; font-size: 18px; line-height: 1.2; font-weight: 800;
+            margin: 0 0 7px;
+            color: var(--primary);
+            font-size: 17px;
+            line-height: 1.3;
+            font-weight: 900;
         }
-        
+
         .point-text p {
-            margin: 0; color: #64748b; font-size: 15px; line-height: 1.5; font-weight: 500;
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.65;
+            font-weight: 600;
         }
 
-        /* ================= SAMBUTAN DIREKTUR ================= */
+        .empty-points {
+            padding: 24px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+        /* ================= SAMBUTAN ================= */
+
+        .sambutan-section {
+            margin-top: 34px;
+        }
+
+        .sambutan-title {
+            max-width: 820px;
+            margin: 0 auto 24px;
+            text-align: center;
+        }
+
+        .sambutan-title .section-kicker {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .sambutan-title h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: clamp(24px, 3.2vw, 38px);
+            line-height: 1.25;
+            font-weight: 900;
+            letter-spacing: -.7px;
+        }
+
         .sambutan-card {
-            overflow: hidden; border-radius: 28px; background: #fff;
-            border: 1px solid rgba(226, 232, 240, .95); box-shadow: var(--shadow);
-            display: flex; margin-top: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 390px 1fr;
+            border-radius: 32px;
         }
 
-        .sambutan-img { flex: 0 0 35%; position: relative; background: var(--primary-dark); }
-        
+        .sambutan-img {
+            position: relative;
+            min-height: 470px;
+            background:
+                radial-gradient(circle at 50% 22%, rgba(45, 156, 219, .18), transparent 35%),
+                linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        .sambutan-img::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0;
+            height: 46%;
+            background: linear-gradient(180deg, transparent, rgba(3, 31, 66, .28));
+            pointer-events: none;
+        }
+
         .sambutan-img img {
-            width: 100%; height: 100%; object-fit: cover; object-position: top center; min-height: 450px;
+            width: 100%;
+            height: 100%;
+            min-height: 470px;
+            display: block;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .director-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 470px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, .52);
+            font-size: 82px;
         }
 
         .sambutan-content {
-            padding: 50px; flex: 1; display: flex; flex-direction: column; justify-content: center;
-            background: linear-gradient(135deg, rgba(6, 59, 112, .03), rgba(45, 156, 219, .03)), #ffffff;
+            position: relative;
+            padding: 46px 48px;
+            background:
+                radial-gradient(circle at 94% 10%, rgba(45, 156, 219, .08), transparent 24%),
+                linear-gradient(180deg, #ffffff, #f8fafc);
         }
 
         .quote-icon {
-            color: var(--blue-light); opacity: 0.3; font-size: 40px; margin-bottom: 20px;
+            width: 58px;
+            height: 58px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            border-radius: 20px;
+            color: var(--primary);
+            background: rgba(6, 47, 95, .08);
+            font-size: 24px;
         }
 
         .sambutan-text {
-            font-size: 16px; line-height: 1.8; color: #374151; font-style: italic; margin-bottom: 35px;
+            color: var(--text-soft);
+            font-size: 16px;
+            line-height: 1.9;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .sambutan-text p {
+            margin-bottom: 16px;
+        }
+
+        .sambutan-text p:last-child {
+            margin-bottom: 0;
         }
 
         .direktur-info {
-            border-left: 4px solid var(--blue-light); padding-left: 18px;
+            position: relative;
+            padding: 20px 22px;
+            border-radius: 22px;
+            background: #ffffff;
+            border: 1px solid #eef2f7;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .direktur-info::before {
+            content: "";
+            position: absolute;
+            inset: 18px auto 18px 0;
+            width: 4px;
+            border-radius: 99px;
+            background: var(--yellow);
         }
 
         .direktur-info h4 {
-            color: #0f3763; font-size: 22px; font-weight: 900; margin-bottom: 6px; letter-spacing: -0.5px;
+            margin: 0 0 7px;
+            color: var(--primary);
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 900;
+            letter-spacing: -.4px;
         }
 
         .direktur-info p {
-            color: #64748b; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .8px;
         }
 
-        .text-center { text-align: center; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        /* ================= EMPTY ================= */
+
+        .empty-card {
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            gap: 13px;
+            padding: 52px 24px;
+            border-radius: 30px;
+        }
+
+        .empty-icon {
+            width: 70px;
+            height: 70px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 24px;
+            color: var(--primary);
+            background: rgba(6, 47, 95, .08);
+            font-size: 30px;
+        }
+
+        .empty-card h3 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 23px;
+            line-height: 1.3;
+            font-weight: 900;
+        }
+
+        .empty-card p {
+            max-width: 560px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            font-weight: 600;
+        }
 
         /* ================= RESPONSIVE ================= */
-        @media(max-width:992px) {
-            .container { width: min(100% - 32px, 1180px); }
-            .about-hero { min-height: 250px; padding: 48px 0 72px; }
-            .hero-inner { grid-template-columns: 1fr; }
-            .hero-info-card { width: 100%; max-width: 420px; }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .sambutan-card { flex-direction: column; }
-            .sambutan-img { flex: none; height: 400px; }
-            .sambutan-img img { min-height: 400px; }
-            .sambutan-content { padding: 40px 30px; }
+
+        @media(max-width: 992px) {
+            .about-container {
+                width: min(100% - 32px, 1180px);
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sambutan-card {
+                grid-template-columns: 1fr;
+            }
+
+            .sambutan-img,
+            .sambutan-img img,
+            .director-placeholder {
+                min-height: 420px;
+            }
         }
 
-        @media(max-width:640px) {
-            .container { width: min(100% - 28px, 1180px); }
-            .about-hero { min-height: 235px; padding: 42px 0 62px; }
-            .hero-pattern-dots { width: 90px; height: 70px; background-size: 16px 16px; opacity: .4; }
-            .hero-line, .hero-orb { display: none; }
-            .hero-badge { font-size: 12px; padding: 8px 12px; margin-bottom: 14px; }
-            .about-title { margin-bottom: 12px; font-size: 28px; }
-            .about-subtitle { font-size: 16px; }
-            .hero-info-card { border-radius: 20px; padding: 20px; min-height: auto; }
-            .page-section { padding: 42px 0 76px; }
-            .section-heading h2 { font-size: 26px; }
-            .point-card { grid-template-columns: 52px 1fr; gap: 16px; min-height: 96px; padding: 18px; border-radius: 18px; }
-            .point-icon { width: 50px; height: 50px; border-radius: 16px; font-size: 22px; }
-            .point-text h3 { font-size: 16px; }
-            .point-text p { font-size: 14px; }
+        @media(max-width: 768px) {
+            .about-container {
+                width: min(100% - 28px, 1180px);
+            }
+
+            .about-hero {
+                min-height: 305px;
+                padding: 48px 0 96px;
+            }
+
+            .hero-dots {
+                left: 14px;
+                top: 12px;
+                width: 90px;
+                height: 70px;
+                background-size: 16px 16px;
+                opacity: .34;
+            }
+
+            .hero-line {
+                display: none;
+            }
+
+            .hero-kicker {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            .about-title {
+                font-size: 32px;
+                letter-spacing: -.6px;
+            }
+
+            .about-subtitle {
+                font-size: 15px;
+            }
+
+            .hero-meta span {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
+            .about-section {
+                margin-top: -48px;
+                padding-bottom: 70px;
+            }
+
+            .about-main-card,
+            .about-points-card,
+            .sambutan-card,
+            .empty-card {
+                border-radius: 24px;
+            }
+
+            .about-main-card {
+                padding: 24px 22px;
+            }
+
+            .about-desc {
+                font-size: 15px;
+                line-height: 1.82;
+                text-align: left;
+            }
+
+            .points-header {
+                padding: 22px;
+            }
+
+            .about-points {
+                padding: 18px;
+            }
+
+            .point-card {
+                grid-template-columns: 48px 1fr;
+                gap: 14px;
+                padding: 16px;
+                border-radius: 18px;
+            }
+
+            .point-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: 16px;
+                font-size: 20px;
+            }
+
+            .point-text h3 {
+                font-size: 16px;
+            }
+
+            .point-text p {
+                font-size: 13px;
+            }
+
+            .sambutan-title {
+                text-align: left;
+            }
+
+            .sambutan-title .section-kicker {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .sambutan-title h2 {
+                font-size: 25px;
+            }
+
+            .sambutan-img,
+            .sambutan-img img,
+            .director-placeholder {
+                min-height: 380px;
+            }
+
+            .sambutan-content {
+                padding: 28px 22px;
+            }
+
+            .sambutan-text {
+                font-size: 15px;
+                line-height: 1.82;
+            }
+
+            .direktur-info h4 {
+                font-size: 19px;
+            }
+        }
+
+        @media(max-width: 480px) {
+            .about-hero {
+                min-height: 292px;
+            }
+
+            .about-title {
+                font-size: 30px;
+            }
+
+            .about-main-card {
+                padding: 22px 18px;
+            }
+
+            .about-points {
+                padding: 16px;
+            }
+
+            .point-card {
+                grid-template-columns: 1fr;
+            }
+
+            .sambutan-img,
+            .sambutan-img img,
+            .director-placeholder {
+                min-height: 330px;
+            }
         }
     </style>
 </head>
@@ -332,117 +809,142 @@
     @include('component.header')
 
     <section class="about-hero">
-        <div class="hero-pattern-dots"></div>
+        <div class="hero-dots"></div>
         <div class="hero-line"></div>
-        <div class="hero-orb"></div>
 
-        <div class="container">
+        <div class="about-container">
             <div class="hero-inner">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <i class="fas fa-university"></i>
-                        Informasi Tentang Kami
-                    </div>
-                    <h1 class="about-title">Tentang Pascasarjana</h1>
-                    <p class="about-subtitle">
-                        Mengenal lebih dekat visi, misi, dan profil Pascasarjana Universitas Ngudi Waluyo.
-                    </p>
+                <div class="hero-kicker">
+                    <i class="fas fa-university"></i>
+                    <span>Profil Pascasarjana</span>
                 </div>
 
-                <div class="hero-info-card">
-                    <div class="hero-info-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Profil Unggulan</h3>
-                    <p>
-                        Pusat pendidikan pascasarjana yang berbudaya sehat dan bereputasi global.
-                    </p>
+                <h1 class="about-title">Tentang Pascasarjana</h1>
+
+                <p class="about-subtitle">
+                    Mengenal lebih dekat profil, arah pengembangan, dan komitmen Pascasarjana Universitas Ngudi Waluyo.
+                </p>
+
+                <div class="hero-meta">
+                    <span>
+                        <i class="fas fa-building-columns"></i>
+                        Universitas Ngudi Waluyo
+                    </span>
+
+                    <span>
+                        <i class="fas fa-graduation-cap"></i>
+                        Pascasarjana
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div class="hero-shape">
+        <div class="hero-wave">
             <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path d="M0,72 C220,120 430,20 720,58 C980,92 1180,118 1440,42 L1440,120 L0,120 Z" fill="#f8fafc"></path>
+                <path d="M0,74 C180,122 384,36 650,62 C930,90 1120,128 1440,44 L1440,120 L0,120 Z" fill="#ffffff"></path>
             </svg>
         </div>
     </section>
 
-    <main class="page-section">
-        <div class="container">
-            
-            <div class="about-grid">
-                @if($tentang)
-                    <div class="section-heading" style="margin-bottom: 0;">
-                        <div class="section-kicker">{{ $tentang->subheading ?? 'Tentang Kami' }}</div>
-                        <h2>{{ $tentang->heading ?? 'Judul Utama Belum Diisi' }}</h2>
-                        <div class="desc">
-                            {!! nl2br(e($tentang->description)) !!}
+    <main class="about-section">
+        <div class="about-container">
+
+            @if($tentang)
+                <section class="about-layout">
+                    <article class="about-main-card">
+                        <div class="section-kicker">
+                            <i class="fas fa-circle-info"></i>
+                            <span>{{ $tentang->subheading ?? 'Tentang Kami' }}</span>
                         </div>
-                    </div>
 
-                    <div class="about-right">
+                        <h2>{{ $tentang->heading ?? 'Tentang Pascasarjana Universitas Ngudi Waluyo' }}</h2>
+
+                        <div class="about-desc">
+                            {!! nl2br(e($tentang->description ?? '')) !!}
+                        </div>
+                    </article>
+
+                    <aside class="about-points-card">
+                        <div class="points-header">
+                            <h3>Keunggulan Pascasarjana</h3>
+                            <p>Informasi utama yang menjadi identitas dan nilai unggulan Pascasarjana UNW.</p>
+                        </div>
+
                         @if(!empty($tentang->points) && is_array($tentang->points))
-                            @foreach($tentang->points as $point)
-                                <article class="point-card">
-                                    <div class="point-icon">
-                                        @if(!empty($point['icon']))
-                                            <img src="{{ asset('storage/' . $point['icon']) }}" alt="Icon">
-                                        @else
-                                            <i class="fas fa-check-circle"></i>
-                                        @endif
-                                    </div>
-                                    <div class="point-text">
-                                        <h3>{{ $point['title'] ?? '' }}</h3>
-                                        <p>{{ $point['description'] ?? '' }}</p>
-                                    </div>
-                                </article>
-                            @endforeach
-                        @else
-                            <p style="color: #6b7280;"><em>Belum ada poin fitur yang ditambahkan.</em></p>
-                        @endif
-                    </div>
-                @else
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px; background: white; border-radius: 20px; box-shadow: var(--shadow);">
-                        <i class="fas fa-folder-open" style="font-size: 40px; color: #cbd5e1; margin-bottom: 15px;"></i>
-                        <h3 style="color: #475569; font-size: 20px;">Data Tentang Pascasarjana belum diisi.</h3>
-                        <p style="color: #94a3b8; margin-top: 10px;">Silakan login ke Admin Panel untuk mengisi data.</p>
-                    </div>
-                @endif
-            </div>
+                            <div class="about-points">
+                                @foreach($tentang->points as $point)
+                                    <article class="point-card">
+                                        <div class="point-icon">
+                                            @if(!empty($point['icon']))
+                                                <img src="{{ asset('storage/' . $point['icon']) }}" alt="Icon {{ $point['title'] ?? 'Poin Pascasarjana' }}">
+                                            @else
+                                                <i class="fas fa-check"></i>
+                                            @endif
+                                        </div>
 
-            @if($tentang && (!empty($tentang->direktur_name) || !empty($tentang->direktur_message)))
-            <div class="sambutan-section" style="margin-top: 60px;">
-                <div class="section-heading text-center">
-                    <div class="section-kicker">{{ $tentang->direktur_heading ?? 'Sambutan Direktur' }}</div>
-                    <h2>{{ $tentang->direktur_greeting ?? 'Selamat Datang di Pascasarjana Universitas Ngudi Waluyo' }}</h2>
-                </div>
-
-                <div class="sambutan-card">
-                    <div class="sambutan-img">
-                        @if(!empty($tentang->direktur_image))
-                            <img src="{{ asset('storage/' . $tentang->direktur_image) }}" alt="{{ $tentang->direktur_name }}">
+                                        <div class="point-text">
+                                            <h3>{{ $point['title'] ?? 'Poin Unggulan' }}</h3>
+                                            <p>{{ $point['description'] ?? '' }}</p>
+                                        </div>
+                                    </article>
+                                @endforeach
+                            </div>
                         @else
-                            <div style="width: 100%; height: 100%; min-height: 400px; display: flex; align-items: center; justify-content: center; background: #e2e8f0; color: #94a3b8;">
-                                <i class="fas fa-user-tie" style="font-size: 80px;"></i>
+                            <div class="empty-points">
+                                <em>Belum ada poin fitur yang ditambahkan.</em>
                             </div>
                         @endif
+                    </aside>
+                </section>
+
+                @if(!empty($tentang->direktur_name) || !empty($tentang->direktur_message))
+                    <section class="sambutan-section">
+                        <div class="sambutan-title">
+                            <div class="section-kicker">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>{{ $tentang->direktur_heading ?? 'Sambutan Direktur' }}</span>
+                            </div>
+
+                            <h2>{{ $tentang->direktur_greeting ?? 'Selamat Datang di Pascasarjana Universitas Ngudi Waluyo' }}</h2>
+                        </div>
+
+                        <article class="sambutan-card">
+                            <div class="sambutan-img">
+                                @if(!empty($tentang->direktur_image))
+                                    <img src="{{ asset('storage/' . $tentang->direktur_image) }}" alt="{{ $tentang->direktur_name ?? 'Direktur Pascasarjana' }}">
+                                @else
+                                    <div class="director-placeholder">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="sambutan-content">
+                                <div class="quote-icon">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+
+                                <div class="sambutan-text">
+                                    {!! $tentang->direktur_message ?? '<p>Pesan sambutan pimpinan belum ditambahkan.</p>' !!}
+                                </div>
+
+                                <div class="direktur-info">
+                                    <h4>{{ $tentang->direktur_name ?? 'Nama Direktur Belum Diisi' }}</h4>
+                                    <p>{{ $tentang->direktur_title ?? 'Direktur Pascasarjana Universitas Ngudi Waluyo' }}</p>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+                @endif
+            @else
+                <div class="empty-card">
+                    <div class="empty-icon">
+                        <i class="fas fa-folder-open"></i>
                     </div>
 
-                    <div class="sambutan-content">
-                        <i class="fas fa-quote-left quote-icon"></i>
-                        
-                        <div class="sambutan-text">
-                            {!! $tentang->direktur_message ?? '<p>Pesan sambutan pimpinan belum ditambahkan.</p>' !!}
-                        </div>
-                        
-                        <div class="direktur-info">
-                            <h4>{{ $tentang->direktur_name ?? 'Nama Direktur Belum Diisi' }}</h4>
-                            <p>{{ $tentang->direktur_title ?? 'Direktur Pascasarjana Universitas Ngudi Waluyo' }}</p>
-                        </div>
-                    </div>
+                    <h3>Data Tentang Pascasarjana Belum Diisi</h3>
+
                 </div>
-            </div>
             @endif
 
         </div>
@@ -451,4 +953,5 @@
     @include('component.footer')
 
 </body>
+
 </html>
