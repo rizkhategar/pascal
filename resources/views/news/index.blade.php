@@ -210,7 +210,7 @@
             color: var(--yellow);
         }
 
-        /* ================= SECTION ================= */
+        /* ================= SECTION & TOOLBAR ================= */
 
         .news-section {
             position: relative;
@@ -228,111 +228,112 @@
         }
 
         .news-toolbar {
-            display: grid;
-            grid-template-columns: 1fr minmax(280px, 360px);
-            gap: 18px;
-            align-items: center;
-            padding: 24px;
+            display: flex;
+            flex-wrap: nowrap; 
+            gap: 24px;
+            align-items: center; 
+            justify-content: space-between;
+            padding: 22px 26px;
             background:
-                linear-gradient(135deg, rgba(6, 47, 95, .08), rgba(45, 156, 219, .08)),
+                linear-gradient(135deg, rgba(6, 47, 95, .05), rgba(45, 156, 219, .05)),
                 #ffffff;
             border-bottom: 1px solid rgba(226, 232, 240, .95);
         }
 
         .filter-wrap {
-            min-width: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 16px;
+            flex: 0 0 auto; 
         }
 
-        .toolbar-label {
+        .dropdown-group {
             display: flex;
+            flex-direction: row; 
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
-            color: var(--primary);
-            font-size: 14px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: .45px;
+            flex: 0 0 auto;
         }
 
-        .toolbar-label i {
-            width: 34px;
-            height: 34px;
+        /* Ikon Membulat */
+        .toolbar-label {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 13px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             color: #fff;
             background: linear-gradient(135deg, var(--primary), var(--blue));
             box-shadow: 0 10px 22px rgba(6, 47, 95, .20);
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-bottom: 0;
+            cursor: pointer;
         }
 
-        .filter-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            min-width: 0;
-        }
-
-        .filter-btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 42px;
-            border: 1px solid rgba(6, 47, 95, .13);
+        /* Dropdown Membulat (Pill Shape) */
+        .styled-select {
+            width: 170px; 
+            height: 44px;
+            border: 1px solid rgba(6, 47, 95, .15);
+            border-radius: 999px;
             background: #fff;
             color: var(--primary);
-            font-weight: 900;
-            font-size: 13px;
-            border-radius: 999px;
-            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 0 32px 0 16px;
             cursor: pointer;
-            white-space: nowrap;
             box-shadow: 0 8px 20px rgba(15, 23, 42, .04);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2307457d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
             transition: .22s ease;
+            flex-shrink: 0;
+            /* Mencegah teks kepanjangan melar ke luar batas */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .filter-btn i {
-            color: var(--yellow);
-            transition: .22s ease;
+        .styled-select:focus,
+        .styled-select:hover {
+            border-color: var(--blue);
+            box-shadow: 0 12px 24px rgba(6, 47, 95, .12);
+            outline: none;
         }
 
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: linear-gradient(135deg, var(--primary), var(--blue));
-            border-color: transparent;
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(6, 47, 95, .22);
-        }
-
-        .filter-btn.active i,
-        .filter-btn:hover i {
-            color: var(--yellow);
-        }
-
+        /* Pembungkus Kolom Pencarian */
         .news-search-wrap {
-            align-self: end;
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 7px;
-            border-radius: 18px;
+            padding: 5px;
+            border-radius: 999px;
             background: #fff;
-            border: 1px solid rgba(6, 47, 95, .12);
+            border: 1px solid rgba(6, 47, 95, .15);
             box-shadow: 0 12px 30px rgba(15, 23, 42, .06);
+            flex: 1 1 auto; 
+            max-width: 320px; 
+            transition: .22s ease;
         }
 
+        .news-search-wrap:focus-within {
+            border-color: var(--blue);
+            box-shadow: 0 12px 24px rgba(6, 47, 95, .12);
+        }
+
+        /* Input Pencarian */
         .search-box {
             width: 100%;
-            height: 46px;
+            height: 34px;
             min-width: 0;
             border: 0;
-            border-radius: 13px;
-            background: #fff;
-            padding: 0 10px 0 12px;
+            border-radius: 999px;
+            background: transparent;
+            padding: 0 10px 0 16px;
             outline: none;
             color: var(--primary);
             font-size: 14px;
@@ -343,20 +344,21 @@
             color: #94a3b8;
         }
 
+        /* Tombol Pencarian */
         .search-icon-btn {
-            width: 46px;
-            height: 46px;
-            flex: 0 0 46px;
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
             border: 0;
-            border-radius: 14px;
+            border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--blue));
             color: #fff;
-            font-size: 17px;
+            font-size: 15px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 12px 24px rgba(7, 43, 87, .18);
+            box-shadow: 0 10px 20px rgba(7, 43, 87, .18);
             transition: .22s ease;
         }
 
@@ -575,6 +577,7 @@
             padding: 0 13px;
             transition: .2s ease;
             box-shadow: 0 8px 18px rgba(15, 23, 42, .04);
+            flex-shrink: 0;
         }
 
         .page-btn.active,
@@ -598,6 +601,7 @@
         .page-dots {
             font-weight: 900;
             color: #94a3b8;
+            margin: 0 2px;
         }
 
         .page-jump {
@@ -619,6 +623,7 @@
             font-weight: 900;
             outline: none;
             box-shadow: 0 8px 18px rgba(15, 23, 42, .04);
+            text-align: center;
         }
 
         .page-jump input:focus {
@@ -712,14 +717,6 @@
         /* ================= RESPONSIVE ================= */
 
         @media(max-width: 1024px) {
-            .news-toolbar {
-                grid-template-columns: 1fr;
-            }
-
-            .news-search-wrap {
-                align-self: stretch;
-            }
-
             .news-page-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
@@ -729,108 +726,95 @@
             .container {
                 width: min(100% - 28px, 1180px);
             }
-
             .news-hero {
                 min-height: 315px;
                 padding: 48px 0 96px;
             }
-
-            .hero-dots {
-                left: 14px;
-                top: 12px;
-                width: 90px;
-                height: 70px;
-                background-size: 16px 16px;
-                opacity: .34;
-            }
-
-            .hero-line {
-                display: none;
-            }
-
-            .hero-kicker {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-
-            .page-title {
-                letter-spacing: -.6px;
-            }
-
-            .page-desc {
-                font-size: 15px;
-            }
-
-            .hero-meta span {
-                font-size: 13px;
-                padding: 8px 10px;
-            }
-
             .news-section {
                 margin-top: -48px;
                 padding-bottom: 70px;
             }
-
-            .news-panel {
-                border-radius: 24px;
-            }
-
             .news-toolbar {
-                padding: 20px;
+                padding: 18px 22px;
             }
-
-            .filter-bar {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 3px;
-                scrollbar-width: none;
+            .news-search-wrap {
+                max-width: 250px; 
             }
-
-            .filter-bar::-webkit-scrollbar {
-                display: none;
-            }
-
-            .filter-btn {
-                flex: 0 0 auto;
-            }
-
             .news-content {
                 padding: 20px;
             }
-
             .news-page-grid {
                 grid-template-columns: 1fr;
                 gap: 18px;
             }
-
-            .pagination {
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 6px;
-                scrollbar-width: none;
-            }
-
-            .pagination::-webkit-scrollbar {
-                display: none;
-            }
-
-            .page-jump {
-                flex: 0 0 auto;
-            }
         }
 
+        /* --- PERBAIKAN TAMPILAN KHUSUS HP (MOBILE) --- */
         @media(max-width: 480px) {
             .news-hero {
-                min-height: 300px;
+                min-height: 280px;
             }
 
             .page-title {
-                font-size: 31px;
+                font-size: 26px;
             }
 
             .news-toolbar {
-                padding: 18px;
+                padding: 16px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 14px;
+            }
+
+            /* Memaksa Dropdown selalu 2 Kolom bersebelahan yang presisi */
+            .filter-wrap {
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px; 
+                display: grid;
+                width: 100%;
+            }
+
+            .dropdown-group {
+                width: 100%;
+                gap: 0;
+            }
+
+            /* Menyembunyikan seluruh Ikon agar Dropdown masuk rata kiri-kanan sempurna */
+            .toolbar-label {
+                display: none;
+            }
+
+            /* Ukuran dropdown di HP */
+            .styled-select {
+                width: 100%;
+                height: 42px; 
+                font-size: 13px; 
+                padding: 0 28px 0 14px; 
+                background-size: 14px; 
+                border-radius: 12px;
+            }
+
+            /* Mengecilkan Kotak Pencarian */
+            .news-search-wrap {
+                width: 100%;
+                max-width: 100%;
+                height: 44px; 
+                padding: 4px; 
+                gap: 6px; 
+                border-radius: 12px;
+            }
+
+            .search-box {
+                height: 34px; 
+                font-size: 13px; 
+            }
+
+            .search-icon-btn {
+                width: 34px; 
+                height: 34px; 
+                flex: 0 0 34px; 
+                font-size: 14px; 
+                border-radius: 10px;
             }
 
             .news-content {
@@ -838,24 +822,59 @@
             }
 
             .news-page-card {
-                border-radius: 20px;
+                border-radius: 18px;
             }
 
             .news-page-body {
-                padding: 18px;
+                padding: 16px;
             }
 
             .news-page-title {
-                font-size: 18px;
+                font-size: 16px;
             }
 
-            .news-page-footer {
-                align-items: flex-start;
-                flex-direction: column;
+            /* Pagination dipaksa menjadi mutlak 1 Baris dengan menu lompat ke bawahnya */
+            .pagination {
+                flex-wrap: wrap !important;
+                gap: 6px;
+                justify-content: center;
+                padding-bottom: 4px;
+            }
+
+            .page-btn {
+                height: 36px;
+                min-width: 36px;
+                padding: 0 8px;
+                font-size: 13px;
+                border-radius: 10px;
+            }
+
+            .page-dots {
+                margin: 0;
+            }
+
+            /* Menu Lompat Halaman agar rapi di HP */
+            .page-jump {
+                width: 100%; /* Memaksa turun ke baris baru */
+                justify-content: center;
+                margin-left: 0;
+                border-left: 0;
+                padding-left: 0;
+                margin-top: 8px;
+                border-top: 1px solid rgba(6, 47, 95, .12);
+                padding-top: 14px;
             }
 
             .page-jump input {
-                width: 62px;
+                height: 38px;
+                width: 60px;
+                border-radius: 10px;
+                font-size: 13px;
+            }
+
+            .page-jump button {
+                height: 38px;
+                border-radius: 10px;
             }
         }
     </style>
@@ -906,17 +925,26 @@
             <section class="news-panel">
                 <div class="news-toolbar">
                     <div class="filter-wrap">
-                        <div class="toolbar-label">
-                            <i class="fas fa-layer-group"></i>
-                            <span>Kategori Berita</span>
+                        
+                        <div class="dropdown-group">
+                            <label class="toolbar-label" for="newsCategorySelect" title="Kategori Berita">
+                                <i class="fas fa-layer-group"></i>
+                            </label>
+                            <select id="newsCategorySelect" class="styled-select" aria-label="Pilih Kategori">
+                                <option value="all">Memuat Kategori...</option>
+                            </select>
                         </div>
 
-                        <div class="filter-bar" id="newsFilters">
-                            <button class="filter-btn active" type="button">
-                                <i class="fas fa-tag"></i>
-                                Semua
-                            </button>
+                        <div class="dropdown-group">
+                            <label class="toolbar-label" for="newsSortSelect" title="Urutkan Berita">
+                                <i class="fas fa-sort-amount-down"></i>
+                            </label>
+                            <select id="newsSortSelect" class="styled-select" aria-label="Urutkan Berita">
+                                <option value="desc">Terbaru</option>
+                                <option value="asc">Terlama</option>
+                            </select>
                         </div>
+
                     </div>
 
                     <div class="news-search-wrap">
@@ -924,12 +952,13 @@
                             class="search-box"
                             id="newsSearch"
                             type="search"
-                            placeholder="Cari berita, agenda, atau pengumuman...">
+                            placeholder="Cari berita atau agenda...">
 
                         <button
                             class="search-icon-btn"
                             id="newsSearchButton"
                             type="button"
+                            title="Cari Berita"
                             aria-label="Cari berita">
                             <i class="fas fa-magnifying-glass"></i>
                         </button>
@@ -966,10 +995,8 @@
             const state = {
                 page: 1,
                 lastPage: 1,
-                category: {
-                    id: 'all',
-                    slug: 'all'
-                },
+                category: 'all',
+                sort: 'desc',
                 q: ''
             };
 
@@ -977,7 +1004,8 @@
             let activeRequestId = 0;
 
             const grid = document.getElementById('newsGrid');
-            const filters = document.getElementById('newsFilters');
+            const categorySelect = document.getElementById('newsCategorySelect');
+            const sortSelect = document.getElementById('newsSortSelect');
             const pagination = document.getElementById('newsPagination');
             const search = document.getElementById('newsSearch');
             const searchButton = document.getElementById('newsSearchButton');
@@ -1010,53 +1038,27 @@
 
             function date(value) {
                 if (!value) return '';
-
                 const d = new Date(value);
-
-                if (Number.isNaN(d.getTime())) {
-                    return String(value);
-                }
-
-                return d.toLocaleDateString('id-ID', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric'
-                });
+                if (Number.isNaN(d.getTime())) return String(value);
+                return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
             }
 
             function img(url) {
                 if (!url) return '';
-
                 url = String(url);
-
-                if (/^https?:\/\//i.test(url)) {
-                    return url;
-                }
-
-                if (url.startsWith('/')) {
-                    return API_ORIGIN + url;
-                }
-
+                if (/^https?:\/\//i.test(url)) return url;
+                if (url.startsWith('/')) return API_ORIGIN + url;
                 return API_ORIGIN + '/' + url.replace(/^\/+/, '');
             }
 
             async function get(url) {
-                const response = await fetch(url, {
-                    headers: {
-                        Accept: 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('failed');
-                }
-
+                const response = await fetch(url, { headers: { Accept: 'application/json' } });
+                if (!response.ok) throw new Error('failed');
                 return response.json();
             }
 
             function normalize(item) {
                 const category = item?.category || {};
-
                 return {
                     title: String(item?.title ?? 'Tanpa Judul'),
                     slug: String(item?.slug ?? ''),
@@ -1072,16 +1074,16 @@
             function buildUrl(page) {
                 const params = new URLSearchParams({
                     paginate: String(PAGE_SIZE),
-                    page: String(page)
+                    page: String(page),
+                    sort: state.sort
                 });
 
                 if (state.q.trim() !== '') {
                     params.set('q', state.q.trim());
                 }
 
-                if (state.category.id !== 'all') {
-                    params.set('category_id', state.category.id);
-                    params.set('category', state.category.slug || state.category.id);
+                if (state.category !== 'all') {
+                    params.set('category_id', state.category);
                 }
 
                 return API.search + '?' + params.toString();
@@ -1093,7 +1095,7 @@
                         <div class="empty">
                             <i class="fas fa-magnifying-glass"></i>
                             <strong>Berita tidak ditemukan</strong>
-                            <span>Belum ada berita yang sesuai dengan kategori atau kata kunci pencarian Anda.</span>
+                            <span>Belum ada berita yang sesuai dengan pencarian Anda.</span>
                         </div>
                     `;
                     return;
@@ -1126,22 +1128,15 @@
                     return `
                         <a class="news-page-card" href="${url}">
                             ${imageHtml}
-
                             <div class="news-page-body">
                                 <h2 class="news-page-title">${title}</h2>
-
                                 <p class="news-page-excerpt">${excerpt}</p>
-
                                 <div class="news-page-footer">
                                     <div class="news-page-date">
                                         <i class="fas fa-calendar-alt"></i>
                                         ${newsDate || 'Tanggal belum tersedia'}
                                     </div>
-
-                                    <div class="read-more">
-                                        Baca
-                                        <i class="fas fa-arrow-right"></i>
-                                    </div>
+                                    <div class="read-more">Baca <i class="fas fa-arrow-right"></i></div>
                                 </div>
                             </div>
                         </a>
@@ -1158,53 +1153,38 @@
                     return;
                 }
 
-                let start = Math.max(1, current - 2);
-                let end = Math.min(last, start + 4);
+                // Pada layar HP hanya memunculkan 3 tombol angka agar muat 1 baris
+                const isMobile = window.innerWidth <= 480;
+                const visiblePages = isMobile ? 3 : 5; 
 
-                if (end - start < 4) {
-                    start = Math.max(1, end - 4);
+                let start = Math.max(1, current - Math.floor(visiblePages / 2));
+                let end = Math.min(last, start + visiblePages - 1);
+
+                if (end - start < visiblePages - 1) {
+                    start = Math.max(1, end - visiblePages + 1);
                 }
 
-                let html = `
-                    <button class="page-btn" data-page="${current - 1}" ${current <= 1 ? 'disabled' : ''}>
-                        ‹
-                    </button>
-                `;
+                let html = `<button class="page-btn" data-page="${current - 1}" ${current <= 1 ? 'disabled' : ''}>‹</button>`;
 
                 for (let page = start; page <= end; page++) {
-                    html += `
-                        <button class="page-btn ${page === current ? 'active' : ''}" data-page="${page}">
-                            ${page}
-                        </button>
-                    `;
+                    html += `<button class="page-btn ${page === current ? 'active' : ''}" data-page="${page}">${page}</button>`;
                 }
 
                 if (end < last) {
-                    html += `
-                        <span class="page-dots">...</span>
-                        <button class="page-btn" data-page="${last}">
-                            ${last}
-                        </button>
-                    `;
+                    html += `<span class="page-dots">...</span><button class="page-btn" data-page="${last}">${last}</button>`;
                 }
 
-                html += `
-                    <button class="page-btn" data-page="${current + 1}" ${current >= last ? 'disabled' : ''}>
-                        ›
-                    </button>
-
-                    <div class="page-jump">
-                        <input type="number" min="1" max="${last}" value="${current}" aria-label="Pilih halaman">
-                        <button type="button">Go</button>
-                    </div>
-                `;
+                html += `<button class="page-btn" data-page="${current + 1}" ${current >= last ? 'disabled' : ''}>›</button>
+                         <div class="page-jump">
+                             <input type="number" min="1" max="${last}" value="${current}" aria-label="Pilih halaman">
+                             <button type="button">Go</button>
+                         </div>`;
 
                 pagination.innerHTML = html;
 
                 pagination.querySelectorAll('[data-page]').forEach(function (button) {
                     button.onclick = function () {
                         const page = Number(button.dataset.page);
-
                         if (page >= 1 && page <= last && page !== current) {
                             state.page = page;
                             load();
@@ -1217,7 +1197,6 @@
 
                 function jump() {
                     const page = Number(input.value);
-
                     if (page >= 1 && page <= last && page !== current) {
                         state.page = page;
                         load();
@@ -1225,30 +1204,16 @@
                 }
 
                 button?.addEventListener('click', jump);
-
-                input?.addEventListener('keydown', function (event) {
-                    if (event.key === 'Enter') {
-                        jump();
-                    }
-                });
+                input?.addEventListener('keydown', function (event) { if (event.key === 'Enter') jump(); });
             }
 
             async function load() {
                 const requestId = ++activeRequestId;
-
-                grid.innerHTML = `
-                    <div class="loading">
-                        <div class="loader"></div>
-                        <span>Memuat berita...</span>
-                    </div>
-                `;
+                grid.innerHTML = `<div class="loading"><div class="loader"></div><span>Memuat berita...</span></div>`;
 
                 try {
                     const payload = await get(buildUrl(state.page));
-
-                    if (requestId !== activeRequestId) {
-                        return;
-                    }
+                    if (requestId !== activeRequestId) return;
 
                     state.lastPage = Number(payload?.meta?.last_page || 1);
                     state.page = Number(payload?.meta?.current_page || state.page);
@@ -1272,58 +1237,32 @@
             async function loadFilters() {
                 try {
                     const payload = await get(API.category);
+                    
+                    categorySelect.innerHTML = '<option value="all">Kategori (Semua)</option>' + 
+                        arr(payload).map(function (category) {
+                            return `<option value="${esc(category.id)}">${esc(category.name)}</option>`;
+                        }).join('');
 
-                    filters.innerHTML = `
-                        <button class="filter-btn active" data-id="all" data-slug="all" type="button">
-                            <i class="fas fa-tag"></i>
-                            Semua
-                        </button>
-                    ` + arr(payload).map(function (category) {
-                        return `
-                            <button
-                                class="filter-btn"
-                                data-id="${esc(category.id)}"
-                                data-slug="${esc(category.slug || '')}"
-                                type="button">
-                                <i class="fas fa-tag"></i>
-                                ${esc(category.name)}
-                            </button>
-                        `;
-                    }).join('');
-
-                    filters.querySelectorAll('.filter-btn').forEach(function (button) {
-                        button.onclick = function () {
-                            filters.querySelectorAll('.filter-btn').forEach(function (item) {
-                                item.classList.remove('active');
-                            });
-
-                            button.classList.add('active');
-
-                            state.category = {
-                                id: button.dataset.id,
-                                slug: button.dataset.slug
-                            };
-
-                            state.page = 1;
-                            load();
-                        };
+                    categorySelect.addEventListener('change', function () {
+                        state.category = this.value;
+                        state.page = 1;
+                        load();
                     });
                 } catch (error) {
-                    filters.innerHTML = `
-                        <button class="filter-btn active" data-id="all" data-slug="all" type="button">
-                            <i class="fas fa-tag"></i>
-                            Semua
-                        </button>
-                    `;
+                    categorySelect.innerHTML = '<option value="all">Kategori (Semua)</option>';
                 }
             }
 
+            sortSelect?.addEventListener('change', function () {
+                state.sort = this.value;
+                state.page = 1;
+                load();
+            });
+
             search.addEventListener('input', function () {
                 clearTimeout(searchTimer);
-
                 state.q = search.value;
                 state.page = 1;
-
                 searchTimer = setTimeout(load, 400);
             });
 
@@ -1336,6 +1275,12 @@
 
             loadFilters();
             load();
+
+            // Handle Resize Window agar Paginasi menyesuaikan otomatis
+            window.addEventListener('resize', function() {
+                clearTimeout(window.resizeTimer);
+                window.resizeTimer = setTimeout(renderPages, 200);
+            });
         })();
     </script>
 </body>

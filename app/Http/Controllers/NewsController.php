@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -25,22 +24,13 @@ class NewsController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $perPage = min(30, max(1, (int) $request->query('paginate', 9)));
 
-        // 1. Ambil data dari cache hasil sinkronisasi Job
+        // 1. Coba ambil seluruh data 1054+ dari Cache
         $cachedNews = \Illuminate\Support\Facades\Cache::get('all_news_api_data');
 
-        // 2. Jika Cache belum ada (misal job belum jalan), lakukan Fallback tarik API instan
-        if (!$cachedNews) {
-            \App\Jobs\SyncNewsApiJob::dispatch(); // Tetap perintahkan job berjalan di background
-            
-            $baseParams = ['paginate' => 100, 'page' => 1];
-            $fallbackResponse = \Illuminate\Support\Facades\Http::withoutVerifying()
-                                    ->timeout(10)->get(self::NEWS_API_URL, $baseParams);
-                                    
-            if ($fallbackResponse->successful()) {
-                $cachedNews = $this->extractNewsItems($fallbackResponse->json());
-            } else {
-                $cachedNews = [];
-            }
+        // 2. Jika Cache kosong atau isinya terlalu sedikit (indikasi error sebelumnya), 
+        // Lakukan sinkronisasi berkecepatan tinggi secara langsung!
+        if (!$cachedNews || count($cachedNews) < 20) {
+            $cachedNews = $this->fetchAllNewsFromApi();
         }
 
         $items = collect($cachedNews);
@@ -53,16 +43,33 @@ class NewsController extends Controller
             });
         }
 
-        // 4. Filter Pencarian Teks (Perbaikan Pencarian Cerdas)
+        // 4. Filter Pencarian Teks
         if ($query !== '') {
             $items = $items->filter(fn (array $item): bool => $this->matchesNewsQuery($item, $query));
         }
 
+        // 5. Filter Sorting (Terbaru / Terlama)
+        $sort = $request->query('sort', 'desc'); // Default Terbaru
+        $dateExtractor = function ($item) {
+            return data_get($item, 'publishedAt') 
+                ?? data_get($item, 'published_at') 
+                ?? data_get($item, 'createdAt') 
+                ?? data_get($item, 'created_at') 
+                ?? '';
+        };
+
+        if ($sort === 'asc') {
+            $items = $items->sortBy($dateExtractor);
+        } else {
+            $items = $items->sortByDesc($dateExtractor);
+        }
+
+        // 6. Terapkan Pagination dari Data yang Sudah Disaring & Diurutkan
         $items = $items->values();
         $total = $items->count();
         $lastResultPage = max(1, (int) ceil($total / $perPage));
         
-        // Pastikan $page tidak melebihi halaman terakhir jika hasil pencarian sedikit
+        // Pastikan $page tidak melebihi halaman terakhir
         $page = min($page, max(1, $lastResultPage)); 
         
         $pagedItems = $items->slice(($page - 1) * $perPage, $perPage)->values();
@@ -75,36 +82,76 @@ class NewsController extends Controller
 
     public function show(string $slug): View
     {
-        return view('news.show', [
-            'slug' => $slug,
-        ]);
+        return view('news.show', ['slug' => $slug]);
     }
 
-    private function newsApiRequest(array $params)
+    /**
+     * Pengunduh Paralel API Berkecepatan Tinggi (Concurrent Fetcher)
+     */
+    private function fetchAllNewsFromApi(): array
     {
-        return Http::withoutVerifying()
-            ->acceptJson()
-            ->timeout(12)
-            ->retry(1, 250)
-            ->get(self::NEWS_API_URL, $params);
+        // Matikan batas waktu eksekusi agar tidak timeout saat mengambil 1000+ data perdana
+        set_time_limit(300);
+
+        $items = collect();
+
+        // Ambil halaman pertama dengan batas maksimum per page
+        $baseParams = ['paginate' => 100, 'page' => 1];
+        $firstResponse = Http::withoutVerifying()->timeout(20)->get(self::NEWS_API_URL, $baseParams);
+
+        if (!$firstResponse->successful()) {
+            return [];
+        }
+
+        $payload = $firstResponse->json();
+        $items = $items->merge($this->extractNewsItems($payload));
+        $lastPage = max(1, (int) data_get($payload, 'meta.last_page', 1));
+
+        // Ambil sisa halaman secara paralel (barengan 10 request sekaligus) agar sangat cepat
+        if ($lastPage > 1) {
+            $pages = range(2, $lastPage);
+            $chunks = array_chunk($pages, 10); 
+
+            foreach ($chunks as $chunk) {
+                $responses = Http::pool(function (Pool $pool) use ($chunk, $baseParams) {
+                    $requests = [];
+                    foreach ($chunk as $p) {
+                        $requests[] = $pool->as((string) $p)
+                            ->withoutVerifying()
+                            ->timeout(20)
+                            ->get(self::NEWS_API_URL, array_merge($baseParams, ['page' => $p]));
+                    }
+                    return $requests;
+                });
+
+                foreach ($responses as $response) {
+                    if ($response instanceof \Illuminate\Http\Client\Response && $response->successful()) {
+                        $items = $items->merge($this->extractNewsItems($response->json()));
+                    }
+                }
+            }
+        }
+
+        $allData = $items->values()->toArray();
+
+        // Simpan seluruh data 1054+ ke Cache selama 12 Jam agar super cepat diakses
+        \Illuminate\Support\Facades\Cache::put('all_news_api_data', $allData, now()->addHours(12));
+
+        return $allData;
     }
 
-    // Ubah return menjadi array agar seragam dengan data yang disimpan dari Job Cache
     private function extractNewsItems(array $payload): array 
     {
         $items = data_get($payload, 'data', []);
-
         if (! is_array($items)) {
             $items = data_get($payload, 'data.data', []);
         }
-
         return collect(is_array($items) ? $items : [])
             ->filter(fn ($item): bool => is_array($item))
             ->values()
             ->toArray(); 
     }
 
-    // SATU-SATUNYA fungsi matchesNewsQuery (yang lama sudah dihapus)
     private function matchesNewsQuery(array $item, string $query): bool
     {
         $title = strtolower((string) data_get($item, 'title', ''));
@@ -112,19 +159,14 @@ class NewsController extends Controller
         $content = strtolower(strip_tags((string) data_get($item, 'content', '')));
         $category = strtolower((string) data_get($item, 'category.name', ''));
         
-        // Gabungkan semua teks relevan (termasuk kategori)
         $textToSearch = $title . ' ' . $excerpt . ' ' . $content . ' ' . $category;
-        
-        // Pecah query pencarian berdasarkan spasi (contoh: "jadwal akademik" -> dicari per kata)
         $keywords = array_filter(explode(' ', strtolower($query)));
         
-        // Pastikan SEMUA kata kunci pencarian ada di dalam $textToSearch
         foreach ($keywords as $keyword) {
             if (strpos($textToSearch, $keyword) === false) {
-                return false; // Jika satu kata saja tidak ketemu, berita diabaikan
+                return false; 
             }
         }
-
         return true;
     }
 
