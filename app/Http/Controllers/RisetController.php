@@ -28,16 +28,15 @@ class RisetController extends Controller
             $query->where('jurusan', $request->jurusan);
         }
 
-        // Pagination data dosen
+        // Pagination data dosen (Tepat 10 data per lembar halaman)
         $dosens = $query->paginate(10);
 
-        // Kembalikan ke view TANPA membawa variabel heroSlides
+        // Kembalikan langsung ke view Blade
         return view('riset&pdm.listrisetdosen', compact('dosens', 'academicProgramsNav'));
     }
 
     public function detailDosen($sinta_id)
     {
-        // Mengambil data dosen beserta relasi publikasi & buku saja (mengoptimalkan performa)
         $dosen = DetailDosen::with([
             'scopusPublications',
             'scopusYearlyStats',
@@ -52,7 +51,6 @@ class RisetController extends Controller
             'serviceYearlies'
         ])->findOrFail($sinta_id);
 
-        // Memperbaiki path view agar mengarah ke folder resources/views/riset&pdm/detailriset.blade.php
         return view('riset&pdm.detailriset', compact('dosen'));
     }
 }
