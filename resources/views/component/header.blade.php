@@ -243,11 +243,12 @@
         padding-left: 23px;
     }
 
+    /* HAMBURGER */
     .hamburger {
         display: none;
         margin-left: auto;
-        width: 42px;
-        height: 42px;
+        width: 60px;
+        height: 60px;
         border: none;
         background: transparent;
         cursor: pointer;
@@ -255,22 +256,31 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        gap: 7px;
+        gap: 6px;
+        align-self: center;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+        appearance: none;
     }
 
     .hamburger span {
         display: block;
-        width: 28px;
-        height: 3px;
+        width: 32px;
+        height: 4px;
         background: var(--primary);
-        border-radius: 10px;
+        border-radius: 999px;
         margin: 0;
+        flex-shrink: 0;
+        opacity: 1;
+        transform: translateY(0);
+        box-sizing: border-box;
     }
 
     @media (min-width: 993px) {
         .site-header.nav-collapsed .navbar {
             position: absolute;
-            top: 14px;
+            top: 18px;
             right: 24px;
             width: auto;
             min-height: 0;
@@ -290,9 +300,16 @@
 
         .site-header.nav-collapsed .hamburger {
             display: flex;
-            width: 44px;
-            height: 44px;
+            width: 60px;
+            height: 60px;
             margin-left: 0;
+            gap: 6px;
+            align-self: center;
+        }
+
+        .site-header.nav-collapsed .hamburger span {
+            width: 32px;
+            height: 4px;
         }
 
         .site-header.nav-collapsed .nav-menu {
@@ -314,7 +331,16 @@
         .site-header.nav-collapsed .nav-item { width: 100%; height: auto; }
         .site-header.nav-collapsed .nav-link { width: 100%; height: 48px; justify-content: space-between; }
         .site-header.nav-collapsed .nav-item::after { display: none !important; }
-        .site-header.nav-collapsed .dropdown { position: static; min-width: 100%; box-shadow: none; padding: 5px 0; transform: none; opacity: 1; visibility: visible; display: none; }
+        .site-header.nav-collapsed .dropdown {
+            position: static;
+            min-width: 100%;
+            box-shadow: none;
+            padding: 5px 0;
+            transform: none;
+            opacity: 1;
+            visibility: visible;
+            display: none;
+        }
         .site-header.nav-collapsed .nav-item:hover .dropdown { display: none; }
         .site-header.nav-collapsed .nav-item.open .dropdown { display: block; }
     }
@@ -325,37 +351,142 @@
 
     @media (max-width: 992px) {
         .site-header { background: var(--light); }
-        .top-header { padding: 10px 74px 10px 0; }
+
+        .top-header {
+            padding: 10px 84px 10px 0;
+        }
+
         .brand-logo { width: 62px; height: 62px; }
         .brand-main { font-size: 34px; }
         .brand-school { font-size: 13px; }
-        .navbar { position: absolute; top: 12px; right: 14px; width: auto; min-height: 0; background: transparent !important; box-shadow: none; }
-        .navbar .container { width: auto; margin: 0; }
-        .nav-content { min-height: 0; justify-content: flex-end; }
-        .hamburger { display: flex; width: 46px; height: 46px; margin-left: 0; }
-        .nav-menu { display: none; position: fixed; top: 82px; left: 0; right: 0; width: 100%; height: auto; max-height: calc(100vh - 82px); overflow-y: auto; flex-direction: column; align-items: stretch; padding: 0 0 12px; background: var(--primary) !important; z-index: 10050; }
+
+        .navbar {
+            position: absolute;
+            top: 10px; /* Jarak atas disesuaikan agar center secara vertikal */
+            right: 16px;
+            width: auto;
+            min-height: 0;
+            background: transparent !important;
+            box-shadow: none;
+        }
+
+        .navbar .container {
+            width: auto;
+            margin: 0;
+        }
+
+        .nav-content {
+            min-height: 0;
+            justify-content: flex-end;
+        }
+
+        .hamburger {
+            display: flex;
+            width: 62px;
+            height: 62px;
+            margin-left: 0;
+            gap: 6px;
+            align-self: center;
+        }
+
+        .hamburger span {
+            width: 32px;
+            height: 4px;
+        }
+
+        .nav-menu {
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: auto;
+            max-height: calc(100vh - 90px);
+            overflow-y: auto;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0 0 12px;
+            background: var(--primary) !important;
+            z-index: 10050;
+        }
+
         .nav-menu.show { display: flex; }
-        .nav-item { width: 100%; height: auto; }
-        .nav-link { width: 100%; height: 50px; padding: 0 18px; justify-content: space-between; font-size: 12px; }
+
+        .nav-item {
+            width: 100%;
+            height: auto;
+        }
+
+        .nav-link {
+            width: 100%;
+            height: 50px;
+            padding: 0 18px;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
         .nav-item::after { display: none !important; }
+
         .nav-item:hover .dropdown { display: none; }
         .nav-item.open .dropdown { display: block; }
-        .dropdown { position: static; min-width: 100%; width: 100%; box-shadow: none; border-radius: 0; opacity: 1; visibility: visible; transform: none; display: none; padding: 5px 0; }
-        .dropdown a { min-width: 100%; padding: 12px 24px; white-space: normal; }
+
+        .dropdown {
+            position: static;
+            min-width: 100%;
+            width: 100%;
+            box-shadow: none;
+            border-radius: 0;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            display: none;
+            padding: 5px 0;
+        }
+
+        .dropdown a {
+            min-width: 100%;
+            padding: 12px 24px;
+            white-space: normal;
+        }
     }
 
     @media (max-width: 640px) {
-        .container { width: min(100% - 28px, 1120px); }
-        .top-header { padding: 9px 70px 9px 0; }
+        .container {
+            width: min(100% - 28px, 1120px);
+        }
+
+        .top-header {
+            padding: 9px 76px 9px 0;
+        }
+
         .brand-logo { width: 54px; height: 54px; }
         .brand-unw { gap: 8px; }
         .brand-main { font-size: 28px; }
         .brand-sub { font-size: 6.5px; }
         .brand-divider, .brand-school { display: none; }
-        .navbar { top: 9px; right: 14px; }
-        .hamburger { width: 42px; height: 42px; gap: 6px; }
-        .hamburger span { width: 26px; }
-        .nav-menu { top: 72px; max-height: calc(100vh - 72px); }
+
+        .navbar {
+            top: 7px; /* Jarak atas disesuaikan agar center secara vertikal di device yang lebih kecil */
+            right: 12px;
+        }
+
+        .hamburger {
+            width: 58px;
+            height: 58px;
+            gap: 6px;
+            align-self: center;
+        }
+
+        .hamburger span {
+            width: 32px;
+            height: 4px;
+        }
+
+        .nav-menu {
+            top: 80px;
+            max-height: calc(100vh - 80px);
+        }
     }
 </style>
 
@@ -367,7 +498,7 @@
                 <div class="brand-unw">
                     <div>
                         <div class="brand-main">UNW</div>
-                        <div class="brand-sub">Universitas Ngudi Waluyo<br>Pasca Sarjana</div>
+                        <div class="brand-sub">Universitas Ngudi Waluyo<br>Pascasarjana</div>
                     </div>
                     <div class="brand-divider"></div>
                     <div class="brand-school">Postgraduate School<br>Pascasarjana</div>
@@ -389,7 +520,9 @@
                     </li>
 
                     <li class="nav-item has-dropdown {{ $isProfile ? 'route-active' : '' }}">
-                        <a href="#" class="nav-link dropdown-trigger {{ $isProfile ? 'nav-route-active' : '' }}"><span>Profil</span><span class="chevron" aria-hidden="true"></span></a>
+                        <a href="#" class="nav-link dropdown-trigger {{ $isProfile ? 'nav-route-active' : '' }}">
+                            <span>Profil</span><span class="chevron" aria-hidden="true"></span>
+                        </a>
                         <div class="dropdown">
                             <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'dropdown-route-active' : '' }}">Tentang Pascasarjana</a>
                             <a href="{{ route('visi-misi') }}" class="{{ request()->routeIs('visi-misi') ? 'dropdown-route-active' : '' }}">Visi dan Misi</a>
@@ -398,10 +531,14 @@
                     </li>
 
                     <li class="nav-item has-dropdown {{ $isAcademic ? 'route-active' : '' }}">
-                        <a href="#" class="nav-link dropdown-trigger {{ $isAcademic ? 'nav-route-active' : '' }}"><span>Akademik</span><span class="chevron" aria-hidden="true"></span></a>
+                        <a href="#" class="nav-link dropdown-trigger {{ $isAcademic ? 'nav-route-active' : '' }}">
+                            <span>Akademik</span><span class="chevron" aria-hidden="true"></span>
+                        </a>
                         <div class="dropdown">
                             @forelse($academicProgramsNav as $program)
-                                <a href="{{ route('akademik.show', $program['slug']) }}" class="{{ request()->is('akademik/' . $program['slug']) ? 'dropdown-route-active' : '' }}">{{ $program['display_name'] }}</a>
+                                <a href="{{ route('akademik.show', $program['slug']) }}" class="{{ request()->is('akademik/' . $program['slug']) ? 'dropdown-route-active' : '' }}">
+                                    {{ $program['display_name'] }}
+                                </a>
                             @empty
                                 <a href="#">Data tidak tersedia</a>
                             @endforelse
@@ -418,9 +555,17 @@
                         </a>
                     </li>
 
-                    <li class="nav-item"><a href="{{ route('home') }}#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a></li>
-                    <li class="nav-item"><a href="https://pmb.unw.ac.id/" class="nav-link">Admisi</a></li>
-                    <li class="nav-item {{ $isContact ? 'route-active' : '' }}"><a href="{{ route('contact.index') }}" class="nav-link {{ $isContact ? 'nav-route-active' : '' }}">Kontak</a></li>
+                    <li class="nav-item">
+                        <a href="{{ route('home') }}#layanan-mahasiswa" class="nav-link" id="edomNav" data-nav="edom">Edom</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="https://pmb.unw.ac.id/" class="nav-link">Admisi</a>
+                    </li>
+
+                    <li class="nav-item {{ $isContact ? 'route-active' : '' }}">
+                        <a href="{{ route('contact.index') }}" class="nav-link {{ $isContact ? 'nav-route-active' : '' }}">Kontak</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -484,6 +629,7 @@
         window.addEventListener('scroll', function() {
             if (!siteHeader || window.innerWidth <= 992) return;
             const currentScrollY = window.scrollY;
+
             if (currentScrollY > lastScrollY && currentScrollY > 120) {
                 siteHeader.classList.add('nav-collapsed');
                 closeNavMenu();
@@ -491,6 +637,7 @@
                 siteHeader.classList.remove('nav-collapsed');
                 closeNavMenu();
             }
+
             lastScrollY = currentScrollY;
         });
 

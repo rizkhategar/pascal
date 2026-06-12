@@ -1451,11 +1451,16 @@
     @include('component.header')
 
     <section class="hero">
-        <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');">
-        </div>
-        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus2.png') }}');"></div>
-        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus3.png') }}');"></div>
-        <div class="hero-slide" style="background-image: url('{{ asset('assets/images/hero-campus4.png') }}');"></div>
+        @if(isset($sliders) && $sliders->count() > 0)
+            @foreach($sliders as $index => $slider)
+                <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" 
+                     style="background-image: url('{{ route('sliders.image', $slider->id) }}');"
+                     data-duration="{{ $slider->duration_ms ?? 3000 }}">
+                </div>
+            @endforeach
+        @else
+            <div class="hero-slide active" style="background-image: url('{{ asset('assets/images/hero-campus.png') }}');" data-duration="3000"></div>
+        @endif
 
         <button class="hero-arrow left" id="prevSlide" type="button" aria-label="Slide sebelumnya">‹</button>
         <button class="hero-arrow right" id="nextSlide" type="button" aria-label="Slide berikutnya">›</button>
@@ -1463,27 +1468,21 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title">
-                        Pascasarjana<br>
-                        Universitas Ngudi Waluyo
-                    </h1>
-
-                    <p class="hero-subtitle">
-                        Pascasarjana Universitas Ngudi Waluyo
-                    </p>
-
-                    <a href="#" class="btn-primary">
-                        Daftar Sekarang
-                    </a>
+                    <h1 class="hero-title">Pascasarjana<br>Universitas Ngudi Waluyo</h1>
+                    <p class="hero-subtitle">Pascasarjana Universitas Ngudi Waluyo</p>
+                    <a href="#" class="btn-primary">Daftar Sekarang</a>
                 </div>
             </div>
         </div>
 
         <div class="hero-dots" id="heroDots">
-            <button class="hero-dot active" type="button" aria-label="Slide 1"></button>
-            <button class="hero-dot" type="button" aria-label="Slide 2"></button>
-            <button class="hero-dot" type="button" aria-label="Slide 3"></button>
-            <button class="hero-dot" type="button" aria-label="Slide 4"></button>
+            @if(isset($sliders) && $sliders->count() > 0)
+                @foreach($sliders as $index => $slider)
+                    <button class="hero-dot {{ $index === 0 ? 'active' : '' }}" type="button" aria-label="Slide {{ $index + 1 }}"></button>
+                @endforeach
+            @else
+                <button class="hero-dot active" type="button" aria-label="Slide 1"></button>
+            @endif
         </div>
     </section>
 
@@ -1719,59 +1718,60 @@
             });
         });
 
-        const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.hero-dot');
-        const prevSlide = document.getElementById('prevSlide');
-        const nextSlide = document.getElementById('nextSlide');
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            const prevSlide = document.getElementById('prevSlide');
+            const nextSlide = document.getElementById('nextSlide');
 
-        let currentSlide = 0;
-        let slideInterval;
+            // Proteksi: Jika jumlah bullet dan gambar beda, berarti masih ada hardcode HTML
+            if (slides.length !== dots.length) {
+                console.error("Error: Jumlah gambar tidak sama dengan jumlah bullet.");
+                return;
+            }
+            if (slides.length === 0) return;
 
-        function showSlide(index) {
-            slides.forEach((slide) => slide.classList.remove('active'));
-            dots.forEach((dot) => dot.classList.remove('active'));
+            let currentSlide = 0;
+            let slideTimeout;
 
-            currentSlide = (index + slides.length) % slides.length;
+            function showSlide(index) {
+                clearTimeout(slideTimeout);
 
-            slides[currentSlide].classList.add('active');
-            dots[currentSlide].classList.add('active');
-        }
+                let nextIndex = index;
+                if (nextIndex >= slides.length) nextIndex = 0;
+                if (nextIndex < 0) nextIndex = slides.length - 1;
 
-        function goToNextSlide() {
-            showSlide(currentSlide + 1);
-        }
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
 
-        function goToPrevSlide() {
-            showSlide(currentSlide - 1);
-        }
+                currentSlide = nextIndex;
 
-        function startAutoSlide() {
-            slideInterval = setInterval(goToNextSlide, 2500);
-        }
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
 
-        function resetAutoSlide() {
-            clearInterval(slideInterval);
-            startAutoSlide();
-        }
+                startAutoSlide();
+            }
 
-        nextSlide.addEventListener('click', function() {
-            goToNextSlide();
-            resetAutoSlide();
-        });
+            function startAutoSlide() {
+                clearTimeout(slideTimeout);
+                const activeSlide = slides[currentSlide];
+                if (!activeSlide) return;
 
-        prevSlide.addEventListener('click', function() {
-            goToPrevSlide();
-            resetAutoSlide();
-        });
+                let duration = parseInt(activeSlide.getAttribute('data-duration')) || 3000;
+                slideTimeout = setTimeout(() => {
+                    showSlide(currentSlide + 1);
+                }, duration);
+            }
 
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', function() {
-                showSlide(index);
-                resetAutoSlide();
+            if (nextSlide) nextSlide.addEventListener('click', () => showSlide(currentSlide + 1));
+            if (prevSlide) prevSlide.addEventListener('click', () => showSlide(currentSlide - 1));
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
             });
-        });
 
-        startAutoSlide();
+            startAutoSlide();
+        });
 
         const edomNav = document.getElementById('edomNav');
         const homeNavItem = document.getElementById('homeNavItem');
