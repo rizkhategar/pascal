@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\DetailDosens\Pages;
 
 use App\Filament\Resources\DetailDosens\DetailDosenResource;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-// Import semua Relation Managers untuk didaftarkan secara paksa di tingkat halaman
+// Import semua Relation Managers
 use App\Filament\Resources\DetailDosens\RelationManagers\ResearchesRelationManager;
 use App\Filament\Resources\DetailDosens\RelationManagers\ServicesRelationManager;
 use App\Filament\Resources\DetailDosens\RelationManagers\BooksRelationManager;
@@ -13,17 +13,16 @@ use App\Filament\Resources\DetailDosens\RelationManagers\ScopusPublicationsRelat
 use App\Filament\Resources\DetailDosens\RelationManagers\ScholarPublicationsRelationManager;
 use App\Filament\Resources\DetailDosens\RelationManagers\GarudaPublicationsRelationManager;
 
-class EditDetailDosen extends EditRecord
+class ViewDetailDosen extends ViewRecord
 {
     protected static string $resource = DetailDosenResource::class;
 
-    // AKTIFKAN: Menyatukan form edit utama dengan data relasi menjadi sistem TAB di atas
+    // AKTIFKAN: Menyatukan view utama dengan data relasi menjadi sistem TAB
     public function hasCombinedRelationManagerTabsWithContent(): bool
     {
         return true;
     }
 
-    // Deklarasikan ulang secara eksplisit di level halaman untuk memicu render v5
     public function getRelationManagers(): array
     {
         return [

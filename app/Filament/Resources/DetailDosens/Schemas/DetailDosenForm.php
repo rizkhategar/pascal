@@ -4,7 +4,7 @@ namespace App\Filament\Resources\DetailDosens\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Select; // Import class Select
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class DetailDosenForm
@@ -13,6 +13,12 @@ class DetailDosenForm
     {
         return $schema
             ->components([
+                // Tambahkan sinta_id sebagai input utama
+                TextInput::make('sinta_id')
+                    ->label('SINTA ID')
+                    ->required()
+                    ->disabled(fn ($context) => $context === 'edit'), // Opsional: disable saat edit data
+
                 TextInput::make('nama')
                     ->default(null),
                 TextInput::make('institusi')
@@ -20,7 +26,6 @@ class DetailDosenForm
                 TextInput::make('program_studi')
                     ->default(null),
                 
-                // Tambahkan input Select untuk Jurusan di sini
                 Select::make('jurusan')
                     ->label('Jurusan')
                     ->options([
@@ -29,7 +34,7 @@ class DetailDosenForm
                         'magister manajemen pendidikan' => 'Magister Manajemen Pendidikan',
                         'magister hukum' => 'Magister Hukum',
                     ])
-                    ->searchable() // Opsional: Memudahkan pencarian jika opsi nanti bertambah
+                    ->searchable()
                     ->default(null),
 
                 Textarea::make('profile_photo')
