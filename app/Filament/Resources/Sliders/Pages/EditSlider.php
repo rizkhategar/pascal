@@ -3,11 +3,23 @@
 namespace App\Filament\Resources\Sliders\Pages;
 
 use App\Filament\Resources\Sliders\SliderResource;
-use Filament\Resources\Pages\EditRecord;
+use App\Models\Slider;
+use Filament\Resources\Pages\Page;
 
-class EditSlider extends EditRecord
+class EditSlider extends Page
 {
     protected static string $resource = SliderResource::class;
+    
+    // Memanggil custom form HTML murni buatan Anda
+    protected string $view = 'filament.resources.sliders.pages.edit-slider';
+
+    public Slider $record;
+
+    // Fungsi untuk mengambil data slider yang sedang diedit
+    public function mount(Slider $record): void
+    {
+        $this->record = $record;
+    }
 
     public function getTitle(): string
     {
